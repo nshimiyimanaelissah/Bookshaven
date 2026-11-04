@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BookHaven — Publish, Discover & Read</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--font-sans:'Inter',system-ui,sans-serif;--font-serif:'Playfair Display',Georgia,serif;
+--bg:#fafaf9;--bg-elev:#fff;--bg-sub:#f5f4f2;--bg-muted:#efedea;
+--text:#1a1a1a;--text-2:#6b6b6b;--text-3:#9a9a9a;--border:#e8e6e3;--border-strong:#d4d1cc;
+--accent:#c17a3f;--accent-hover:#a86530;--accent-soft:#f5ebe0;--accent-text:#fff;
+--success:#2d7a4f;--success-soft:#e3f2e9;--danger:#b84242;--danger-soft:#fbeaea;
+--radius:12px;--shadow-md:0 4px 12px rgba(0,0,0,.06);--shadow-lg:0 12px 32px rgba(0,0,0,.08);--t:180ms cubic-bezier(.4,0,.2,1)}
+[data-theme="dark"]{--bg:#121212;--bg-elev:#1c1c1c;--bg-sub:#232323;--bg-muted:#2a2a2a;
+--text:#f5f5f4;--text-2:#a8a8a8;--text-3:#6b6b6b;--border:#2e2e2e;--border-strong:#404040;
+--accent:#d89a5e;--accent-hover:#e8ac6f;--accent-soft:#3a2e22;--accent-text:#121212;
+--success:#4caf7d;--success-soft:#1e3a2b;--danger:#e06b6b;--danger-soft:#3a1e1e;
+--shadow-md:0 4px 12px rgba(0,0,0,.4);--shadow-lg:0 12px 32px rgba(0,0,0,.5)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);line-height:1.55;min-height:100vh;display:flex;flex-direction:column;transition:background var(--t),color var(--t);-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}input,textarea,select{font-family:inherit}a{color:inherit;text-decoration:none}
+.navbar{background:var(--bg-elev);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;height:68px;display:flex;align-items:center;gap:24px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--font-serif);font-size:1.35rem;font-weight:800;background:none;border:none;color:var(--text)}
+.logo-mark{width:34px;height:34px;background:var(--accent);color:var(--accent-text);border-radius:9px;display:grid;place-items:center;font-family:var(--font-sans);font-weight:800}
+.nav-links{display:flex;gap:4px;flex:1;flex-wrap:wrap}
+.nav-link{padding:8px 14px;border-radius:8px;font-size:.86rem;font-weight:500;color:var(--text-2);background:none;border:none;display:inline-flex;gap:6px;align-items:center;transition:var(--t)}
+.nav-link:hover{background:var(--bg-sub);color:var(--text)}
+.nav-link.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.lang-switcher{display:flex;background:var(--bg-sub);border-radius:8px;padding:3px;gap:2px}
+.lang-btn{padding:6px 10px;border-radius:6px;border:none;background:none;font-size:.74rem;font-weight:600;color:var(--text-2);transition:var(--t)}
+.lang-btn.active{background:var(--bg-elev);color:var(--text);box-shadow:var(--shadow-md)}
+.icon-btn{width:38px;height:38px;border-radius:8px;background:var(--bg-sub);border:none;color:var(--text-2);display:grid;place-items:center;font-size:1rem;transition:var(--t)}
+.icon-btn:hover{background:var(--accent-soft);color:var(--accent)}
+.main{flex:1;max-width:1280px;margin:0 auto;padding:40px 24px 80px;width:100%}
+.page{display:none}.page.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.hero{background:var(--bg-elev);border:1px solid var(--border);border-radius:24px;padding:56px 48px;box-shadow:var(--shadow-md);margin-bottom:40px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;background:var(--accent-soft);color:var(--accent);font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:20px}
+.hero h1{font-family:var(--font-serif);font-size:clamp(2rem,4vw,3rem);line-height:1.15;letter-spacing:-.02em;margin-bottom:18px;max-width:640px}
+.hero p{color:var(--text-2);font-size:1.08rem;max-width:560px;margin-bottom:28px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:10px;font-size:.9rem;font-weight:600;border:1.5px solid transparent;transition:var(--t)}
+.btn-primary{background:var(--accent);color:var(--accent-text)}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-secondary{background:var(--bg-sub);color:var(--text);border-color:var(--border)}
+.btn-secondary:hover{background:var(--bg-muted)}
+.btn-block{width:100%}.btn:disabled{opacity:.5;cursor:not-allowed}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-bottom:24px}
+.feature{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:var(--t)}
+.feature:hover{border-color:var(--border-strong);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.feature-icon{width:44px;height:44px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:1.1rem;font-weight:800;margin-bottom:14px}
+.feature h3{font-size:1.02rem;margin-bottom:6px}.feature p{color:var(--text-2);font-size:.9rem}
+.section-head{margin-bottom:20px}.section-title{font-family:var(--font-serif);font-size:1.6rem}.section-sub{color:var(--text-2);font-size:.9rem;margin-top:4px}
+.book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.book-card{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:var(--t)}
+.book-card:hover{border-color:var(--border-strong);box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.book-cover{aspect-ratio:3/4;display:grid;place-items:center;font-size:2.4rem;color:rgba(255,255,255,.85)}
+.book-body{padding:14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.book-title{font-family:var(--font-serif);font-weight:700;font-size:1rem;line-height:1.3}
+.book-author{font-size:.8rem;color:var(--text-2);margin-bottom:10px}
+.book-footer{margin-top:auto;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.book-price{font-weight:800;color:var(--accent);font-size:.95rem}
+.book-price.free{color:var(--success)}
+.download-btn{padding:7px 11px;border-radius:8px;font-size:.78rem;font-weight:600;border:none;background:var(--accent);color:var(--accent-text);transition:var(--t);display:inline-flex;gap:5px;align-items:center}
+.download-btn:hover{background:var(--accent-hover)}
+.download-btn.owned{background:var(--bg-muted);color:var(--text-2);cursor:default}
+.download-btn:disabled{cursor:not-allowed;opacity:.7}
+.auth-wrap{max-width:440px;margin:20px auto}
+.auth-card{background:var(--bg-elev);border:1px solid var(--border);border-radius:20px;padding:36px;box-shadow:var(--shadow-lg)}
+.auth-header{text-align:center;margin-bottom:24px}
+.auth-icon{width:54px;height:54px;border-radius:14px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:1.35rem;margin:0 auto 14px}
+.auth-header h2{font-family:var(--font-serif);font-size:1.5rem;margin-bottom:4px}
+.auth-header p{color:var(--text-2);font-size:.9rem}
+.tabs{display:flex;background:var(--bg-sub);border-radius:10px;padding:4px;margin-bottom:20px}
+.tab{flex:1;padding:10px;border-radius:7px;border:none;background:none;font-size:.84rem;font-weight:600;color:var(--text-2);transition:var(--t)}
+.tab.active{background:var(--bg-elev);color:var(--text);box-shadow:var(--shadow-md)}
+.form-group{margin-bottom:14px}.form-label{display:block;font-size:.8rem;font-weight:600;color:var(--text-2);margin-bottom:6px}
+.form-input,.form-textarea,.form-select{width:100%;padding:11px 14px;border-radius:9px;border:1.5px solid var(--border);background:var(--bg-sub);color:var(--text);font-size:.92rem;transition:var(--t)}
+.form-input:focus,.form-textarea:focus,.form-select:focus{outline:none;border-color:var(--accent);background:var(--bg-elev);box-shadow:0 0 0 3px var(--accent-soft)}
+.form-textarea{min-height:80px;resize:vertical}
+.form-feedback{display:none;padding:10px 14px;border-radius:9px;font-size:.85rem;margin-bottom:14px}
+.form-feedback.show{display:block}
+.form-feedback.error{background:var(--danger-soft);color:var(--danger)}
+.form-feedback.success{background:var(--success-soft);color:var(--success)}
+.form-feedback.info{background:var(--accent-soft);color:var(--accent)}
+.dash-header{display:flex;align-items:center;gap:16px;padding:22px 26px;background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:20px;flex-wrap:wrap}
+.dash-tabs{display:flex;gap:4px;background:var(--bg-sub);border-radius:10px;padding:4px;margin-bottom:20px;flex-wrap:wrap}
+.dash-tab{padding:9px 16px;border-radius:7px;border:none;background:none;font-size:.86rem;font-weight:600;color:var(--text-2);transition:var(--t)}
+.dash-tab.active{background:var(--bg-elev);color:var(--text);box-shadow:var(--shadow-md)}
+.panel{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:20px}
+.panel h3{font-size:1rem;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.panel h3 i{color:var(--accent)}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px}
+.stat{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.stat-label{font-size:.74rem;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.stat-value{font-family:var(--font-serif);font-size:1.6rem;font-weight:800;color:var(--accent)}
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--bg-sub);font-weight:600;color:var(--text-2);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-sub)}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.7rem;font-weight:700;text-transform:uppercase;background:var(--accent-soft);color:var(--accent)}
+.badge.success{background:var(--success-soft);color:var(--success)}
+.badge.danger{background:var(--danger-soft);color:var(--danger)}
+.access-denied{text-align:center;padding:60px 24px}
+.access-denied i{font-size:2.5rem;color:var(--text-3);margin-bottom:16px}
+.access-denied h2{font-family:var(--font-serif);font-size:1.6rem;margin-bottom:6px}
+.access-denied p{color:var(--text-2);margin-bottom:20px}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);display:none;place-items:center;z-index:1000;padding:20px}
+.modal-overlay.show{display:grid}
+.modal{background:var(--bg-elev);border-radius:18px;padding:28px;max-width:480px;width:100%;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto}
+.modal h3{font-family:var(--font-serif);font-size:1.3rem;margin-bottom:6px}
+.modal p{color:var(--text-2);font-size:.9rem}
+.modal-amount{font-family:var(--font-serif);font-size:2rem;font-weight:800;color:var(--accent);text-align:center;margin:16px 0}
+.modal .muted{font-size:.82rem;color:var(--text-3);text-align:center}
+.modal-actions{display:flex;gap:10px;margin-top:18px}
+.modal-actions .btn{flex:1}
+.toast-container{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:2000;max-width:360px}
+.toast{padding:12px 16px;border-radius:10px;background:var(--bg-elev);border:1px solid var(--border);box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:10px;font-size:.88rem;animation:slideIn .25s ease}
+.toast.success i{color:var(--success)}.toast.error i{color:var(--danger)}.toast.info i{color:var(--accent)}
+.toast.removing{animation:slideOut .2s ease forwards}
+@keyframes slideIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideOut{to{opacity:0;transform:translateX(30px)}}
+.user-menu{display:flex;align-items:center;gap:8px;padding:5px 5px 5px 12px;background:var(--bg-sub);border-radius:40px;font-size:.82rem}
+.user-avatar{width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-text);display:grid;place-items:center;font-weight:700;font-size:.75rem}
+.user-info{display:flex;flex-direction:column;line-height:1.15}
+.user-info strong{font-size:.8rem}.user-info span{font-size:.68rem;color:var(--text-3)}
+.role-badge{font-size:.64rem;font-weight:700;padding:2px 7px;border-radius:20px;background:var(--accent-soft);color:var(--accent);text-transform:uppercase}
+.logout-mini{width:28px;height:28px;border-radius:50%;border:none;background:none;color:var(--text-2);display:grid;place-items:center}
+.logout-mini:hover{background:var(--danger-soft);color:var(--danger)}
+.footer{border-top:1px solid var(--border);padding:20px;text-align:center;color:var(--text-2);font-size:.82rem;background:var(--bg-elev)}
+.hidden{display:none!important}
+.readmore-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:24px}
+.study-card{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.study-card h3{font-family:var(--font-serif);font-size:1.15rem;margin-bottom:10px;color:var(--accent)}
+.study-card p{color:var(--text-2);font-size:.92rem;line-height:1.7}
+.study-card ul{margin:10px 0 0 18px;color:var(--text-2);font-size:.9rem}
+.study-card li{margin-bottom:6px}
+@media (max-width:860px){.nav-links{display:none}.hero{padding:40px 24px}.main{padding:24px 16px 60px}.lang-switcher{display:none}.user-info{display:none}}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <button class="logo" onclick="router.go('home')"><span class="logo-mark">B</span><span>BookHaven</span></button>
+    <div class="nav-links">
+      <button class="nav-link" data-route="home" onclick="router.go('home')"><i class="fas fa-house"></i> <span data-i18n="nav.home">Home</span></button>
+      <button class="nav-link" data-route="readmore" onclick="router.go('readmore')"><i class="fas fa-book-reader"></i> <span data-i18n="nav.readmore">Read more</span></button>
+      <button class="nav-link" data-route="how" onclick="router.go('how')"><i class="fas fa-circle-info"></i> <span data-i18n="nav.how">How it works</span></button>
+      <button class="nav-link" data-route="about" onclick="router.go('about')"><i class="fas fa-users"></i> <span data-i18n="nav.about">About us</span></button>
+      <button class="nav-link" data-route="login" onclick="router.go('login')"><i class="fas fa-sign-in-alt"></i> <span data-i18n="nav.login">Login</span></button>
+    </div>
+    <div class="nav-actions">
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="rw">RW</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+      </div>
+      <button class="icon-btn" id="themeBtn"><i class="fas fa-moon"></i></button>
+      <div id="userMenu"></div>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+  <section class="page active" id="page-home">
+    <div class="hero">
+      <span class="eyebrow"><i class="fas fa-star"></i> <span data-i18n="hero.eyebrow">Premium publishing platform</span></span>
+      <h1 data-i18n="hero.title">Where great books find their readers.</h1>
+      <p data-i18n="hero.subtitle">Publish, discover, and download quality books. Secure payments, three languages, thoughtfully crafted templates.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="router.go('login')"><i class="fas fa-book-open"></i> <span data-i18n="hero.browse">Get started</span></button>
+        <button class="btn btn-secondary" onclick="router.go('readmore')"><i class="fas fa-book-reader"></i> <span data-i18n="nav.readmore">Read more</span></button>
+      </div>
+    </div>
+    <div class="section-head">
+      <h2 class="section-title" data-i18n="home.recent">Recently added</h2>
+      <p class="section-sub" data-i18n="home.recent.sub">New titles in the library</p>
+    </div>
+    <div class="book-grid" id="homeRecent"></div>
+    <div class="section-head" style="margin-top:40px">
+      <h2 class="section-title" data-i18n="home.popular">Most popular</h2>
+      <p class="section-sub" data-i18n="home.popular.sub">Top downloads right now</p>
+    </div>
+    <div class="book-grid" id="homePopular"></div>
+  </section>
+
+  <section class="page" id="page-readmore">
+    <div class="section-head">
+      <h2 class="section-title" data-i18n="read.title">Read more & study well</h2>
+      <p class="section-sub" data-i18n="read.sub">Guides, reading tips, and study material.</p>
+    </div>
+    <div class="readmore-grid">
+      <div class="study-card">
+        <h3><i class="fas fa-lightbulb"></i> <span data-i18n="read.1.title">How to read effectively</span></h3>
+        <p data-i18n="read.1.body">Set a goal for each reading session. Preview the chapter, ask questions, then read actively. Summarize in your own words after every section — this simple step doubles retention.</p>
+        <ul>
+          <li>Read 25 minutes, rest 5</li>
+          <li>Highlight key ideas only</li>
+          <li>Write a 3-line summary</li>
+        </ul>
+      </div>
+      <div class="study-card">
+        <h3><i class="fas fa-brain"></i> <span data-i18n="read.2.title">Memory techniques</span></h3>
+        <p data-i18n="read.2.body">Spaced repetition beats cramming every time. Review notes after 1 day, 1 week, and 1 month. Use flashcards for definitions and concept maps for structure.</p>
+        <ul>
+          <li>Review after 1 day, 7 days, 30 days</li>
+          <li>Use concept maps for structure</li>
+          <li>Teach the idea to someone else</li>
+        </ul>
+      </div>
+      <div class="study-card">
+        <h3><i class="fas fa-pen"></i> <span data-i18n="read.3.title">Note-taking method</span></h3>
+        <p data-i18n="read.3.body">The Cornell method: divide the page into notes, cues, and summary. Write notes during reading, cues after, and a summary at the end. It forces you to process the material twice.</p>
+        <ul>
+          <li>Right column: main notes</li>
+          <li>Left column: cues & questions</li>
+          <li>Bottom: 5-line summary</li>
+        </ul>
+      </div>
+      <div class="study-card">
+        <h3><i class="fas fa-globe"></i> <span data-i18n="read.4.title">Learn across languages</span></h3>
+        <p data-i18n="read.4.body">Read the same passage in two languages. Start in the language you know best, then read the translation. Compare sentence structures to build vocabulary naturally.</p>
+        <ul>
+          <li>Read EN → then RW or FR</li>
+          <li>Compare 3 sentences per page</li>
+          <li>Keep a bilingual glossary</li>
+        </ul>
+      </div>
+      <div class="study-card">
+        <h3><i class="fas fa-clock"></i> <span data-i18n="read.5.title">Build a reading habit</span></h3>
+        <p data-i18n="read.5.body">Attach reading to an existing habit: after coffee, before bed, on the commute. Small consistent sessions (15 minutes daily) beat long irregular ones.</p>
+        <ul>
+          <li>Same time, same place</li>
+          <li>Start with 15 minutes/day</li>
+          <li>Track your streak</li>
+        </ul>
+      </div>
+      <div class="study-card">
+        <h3><i class="fas fa-search"></i> <span data-i18n="read.6.title">Active reading</span></h3>
+        <p data-i18n="read.6.body">Interact with the text: underline, question, connect to what you already know. Passive reading is forgettable; active reading is permanent.</p>
+        <ul>
+          <li>Question what you read</li>
+          <li>Connect to prior knowledge</li>
+          <li>Predict before reading on</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="page-how">
+    <div class="section-head">
+      <h2 class="section-title" data-i18n="how.title">How it works</h2>
+      <p class="section-sub" data-i18n="how.sub">Four simple steps.</p>
+    </div>
+    <div class="features">
+      <div class="feature"><div class="feature-icon">1</div><h3 data-i18n="how.1.title">Create account</h3><p data-i18n="how.1.desc">Sign up and confirm your email.</p></div>
+      <div class="feature"><div class="feature-icon">2</div><h3 data-i18n="how.2.title">Browse library</h3><p data-i18n="how.2.desc">Explore free and paid books.</p></div>
+      <div class="feature"><div class="feature-icon">3</div><h3 data-i18n="how.3.title">Pay & record</h3><p data-i18n="how.3.desc">Pay for a book and record the transaction.</p></div>
+      <div class="feature"><div class="feature-icon">4</div><h3 data-i18n="how.4.title">Download forever</h3><p data-i18n="how.4.desc">Access from your dashboard.</p></div>
+    </div>
+  </section>
+
+  <section class="page" id="page-about">
+    <div class="section-head"><h2 class="section-title" data-i18n="about.title">About BookHaven</h2></div>
+    <div class="panel" style="max-width:800px">
+      <p style="line-height:1.8;color:var(--text-2)" data-i18n="about.body">BookHaven is a modern publishing platform built for Rwandan and international readers. We support three languages, secure payments, and clean templates so publishers and readers can focus on what matters: great books.</p>
+    </div>
+  </section>
+
+  <section class="page" id="page-login">
+    <div class="auth-wrap">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="auth-icon"><i class="fas fa-user-lock"></i></div>
+          <h2 id="authTitle" data-i18n="auth.signin">Sign in</h2>
+          <p id="authSubtitle" data-i18n="auth.signin.sub">Access your account</p>
+        </div>
+        <div class="tabs">
+          <button type="button" class="tab active" data-tab="signin" data-i18n="auth.tab.signin">Sign in</button>
+          <button type="button" class="tab" data-tab="signup" data-i18n="auth.tab.signup">Create account</button>
+        </div>
+        <div class="form-feedback" id="authFeedback"></div>
+        <form id="authForm" autocomplete="on" novalidate>
+          <div class="form-group hidden" id="nameGroup">
+            <label class="form-label" data-i18n="auth.name">Full name</label>
+            <input class="form-input" id="authName" autocomplete="name" placeholder="Your full name">
+          </div>
+          <div class="form-group hidden" id="usernameGroup">
+            <label class="form-label" data-i18n="auth.username">Username</label>
+            <input class="form-input" id="authUsername" autocomplete="username" placeholder="username">
+          </div>
+          <div class="form-group hidden" id="emailGroup">
+            <label class="form-label" data-i18n="auth.email">Email</label>
+            <input class="form-input" id="authEmail" type="email" autocomplete="email" placeholder="you@example.com">
+          </div>
+          <div class="form-group hidden" id="emailOrUserGroup">
+            <label class="form-label" data-i18n="auth.email_or_username">Email or username</label>
+            <input class="form-input" id="authEmailOrUsername" placeholder="you@example.com or username">
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="auth.password">Password</label>
+            <input class="form-input" id="authPassword" type="password" minlength="8" autocomplete="current-password" placeholder="At least 8 characters">
+          </div>
+          <button class="btn btn-primary btn-block" id="authSubmit" type="submit">
+            <i class="fas fa-arrow-right-to-bracket"></i> <span data-i18n="auth.tab.signin">Sign in</span>
+          </button>
+        </form>
+        <p id="authHint" style="margin-top:16px;font-size:.85rem;color:var(--text-2);text-align:center"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="page-verify">
+    <div class="auth-wrap">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="auth-icon"><i class="fas fa-envelope-open-text"></i></div>
+          <h2>Confirm your email</h2>
+          <p>Click below to verify your account.</p>
+        </div>
+        <div class="form-feedback info show" id="verifyInfo"></div>
+        <button class="btn btn-primary btn-block" id="verifyBtn" onclick="authUI.confirmVerification()">
+          <i class="fas fa-check"></i> Confirm my account
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="page-2fa">
+    <div class="auth-wrap">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="auth-icon"><i class="fas fa-shield-halved"></i></div>
+          <h2>Two-factor authentication</h2>
+          <p>Enter the 6-digit code from your authenticator app</p>
+        </div>
+        <div class="form-feedback" id="tfaFeedback"></div>
+        <form id="tfaForm">
+          <div class="form-group">
+            <input class="form-input" id="tfaCode" inputmode="numeric" pattern="\d{6}" maxlength="6" placeholder="123456" style="text-align:center;font-size:1.5rem;letter-spacing:.5rem" required>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-check"></i> Verify</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="page-dashboard"><div id="dashboardContent"></div></section>
+  <section class="page" id="page-admin"><div id="adminContent"></div></section>
+</main>
+
+<footer class="footer"><div>BookHaven — <span data-i18n="footer.copy">All rights reserved.</span></div></footer>
+
+<div class="modal-overlay" id="payModal">
+  <div class="modal">
+    <h3 data-i18n="pay.title">Confirm purchase</h3>
+    <p id="payBook"></p>
+    <div class="modal-amount" id="payAmount">$0.00</div>
+    <p class="muted">Confirm to record your purchase. You'll then add the transaction in Payment records.</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="payment.close()" data-i18n="pay.cancel">Cancel</button>
+      <button class="btn btn-primary" id="payConfirm" data-i18n="pay.confirm">Confirm purchase</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="mailModal">
+  <div class="modal">
+    <h3><i class="fas fa-envelope" style="color:var(--accent)"></i> Demo email</h3>
+    <p>In production, this would arrive in your inbox.</p>
+    <div style="background:var(--bg-sub);padding:16px;border-radius:8px;margin-top:14px;font-size:.85rem;line-height:1.6" id="mailPreview"></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary btn-block" onclick="authUI.closeMailAndGoVerify()">Go to verification</button>
+    </div>
+  </div>
+</div>
+
+<div id="toasts" class="toast-container"></div>
+
+<script>
+/* ============================================================
+   GLOBAL UTILITIES
+   ============================================================ */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const esc = (s) => String(s??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $money = (c) => '$' + (c/100).toFixed(2);
+
+/* ============================================================
+   INDEXEDDB
+   ============================================================ */
+const DB = (() => {
+  const NAME='bookhaven', VERSION=2;
+  let dbp=null;
+  const open = () => {
+    if (dbp) return dbp;
+    dbp = new Promise((resolve, reject) => {
+      const req = indexedDB.open(NAME, VERSION);
+      req.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains('users')) {
+          const s = db.createObjectStore('users', { keyPath: 'id' });
+          s.createIndex('email', 'email', { unique: true });
+          s.createIndex('username', 'username', { unique: true });
+        }
+        if (!db.objectStoreNames.contains('books')) db.createObjectStore('books', { keyPath: 'id' });
+        if (!db.objectStoreNames.contains('purchases')) {
+          const s = db.createObjectStore('purchases', { keyPath: 'id', autoIncrement: true });
+          s.createIndex('user_id', 'user_id');
+          s.createIndex('book_id', 'book_id');
+        }
+        // Manual payment records store
+        if (!db.objectStoreNames.contains('payment_records')) {
+          const s = db.createObjectStore('payment_records', { keyPath: 'id', autoIncrement: true });
+          s.createIndex('user_id', 'user_id');
+        }
+        if (!db.objectStoreNames.contains('sessions')) db.createObjectStore('sessions', { keyPath: 'token' });
+        if (!db.objectStoreNames.contains('settings')) db.createObjectStore('settings', { keyPath: 'key' });
+      };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+    return dbp;
+  };
+  return {
+    async get(store,key){const db=await open();return new Promise((res,rej)=>{const r=db.transaction(store).objectStore(store).get(key);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})},
+    async getAll(store){const db=await open();return new Promise((res,rej)=>{const r=db.transaction(store).objectStore(store).getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})},
+    async put(store,val){const db=await open();return new Promise((res,rej)=>{const r=db.transaction(store,'readwrite').objectStore(store).put(val);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})},
+    async add(store,val){const db=await open();return new Promise((res,rej)=>{const r=db.transaction(store,'readwrite').objectStore(store).add(val);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})},
+    async del(store,key){const db=await open();return new Promise((res,rej)=>{const r=db.transaction(store,'readwrite').objectStore(store).delete(key);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})},
+    async byIndex(store,index,value){const db=await open();return new Promise((res,rej)=>{const r=db.transaction(store).objectStore(store).index(index).getAll(value);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+  };
+})();
+
+/* ============================================================
+   CRYPTO
+   ============================================================ */
+const CryptoUtil = {
+  async hashPassword(password, salt) {
+    const enc = new TextEncoder().encode(salt + '::' + password + '::bookhaven-v1');
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  },
+  randomHex(bytes=24){
+    const a=new Uint8Array(bytes);crypto.getRandomValues(a);
+    return Array.from(a).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+};
+
+/* ============================================================
+   TOTP
+   ============================================================ */
+const TOTP = (() => {
+  const B32 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+  function base32Encode(bytes) {
+    let bits = '';
+    for (const b of bytes) bits += b.toString(2).padStart(8, '0');
+    let out = '';
+    for (let i = 0; i < bits.length; i += 5) {
+      const chunk = bits.slice(i, i + 5).padEnd(5, '0');
+      out += B32[parseInt(chunk, 2)];
+    }
+    return out;
+  }
+  function base32Decode(str) {
+    str = str.replace(/=+$/, '').toUpperCase();
+    let bits = '';
+    for (const c of str) {
+      const idx = B32.indexOf(c);
+      if (idx < 0) continue;
+      bits += idx.toString(2).padStart(5, '0');
+    }
+    const bytes = [];
+    for (let i = 0; i + 8 <= bits.length; i += 8) bytes.push(parseInt(bits.slice(i, i + 8), 2));
+    return new Uint8Array(bytes);
+  }
+  async function hmacSha1(key, msg) {
+    const k = await crypto.subtle.importKey('raw', key, { name: 'HMAC', hash: 'SHA-1' }, false, ['sign']);
+    const sig = await crypto.subtle.sign('HMAC', k, msg);
+    return new Uint8Array(sig);
+  }
+  function counterToBytes(counter) {
+    const bytes = new Uint8Array(8);
+    let c = counter;
+    for (let i = 7; i >= 0; i--) { bytes[i] = c & 0xff; c = Math.floor(c / 256); }
+    return bytes;
+  }
+  async function generate(secretB32, time) {
+    const counter = Math.floor((time ?? Date.now()) / 30000);
+    const key = base32Decode(secretB32);
+    const hmac = await hmacSha1(key, counterToBytes(counter));
+    const off = hmac[hmac.length - 1] & 0x0f;
+    const code = ((hmac[off] & 0x7f) << 24 | (hmac[off+1] & 0xff) << 16 | (hmac[off+2] & 0xff) << 8 | (hmac[off+3] & 0xff)) % 1000000;
+    return String(code).padStart(6, '0');
+  }
+  async function verify(secretB32, code, window = 1) {
+    const now = Date.now();
+    for (let w = -window; w <= window; w++) {
+      const expected = await generate(secretB32, now + w * 30000);
+      if (expected === String(code).trim()) return true;
+    }
+    return false;
+  }
+  function generateSecret() {
+    const bytes = new Uint8Array(20);
+    crypto.getRandomValues(bytes);
+    return base32Encode(bytes);
+  }
+  return { generate, verify, generateSecret };
+})();
+
+/* ============================================================
+   PREFS
+   ============================================================ */
+const Prefs = {
+  get:(k,d)=>{try{return JSON.parse(localStorage.getItem('bh_'+k))??d}catch{return d}},
+  set:(k,v)=>localStorage.setItem('bh_'+k, JSON.stringify(v))
+};
+
+/* ============================================================
+   i18n
+   ============================================================ */
+const dict = {
+  en:{'nav.home':'Home','nav.readmore':'Read more','nav.how':'How it works','nav.about':'About us','nav.login':'Login','nav.dashboard':'Dashboard','nav.admin':'Admin',
+    'hero.eyebrow':'Premium publishing platform','hero.title':'Where great books find their readers.','hero.subtitle':'Publish, discover, and download quality books. Secure payments, three languages, thoughtfully crafted templates.','hero.browse':'Get started','hero.how':'How it works',
+    'home.recent':'Recently added','home.recent.sub':'New titles in the library','home.popular':'Most popular','home.popular.sub':'Top downloads right now',
+    'read.title':'Read more & study well','read.sub':'Guides, reading tips, and study material.',
+    'read.1.title':'How to read effectively','read.1.body':'Set a goal for each reading session. Preview the chapter, ask questions, then read actively. Summarize in your own words after every section — this simple step doubles retention.',
+    'read.2.title':'Memory techniques','read.2.body':'Spaced repetition beats cramming every time. Review notes after 1 day, 1 week, and 1 month. Use flashcards for definitions and concept maps for structure.',
+    'read.3.title':'Note-taking method','read.3.body':'The Cornell method: divide the page into notes, cues, and summary. Write notes during reading, cues after, and a summary at the end. It forces you to process the material twice.',
+    'read.4.title':'Learn across languages','read.4.body':'Read the same passage in two languages. Start in the language you know best, then read the translation. Compare sentence structures to build vocabulary naturally.',
+    'read.5.title':'Build a reading habit','read.5.body':'Attach reading to an existing habit: after coffee, before bed, on the commute. Small consistent sessions (15 minutes daily) beat long irregular ones.',
+    'read.6.title':'Active reading','read.6.body':'Interact with the text: underline, question, connect to what you already know. Passive reading is forgettable; active reading is permanent.',
+    'how.title':'How it works','how.sub':'Four simple steps.','how.1.title':'Create account','how.1.desc':'Sign up and confirm your email.','how.2.title':'Browse library','how.2.desc':'Explore free and paid books.','how.3.title':'Pay & record','how.3.desc':'Pay for a book and record the transaction.','how.4.title':'Download forever','how.4.desc':'Access from your dashboard.',
+    'about.title':'About BookHaven','about.body':'BookHaven is a modern publishing platform built for Rwandan and international readers. We support three languages, secure payments, and clean templates so publishers and readers can focus on what matters: great books.',
+    'auth.signin':'Sign in','auth.signin.sub':'Access your account','auth.tab.signin':'Sign in','auth.tab.signup':'Create account','auth.name':'Full name','auth.username':'Username','auth.email':'Email','auth.email_or_username':'Email or username','auth.password':'Password',
+    'pay.title':'Confirm purchase','pay.hint':'Confirm to record your purchase.','pay.cancel':'Cancel','pay.confirm':'Confirm purchase',
+    'btn.download':'Download','btn.pay':'Buy','btn.owned':'Owned',
+    'dash.welcome':'Welcome back','dash.tab.overview':'Overview','dash.tab.settings':'Account','dash.tab.payments':'Payment records','dash.tab.mine':'My library','dash.tab.free':'Free books',
+    'dash.add_payment':'Add payment record','dash.pay_method':'Payment method','dash.pay_ref':'Reference / transaction ID','dash.pay_amount':'Amount (USD)','dash.pay_book':'Book (optional)','dash.pay_note':'Note (optional)','dash.pay_date':'Date','dash.pay_submit':'Save record',
+    'admin.tab.overview':'Overview','admin.tab.books':'Add book','admin.tab.consumers':'Consumers','admin.tab.payments':'Payments','admin.tab.user_records':'User payments','admin.tab.account':'Account','admin.tab.security':'2FA',
+    'admin.denied':'Access Denied','admin.denied.msg':'Admins only.','admin.signin':'Sign in as Admin',
+    'msg.registered':'Account created. Check your email to confirm before signing in.','msg.signedout':'Signed out.','msg.paid':'Purchase recorded. Add it in Payment records.','msg.saved':'Saved.','msg.pay_recorded':'Payment record saved.',
+    'err.login_required':'Please sign in.','err.session':'Session expired.',
+    'footer.copy':'All rights reserved.'},
+  rw:{'nav.home':'Ahabanza','nav.readmore':'Soma byinshi','nav.how':'Bikora gute','nav.about':'Turi bande','nav.login':'Injira','nav.dashboard':'Ikibaho','nav.admin':'Umuyobozi',
+    'hero.eyebrow':'Urubuga rwo gutangaza ibitabo','hero.title':'Aho ibitabo byiza bihurira n’abasomyi.','hero.subtitle':'Tangaza, shakisha, ukure ibitabo nziza. Indimi eshatu, kwishyura umutekano.','hero.browse':'Tangira','hero.how':'Bikora gute',
+    'home.recent':'Bishya','home.recent.sub':'Ibitabo bishya','home.popular':'Byakunzwe','home.popular.sub':'Byakunzwe cyane',
+    'read.title':'Soma byinshi & wige neza','read.sub':'Ubuyobozi, inama zo gusoma, n’ibikoresho byo kwiga.',
+    'read.1.title':'Gusoma neza','read.1.body':'Shyiraho intego kuri buri gusoma. Reba igice mbere, ubaze ibibazo, hanyuma usome. Vuga mu magambo yawe ibyo wasomye.',
+    'read.2.title':'Uburyo bwo kwibuka','read.2.body':'Subiramo inyandiko nyuma y’umunsi, icyumweru, n’ukwezi. Koresha amakarita y’ibyigwa n’amakarita y’ibitekerezo.',
+    'read.3.title':'Kwandika inyandiko','read.3.body':'Koresha uburyo bwa Cornell: gabanya urupapuro mu ngingo, ibibazo, n’incamake. Andika mu gihe usoma, ubaze ibibazo nyuma, hanyuma wandike incamake.',
+    'read.4.title':'Kwiga indimi','read.4.body':'Soma igice kimwe mu ndimi ebyiri. Tangira mu rurimi uzirikana neza, hanyuma usome ubusobanuro. Gereranya interuro.',
+    'read.5.title':'Guhanga akamenyero','read.5.body':'Huza gusoma n’ikindi ukora: nyuma y’ikawa, mbere yo kuryama, mu rugendo. Iminota 15 buri munsi iruta ibihe birebire.',
+    'read.6.title':'Gusoma ukora','read.6.body':'Korana n’inyandiko: shyira akamenyetso, baza ibibazo, huza n’ibyo uziko. Gusoma utitaye ni ukwibagirwa; gusoma ukora ni ukwamara.',
+    'how.title':'Bikora gute','how.sub':'Intambwe enye.','how.1.title':'Fungura konti','how.1.desc':'Iyandikishe wemeze imeyili.','how.2.title':'Reba isomero','how.2.desc':'Ibitabo buntu n’ibishyurwa.','how.3.title':'Wishyure & wandike','how.3.desc':'Wishyure igitabo hanyuma wandike ibyakozwe.','how.4.title':'Kura iteka','how.4.desc':'Uhereye ku kibaho.',
+    'about.title':'Kuri BookHaven','about.body':'BookHaven ni urubuga rugezweho rw’ibitabo ku Banyarwanda n’amahanga. Dushyigikira indimi eshatu, kwishyura umutekano, n’inyandiko nziza.',
+    'auth.signin':'Injira','auth.signin.sub':'Injira mu konti','auth.tab.signin':'Injira','auth.tab.signup':'Fungura konti','auth.name':'Amazina','auth.username':'Izina rikoreshwa','auth.email':'Imeyili','auth.email_or_username':'Imeyili cyangwa izina','auth.password':'Ijambo ry’ibanga',
+    'pay.title':'Emeza ugura','pay.hint':'Emeza kwandika ibyaguzwe.','pay.cancel':'Reka','pay.confirm':'Emeza ugura',
+    'btn.download':'Kura','btn.pay':'Gura','btn.owned':'Bifite',
+    'dash.welcome':'Murakaza neza','dash.tab.overview':'Incamake','dash.tab.settings':'Konti','dash.tab.payments':'Inyandiko z’ubwishyu','dash.tab.mine':'Ibitabo byanjye','dash.tab.free':'Ibitabo buntu',
+    'dash.add_payment':'Ongeraho inyandiko y’ubwishyu','dash.pay_method':'Uburyo bwo kwishyura','dash.pay_ref':'Nimero y’ubwishyu','dash.pay_amount':'Amafaranga (USD)','dash.pay_book':'Igitabo (bidategetswe)','dash.pay_note':'Icyitonderwa (bidategetswe)','dash.pay_date':'Itariki','dash.pay_submit':'Bika inyandiko',
+    'admin.tab.overview':'Incamake','admin.tab.books':'Ongeraho igitabo','admin.tab.consumers':'Abakoresha','admin.tab.payments':'Kwishyura','admin.tab.user_records':'Inyandiko z’abakoresha','admin.tab.account':'Konti','admin.tab.security':'2FA',
+    'admin.denied':'Nta bwemererwa','admin.denied.msg':'Abayobozi gusa.','admin.signin':'Injira nk’Umuyobozi',
+    'msg.registered':'Konti yafunguwe. Emeza imeyili mbere yo kwinjira.','msg.signedout':'Wasohotse.','msg.paid':'Ibyaguzwe byanditswe. Bishyire mu nyandiko z’ubwishyu.','msg.saved':'Byabitswe.','msg.pay_recorded':'Inyandiko y’ubwishyu yabitswe.',
+    'err.login_required':'Nyamuneka injira.','err.session':'Igihe cyarangiye.',
+    'footer.copy':'Uburenganzira bwose burafitwe.'},
+  fr:{'nav.home':'Accueil','nav.readmore':'Lire plus','nav.how':'Comment ça marche','nav.about':'À propos','nav.login':'Connexion','nav.dashboard':'Tableau de bord','nav.admin':'Admin',
+    'hero.eyebrow':'Plateforme de publication','hero.title':'Là où les grands livres trouvent leurs lecteurs.','hero.subtitle':'Publiez, découvrez et téléchargez des livres de qualité. Trois langues, paiements sécurisés.','hero.browse':'Commencer','hero.how':'Comment ça marche',
+    'home.recent':'Récemment ajoutés','home.recent.sub':'Nouveaux titres','home.popular':'Les plus populaires','home.popular.sub':'Top téléchargements',
+    'read.title':'Lire plus & bien étudier','read.sub':'Guides, conseils de lecture et matériel d\'étude.',
+    'read.1.title':'Lire efficacement','read.1.body':'Fixez un objectif à chaque session. Prévisualisez le chapitre, posez des questions, puis lisez activement. Résumez dans vos propres mots après chaque section.',
+    'read.2.title':'Techniques de mémoire','read.2.body':'La répétition espacée bat le bachotage. Révisez après 1 jour, 1 semaine et 1 mois. Utilisez des fiches et des cartes conceptuelles.',
+    'read.3.title':'Prise de notes','read.3.body':'La méthode Cornell : divisez la page en notes, questions et résumé. Prenez des notes pendant la lecture, des questions après, puis un résumé final.',
+    'read.4.title':'Apprendre les langues','read.4.body':'Lisez le même passage en deux langues. Commencez par celle que vous connaissez le mieux, puis lisez la traduction. Comparez les structures.',
+    'read.5.title':'Créer une habitude','read.5.body':'Associez la lecture à une habitude existante : après le café, avant de dormir, pendant le trajet. 15 minutes par jour valent mieux que de longues sessions irrégulières.',
+    'read.6.title':'Lecture active','read.6.body':'Interagissez avec le texte : soulignez, questionnez, reliez à vos connaissances. La lecture passive s\'oublie ; la lecture active reste.',
+    'how.title':'Comment ça marche','how.sub':'Quatre étapes.','how.1.title':'Créer un compte','how.1.desc':'Confirmez votre e-mail.','how.2.title':'Parcourir','how.2.desc':'Livres gratuits et payants.','how.3.title':'Payer & enregistrer','how.3.desc':'Payez un livre et enregistrez la transaction.','how.4.title':'Télécharger','how.4.desc':'Depuis votre tableau.',
+    'about.title':'À propos de BookHaven','about.body':'BookHaven est une plateforme moderne de publication pour les lecteurs rwandais et internationaux. Trois langues, paiements sécurisés, modèles élégants.',
+    'auth.signin':'Connexion','auth.signin.sub':'Accédez à votre compte','auth.tab.signin':'Connexion','auth.tab.signup':'Créer un compte','auth.name':'Nom complet','auth.username':"Nom d'utilisateur",'auth.email':'E-mail','auth.email_or_username':'E-mail ou nom','auth.password':'Mot de passe',
+    'pay.title':"Confirmer l'achat",'pay.hint':'Confirmez pour enregistrer votre achat.','pay.cancel':'Annuler','pay.confirm':"Confirmer l'achat",
+    'btn.download':'Télécharger','btn.pay':'Acheter','btn.owned':'Possédé',
+    'dash.welcome':'Bon retour','dash.tab.overview':'Aperçu','dash.tab.settings':'Compte','dash.tab.payments':'Paiements','dash.tab.mine':'Ma bibliothèque','dash.tab.free':'Livres gratuits',
+    'dash.add_payment':'Ajouter un paiement','dash.pay_method':'Méthode de paiement','dash.pay_ref':'Référence / ID transaction','dash.pay_amount':'Montant (USD)','dash.pay_book':'Livre (optionnel)','dash.pay_note':'Note (optionnel)','dash.pay_date':'Date','dash.pay_submit':'Enregistrer',
+    'admin.tab.overview':'Aperçu','admin.tab.books':'Ajouter un livre','admin.tab.consumers':'Consommateurs','admin.tab.payments':'Paiements','admin.tab.user_records':'Paiements utilisateurs','admin.tab.account':'Compte','admin.tab.security':'2FA',
+    'admin.denied':'Accès refusé','admin.denied.msg':'Admins uniquement.','admin.signin':'Connexion admin',
+    'msg.registered':'Compte créé. Confirmez votre e-mail.','msg.signedout':'Déconnecté.','msg.paid':'Achat enregistré. Ajoutez-le dans les paiements.','msg.saved':'Enregistré.','msg.pay_recorded':'Paiement enregistré.',
+    'err.login_required':'Veuillez vous connecter.','err.session':'Session expirée.',
+    'footer.copy':'Tous droits réservés.'}
+};
+
+const i18n = (() => {
+  let lang = Prefs.get('lang','en');
+  if (!dict[lang]) lang='en';
+  const t = (k) => dict[lang][k] ?? dict.en[k] ?? k;
+  const apply = () => {
+    document.documentElement.lang = lang;
+    $$('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
+    $$('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang===lang));
+  };
+  const set = (l) => { if(!dict[l]) return; lang=l; Prefs.set('lang',l); apply(); document.dispatchEvent(new Event('langchange')); };
+  return { t, apply, set, get:()=>lang };
+})();
+
+/* ============================================================
+   THEME
+   ============================================================ */
+const theme = (() => {
+  let current = Prefs.get('theme','light');
+  const apply = (t) => { document.documentElement.dataset.theme = t; const i=$('#themeBtn i'); if(i) i.className = t==='dark'?'fas fa-sun':'fas fa-moon'; };
+  const toggle = () => { current = current==='light'?'dark':'light'; Prefs.set('theme', current); apply(current); };
+  return { init:()=>apply(current), toggle };
+})();
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+const toast = (() => {
+  const c = $('#toasts');
+  return { show(msg, type='info', ms=3800) {
+    const el = document.createElement('div');
+    el.className = `toast ${type}`;
+    const ic = type==='success'?'fa-circle-check':type==='error'?'fa-circle-exclamation':'fa-circle-info';
+    el.innerHTML = `<i class="fas ${ic}"></i><span>${esc(msg)}</span>`;
+    c.appendChild(el);
+    setTimeout(()=>{el.classList.add('removing');setTimeout(()=>el.remove(),220)}, ms);
+  }};
+})();
+
+/* ============================================================
+   AUTH STATE
+   ============================================================ */
+const Auth = {
+  currentUser: null,
+  pendingVerifyUserId: null,
+  pending2faUserId: null
+};
+
+/* ============================================================
+   AUTH SERVICE
+   ============================================================ */
+const AuthService = (() => {
+  const SESSION_TTL = 7 * 24 * 60 * 60 * 1000;
+  const SESSION_KEY = 'bh_session';
+
+  async function ensureFirstAdmin() {
+    // No prefilled demo data. But we need at least one admin for the app to be usable.
+    // Prompt-free approach: no auto admin. The first user to register becomes admin.
+    const users = await DB.getAll('users');
+    if (users.length === 0) {
+      // nothing yet — first register becomes admin via register flow
+    }
+  }
+
+  async function createSession(userId) {
+    const token = CryptoUtil.randomHex(32);
+    await DB.put('sessions', { token, userId, expires: Date.now()+SESSION_TTL });
+    localStorage.setItem(SESSION_KEY, token);
+    return token;
+  }
+
+  async function restore() {
+    const token = localStorage.getItem(SESSION_KEY);
+    if (!token) { Auth.currentUser = null; return null; }
+    const s = await DB.get('sessions', token);
+    if (!s || s.expires < Date.now()) {
+      localStorage.removeItem(SESSION_KEY);
+      Auth.currentUser = null;
+      return null;
+    }
+    const u = await DB.get('users', s.userId);
+    if (!u) { localStorage.removeItem(SESSION_KEY); Auth.currentUser = null; return null; }
+    Auth.currentUser = u;
+    return u;
+  }
+
+  async function register(name, username, email, password) {
+    if (!name || name.trim().length < 2) throw new Error('Please enter your full name.');
+    if (!/^[a-zA-Z0-9_.-]{3,40}$/.test(username||'')) throw new Error('Username must be 3–40 chars (letters, numbers, . _ -).');
+    if (!/^\S+@\S+\.\S+$/.test(email||'')) throw new Error('Please enter a valid email.');
+    if ((password||'').length < 8) throw new Error('Password must be at least 8 characters.');
+    const emailLower = email.toLowerCase();
+    const dupEmail = await DB.byIndex('users','email',emailLower);
+    if (dupEmail.length) throw new Error('That email is already registered.');
+    const dupUser = await DB.byIndex('users','username',username);
+    if (dupUser.length) throw new Error('That username is taken.');
+
+    const allUsers = await DB.getAll('users');
+    const isFirstUser = allUsers.length === 0;
+
+    const salt = CryptoUtil.randomHex(16);
+    const hash = await CryptoUtil.hashPassword(password, salt);
+    const user = {
+      id:'u_'+Date.now()+'_'+CryptoUtil.randomHex(4),
+      name:name.trim(), username:username.trim(),
+      email:emailLower, salt, hash,
+      role: isFirstUser ? 'admin' : 'user',
+      email_verified: isFirstUser ? 1 : 0,   // first user auto-verified so they can log in right away
+      totp_enabled:0, createdAt:Date.now()
+    };
+    await DB.put('users', user);
+    return { user, isFirstUser };
+  }
+
+  async function verifyEmail(userId) {
+    const u = await DB.get('users', userId);
+    if (!u) throw new Error('User not found');
+    u.email_verified = 1;
+    await DB.put('users', u);
+    return u;
+  }
+
+  async function login(id, password) {
+    const emailLower = id.toLowerCase();
+    let rows = await DB.byIndex('users','email',emailLower);
+    if (!rows.length) rows = await DB.byIndex('users','username',id);
+    if (!rows.length) throw new Error('Invalid credentials.');
+    const user = rows[0];
+    const hash = await CryptoUtil.hashPassword(password, user.salt);
+    if (hash !== user.hash) throw new Error('Invalid credentials.');
+    if (!user.email_verified && user.role !== 'admin') {
+      const e = new Error('Please confirm your email first.');
+      e.needsVerification = true;
+      e.userId = user.id;
+      throw e;
+    }
+    if (user.role === 'admin' && user.totp_enabled) {
+      return { requires2FA: true, userId: user.id };
+    }
+    await createSession(user.id);
+    Auth.currentUser = user;
+    return { user };
+  }
+
+  async function verify2FA(userId, code) {
+    const u = await DB.get('users', userId);
+    if (!u || !u.totp_secret) throw new Error('2FA not configured');
+    const ok = await TOTP.verify(u.totp_secret, code);
+    if (!ok) throw new Error('Invalid code');
+    await createSession(u.id);
+    Auth.currentUser = u;
+    return u;
+  }
+
+  async function logout() {
+    const token = localStorage.getItem(SESSION_KEY);
+    if (token) await DB.del('sessions', token);
+    localStorage.removeItem(SESSION_KEY);
+    Auth.currentUser = null;
+  }
+
+  async function saveUser(u) {
+    await DB.put('users', u);
+    if (Auth.currentUser && Auth.currentUser.id === u.id) Auth.currentUser = u;
+    return u;
+  }
+
+  return { ensureFirstAdmin, restore, register, verifyEmail, login, verify2FA, logout, saveUser };
+})();
+
+/* ============================================================
+   BOOKS SERVICE
+   ============================================================ */
+const BooksService = (() => {
+  async function list() { return DB.getAll('books'); }
+  async function ownedBy(userId) {
+    const rows = await DB.byIndex('purchases','user_id',userId);
+    return new Set(rows.filter(p=>p.status==='paid').map(p=>p.book_id));
+  }
+  async function isOwned(userId, bookId) {
+    const rows = await DB.byIndex('purchases','user_id',userId);
+    return rows.some(p=>p.book_id===bookId && p.status==='paid');
+  }
+  async function purchase(userId, bookId) {
+    if (await isOwned(userId, bookId)) throw new Error('You already own this book.');
+    const book = await DB.get('books', bookId);
+    if (!book) throw new Error('Book not found');
+    await new Promise(r=>setTimeout(r,200));
+    await DB.add('purchases', {
+      user_id: userId, book_id: bookId,
+      amount_cents: book.price_cents,
+      payment_ref: 'pending_'+CryptoUtil.randomHex(6),
+      status:'paid', created_at: Date.now()
+    });
+    book.downloads = (book.downloads||0) + 1;
+    await DB.put('books', book);
+  }
+  async function purchasesFor(userId) { return DB.byIndex('purchases','user_id',userId); }
+  async function addBook(data) {
+    const b = {
+      id:'b_'+Date.now()+'_'+CryptoUtil.randomHex(4),
+      title:data.title, author:data.author,
+      description:data.description||'',
+      color:data.color||'#c17a3f',
+      price_cents: data.is_free?0:Math.round(data.price_cents),
+      is_free: data.is_free?1:0,
+      language: data.language||'en',
+      downloads: 0, createdAt: Date.now()
+    };
+    await DB.put('books', b);
+    return b;
+  }
+  async function deleteBook(bookId) {
+    await DB.del('books', bookId);
+  }
+  return { list, ownedBy, isOwned, purchase, purchasesFor, addBook, deleteBook };
+})();
+
+/* ============================================================
+   PAYMENT RECORDS SERVICE (manual records by user)
+   ============================================================ */
+const PaymentRecords = (() => {
+  async function add(userId, data) {
+    if (!data.method) throw new Error('Payment method is required.');
+    if (!data.reference) throw new Error('Reference / transaction ID is required.');
+    const amount = parseFloat(data.amount);
+    if (!Number.isFinite(amount) || amount <= 0) throw new Error('Amount must be a positive number.');
+    const rec = {
+      user_id: userId,
+      method: data.method,
+      reference: data.reference,
+      amount_cents: Math.round(amount * 100),
+      book_id: data.book_id || null,
+      book_title: data.book_title || null,
+      note: data.note || '',
+      date: data.date || new Date().toISOString().slice(0,10),
+      created_at: Date.now()
+    };
+    const id = await DB.add('payment_records', rec);
+    return { ...rec, id };
+  }
+  async function listFor(userId) {
+    return DB.byIndex('payment_records','user_id',userId);
+  }
+  async function listAll() {
+    return DB.getAll('payment_records');
+  }
+  async function remove(id) {
+    await DB.del('payment_records', id);
+  }
+  return { add, listFor, listAll, remove };
+})();
+
+/* ============================================================
+   USER MENU
+   ============================================================ */
+function renderUserMenu() {
+  const el = $('#userMenu');
+  if (!Auth.currentUser) {
+    el.innerHTML = `<button class="btn btn-primary" style="padding:8px 14px;font-size:.8rem" onclick="router.go('login')"><i class="fas fa-sign-in-alt"></i> <span data-i18n="nav.login">Login</span></button>`;
+    i18n.apply(); return;
+  }
+  const u = Auth.currentUser;
+  const init = u.name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  el.innerHTML = `
+    <div class="user-menu">
+      <div class="user-avatar">${esc(init)}</div>
+      <div class="user-info"><strong>${esc(u.name.split(' ')[0])}</strong><span>${esc(u.email)}</span></div>
+      <span class="role-badge">${esc(u.role)}</span>
+      <button class="logout-mini" title="Sign out" onclick="authUI.logout()"><i class="fas fa-right-from-bracket"></i></button>
+    </div>`;
+}
+
+/* ============================================================
+   ROUTER
+   ============================================================ */
+const router = (() => {
+  const routes = ['home','readmore','how','about','login','verify','2fa','dashboard','admin'];
+  async function go(route) {
+    if (!routes.includes(route)) route='home';
+    if (route==='dashboard' && !Auth.currentUser) route='login';
+    if (route==='admin' && (!Auth.currentUser || Auth.currentUser.role!=='admin')) route='login';
+    $$('.page').forEach(p=>p.classList.remove('active'));
+    $('#page-'+route)?.classList.add('active');
+    $$('.nav-link').forEach(l=>l.classList.toggle('active', l.dataset.route===route));
+    if (route==='home') await home.load();
+    if (route==='login') authUI.setMode('signin');
+    if (route==='verify') authUI.renderVerifyPage();
+    if (route==='dashboard') await dashboard.render();
+    if (route==='admin') await admin.render();
+    try { history.replaceState(null,'','#'+route); } catch {}
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function init() {
+    const h = (location.hash||'#home').slice(1);
+    go(routes.includes(h)?h:'home');
+    window.addEventListener('hashchange', ()=>{
+      const r = location.hash.slice(1);
+      go(routes.includes(r)?r:'home');
+    });
+  }
+  return { go, init };
+})();
+
+/* ============================================================
+   AUTH UI
+   ============================================================ */
+const authUI = (() => {
+  let mode = 'signin';
+
+  function setMode(m) {
+    mode = m;
+    $$('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===m));
+    $('#nameGroup').classList.toggle('hidden', m!=='signup');
+    $('#usernameGroup').classList.toggle('hidden', m!=='signup');
+    $('#emailGroup').classList.toggle('hidden', m!=='signup');
+    $('#emailOrUserGroup').classList.toggle('hidden', m!=='signin');
+    $('#authTitle').textContent = i18n.t(m==='signup'?'auth.tab.signup':'auth.signin');
+    $('#authSubtitle').textContent = i18n.t('auth.signin.sub');
+    const b = $('#authSubmit');
+    b.querySelector('span').textContent = i18n.t(m==='signup'?'auth.tab.signup':'auth.tab.signin');
+    b.querySelector('i').className = m==='signup'?'fas fa-user-plus':'fas fa-arrow-right-to-bracket';
+    feedback(null);
+    $('#authHint').textContent = '';
+  }
+
+  function feedback(msg, kind='error') {
+    const el = $('#authFeedback');
+    if (!msg) { el.className='form-feedback'; el.textContent=''; return; }
+    el.className = `form-feedback show ${kind}`; el.textContent = msg;
+  }
+
+  async function submit(e) {
+    e.preventDefault();
+    feedback(null);
+    const btn = $('#authSubmit'); btn.disabled = true;
+    try {
+      if (mode==='signup') {
+        const name = $('#authName').value.trim();
+        const username = $('#authUsername').value.trim();
+        const email = $('#authEmail').value.trim();
+        const password = $('#authPassword').value;
+        const { user, isFirstUser } = await AuthService.register(name, username, email, password);
+        if (isFirstUser) {
+          feedback('First user created as administrator. You can sign in now.', 'success');
+          setMode('signin');
+          $('#authEmailOrUsername').value = email;
+        } else {
+          Auth.pendingVerifyUserId = user.id;
+          showDemoEmail(user);
+          feedback('Account created. Check the demo email to confirm.', 'success');
+        }
+      } else {
+        const id = $('#authEmailOrUsername').value.trim();
+        const password = $('#authPassword').value;
+        if (!id) { feedback('Enter email or username'); btn.disabled = false; return; }
+        if (!password) { feedback('Enter your password'); btn.disabled = false; return; }
+        const r = await AuthService.login(id, password);
+        if (r.requires2FA) {
+          Auth.pending2faUserId = r.userId;
+          $('#tfaCode').value = '';
+          $('#tfaFeedback').className = 'form-feedback';
+          router.go('2fa');
+          return;
+        }
+        renderUserMenu();
+        toast.show('Welcome, '+r.user.name, 'success');
+        router.go(r.user.role==='admin'?'admin':'dashboard');
+      }
+    } catch (err) {
+      feedback(err.message||'Error');
+      if (err.needsVerification) {
+        Auth.pendingVerifyUserId = err.userId;
+        $('#authHint').textContent = 'Please confirm your email to continue.';
+      }
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  function showDemoEmail(user) {
+    const box = $('#mailPreview');
+    box.innerHTML = `
+      <strong>To:</strong> ${esc(user.email)}<br>
+      <strong>From:</strong> BookHaven &lt;no-reply@bookhaven.local&gt;<br>
+      <strong>Subject:</strong> Confirm your BookHaven account<br><br>
+      <p>Hi ${esc(user.name)},</p>
+      <p>Click the button below to confirm your account.</p>`;
+    $('#mailModal').classList.add('show');
+  }
+
+  function closeMailAndGoVerify() {
+    $('#mailModal').classList.remove('show');
+    router.go('verify');
+  }
+
+  function renderVerifyPage() {
+    const info = $('#verifyInfo');
+    if (Auth.pendingVerifyUserId) {
+      info.className = 'form-feedback info show';
+      info.textContent = 'Click below to verify your account.';
+    } else {
+      info.className = 'form-feedback error show';
+      info.textContent = 'No account pending verification. Please sign up first.';
+    }
+  }
+
+  async function confirmVerification() {
+    if (!Auth.pendingVerifyUserId) {
+      toast.show('No account pending verification.', 'error');
+      router.go('login'); return;
+    }
+    try {
+      await AuthService.verifyEmail(Auth.pendingVerifyUserId);
+      Auth.pendingVerifyUserId = null;
+      toast.show('Email confirmed. Please sign in.', 'success');
+      router.go('login');
+    } catch (e) {
+      toast.show(e.message, 'error');
+    }
+  }
+
+  async function logout() {
+    await AuthService.logout();
+    renderUserMenu();
+    toast.show(i18n.t('msg.signedout'), 'info');
+    router.go('home');
+  }
+
+  async function submit2fa(e) {
+    e.preventDefault();
+    const fb = $('#tfaFeedback');
+    const code = $('#tfaCode').value.trim();
+    if (!Auth.pending2faUserId) {
+      fb.className = 'form-feedback show error';
+      fb.textContent = 'No pending 2FA session. Please sign in again.';
+      return;
+    }
+    try {
+      const u = await AuthService.verify2FA(Auth.pending2faUserId, code);
+      Auth.pending2faUserId = null;
+      renderUserMenu();
+      toast.show('Welcome, '+u.name, 'success');
+      router.go('admin');
+    } catch (err) {
+      fb.className = 'form-feedback show error';
+      fb.textContent = err.message || 'Invalid code';
+    }
+  }
+
+  function init() {
+    $$('.tab').forEach(t=>t.addEventListener('click', ()=>setMode(t.dataset.tab)));
+    $('#authForm').addEventListener('submit', submit);
+    $('#tfaForm').addEventListener('submit', submit2fa);
+    setMode('signin');
+  }
+
+  return { init, setMode, logout, submit2fa, confirmVerification, closeMailAndGoVerify, renderVerifyPage };
+})();
+
+/* ============================================================
+   HOME
+   ============================================================ */
+const home = (() => {
+  function bookCard(b) {
+    const isFree = !!b.is_free;
+    const price = isFree ? `<span class="book-price free">FREE</span>` : `<span class="book-price">${$money(b.price_cents)}</span>`;
+    const btn = isFree
+      ? `<button class="download-btn" onclick="home.download('${b.id}')"><i class="fas fa-download"></i> ${i18n.t('btn.download')}</button>`
+      : `<button class="download-btn" onclick="library.requestBuy('${b.id}')"><i class="fas fa-shopping-cart"></i> ${i18n.t('btn.pay')}</button>`;
+    return `<div class="book-card">
+      <div class="book-cover" style="background:linear-gradient(135deg,${b.color||'#c17a3f'},${shade(b.color||'#c17a3f',-30)})"><i class="fas fa-book"></i></div>
+      <div class="book-body">
+        <div class="book-title">${esc(b.title)}</div>
+        <div class="book-author">${esc(b.author)}</div>
+        <div class="book-footer">${price}${btn}</div>
+      </div>
+    </div>`;
+  }
+  async function load() {
+    try {
+      const all = await BooksService.list();
+      const recent = [...all].sort((a,b)=>b.createdAt-a.createdAt).slice(0,8);
+      const popular = [...all].sort((a,b)=>(b.downloads||0)-(a.downloads||0)).slice(0,8);
+      $('#homeRecent').innerHTML = recent.map(bookCard).join('') || '<p style="color:var(--text-2)">No books yet. An admin can add books from the admin dashboard.</p>';
+      $('#homePopular').innerHTML = popular.map(bookCard).join('') || '<p style="color:var(--text-2)">No books yet.</p>';
+    } catch(e) { console.error(e); }
+  }
+  async function download(id) {
+    if (!Auth.currentUser) { toast.show(i18n.t('err.login_required'), 'error'); router.go('login'); return; }
+    const b = await DB.get('books', id);
+    if (!b) return;
+    if (!b.is_free && Auth.currentUser.role !== 'admin') {
+      const owns = await BooksService.isOwned(Auth.currentUser.id, id);
+      if (!owns) { toast.show('Please purchase this book first.', 'error'); return; }
+    }
+    const content = `BookHaven — ${b.title}\nby ${b.author}\n\n${b.description||''}\n\n(Demo download)`;
+    const blob = new Blob([content], {type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = b.title.replace(/[^\w.-]+/g,'_') + '.txt';
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+    b.downloads = (b.downloads||0)+1;
+    await DB.put('books', b);
+    toast.show('Download started for "'+b.title+'"', 'success');
+  }
+  return { load, download };
+})();
+
+/* ============================================================
+   LIBRARY (purchase confirmation)
+   ============================================================ */
+const library = (() => {
+  let pending = null;
+  function requestBuy(bookId) {
+    if (!Auth.currentUser) { toast.show(i18n.t('err.login_required'), 'error'); router.go('login'); return; }
+    DB.get('books', bookId).then(b => {
+      if (!b) return;
+      pending = b;
+      $('#payBook').textContent = b.title + ' — ' + b.author;
+      $('#payAmount').textContent = $money(b.price_cents);
+      $('#payModal').classList.add('show');
+    });
+  }
+  async function confirm() {
+    if (!pending) return;
+    const btn = $('#payConfirm'); btn.disabled = true;
+    try {
+      await BooksService.purchase(Auth.currentUser.id, pending.id);
+      $('#payModal').classList.remove('show');
+      toast.show(i18n.t('msg.paid'), 'success');
+      if ($('#page-dashboard').classList.contains('active')) await dashboard.render();
+      if ($('#page-home').classList.contains('active')) await home.load();
+    } catch (e) {
+      toast.show(e.message||'Purchase failed', 'error');
+    } finally {
+      btn.disabled = false; pending = null;
+    }
+  }
+  return { requestBuy, confirm };
+})();
+
+const payment = { close: () => $('#payModal').classList.remove('show') };
+
+/* ============================================================
+   USER DASHBOARD
+   ============================================================ */
+const dashboard = (() => {
+  let tab = 'overview';
+  function setTab(t) { tab=t; render(); }
+  async function render() {
+    const root = $('#dashboardContent');
+    if (!Auth.currentUser) { root.innerHTML = `<div class="access-denied"><h2>${i18n.t('err.login_required')}</h2></div>`; return; }
+    const all = await BooksService.list();
+    const ownedIds = await BooksService.ownedBy(Auth.currentUser.id);
+    const records = await BooksService.purchasesFor(Auth.currentUser.id);
+    const manualRecords = await PaymentRecords.listFor(Auth.currentUser.id);
+    const spent = records.reduce((s,r)=>s+r.amount_cents,0);
+    const freeBooks = all.filter(b=>b.is_free);
+    const ownedBooks = records.map(r => all.find(b=>b.id===r.book_id)).filter(Boolean);
+    const u = Auth.currentUser;
+
+    root.innerHTML = `
+      <div class="dash-header">
+        <div class="feature-icon" style="margin:0"><i class="fas fa-user"></i></div>
+        <div style="flex:1;min-width:200px">
+          <h2 style="font-family:var(--font-serif);font-size:1.4rem">${i18n.t('dash.welcome')}, ${esc(u.name)}</h2>
+          <p style="color:var(--text-2);font-size:.88rem">${esc(u.email)} · <span class="badge">${esc(u.role)}</span></p>
+        </div>
+        <button class="btn btn-secondary" onclick="authUI.logout()"><i class="fas fa-sign-out-alt"></i> Sign out</button>
+      </div>
+      <div class="dash-tabs">
+        ${['overview','settings','payments','mine','free'].map(t =>
+          `<button class="dash-tab ${tab===t?'active':''}" onclick="dashboard.setTab('${t}')">${i18n.t('dash.tab.'+t)}</button>`
+        ).join('')}
+      </div>
+      <div id="dashPanel"></div>
+    `;
+    const panel = $('#dashPanel');
+    if (tab==='overview') {
+      panel.innerHTML = `
+        <div class="stat-grid">
+          <div class="stat"><div class="stat-label">Books owned</div><div class="stat-value">${ownedIds.size}</div></div>
+          <div class="stat"><div class="stat-label">Free books</div><div class="stat-value">${freeBooks.length}</div></div>
+          <div class="stat"><div class="stat-label">Total spent</div><div class="stat-value">${$money(spent)}</div></div>
+          <div class="stat"><div class="stat-label">Payment records</div><div class="stat-value">${manualRecords.length}</div></div>
+        </div>
+        <div class="panel"><h3><i class="fas fa-fire"></i> ${i18n.t('home.popular')}</h3>
+          <div class="book-grid">${[...all].sort((a,b)=>(b.downloads||0)-(a.downloads||0)).slice(0,4).map(b=>userBookCard(b, ownedIds.has(b.id))).join('')||'<p style="color:var(--text-2)">No books.</p>'}</div>
+        </div>`;
+    } else if (tab==='settings') {
+      panel.innerHTML = `
+        <div class="panel"><h3><i class="fas fa-user-cog"></i> Account settings</h3>
+          <div class="form-group"><label class="form-label">Name</label><input class="form-input" id="setName" value="${esc(u.name)}"></div>
+          <button class="btn btn-primary" onclick="dashboard.saveProfile()"><i class="fas fa-save"></i> Save</button>
+        </div>
+        <div class="panel"><h3><i class="fas fa-key"></i> Change password</h3>
+          <div class="form-group"><label class="form-label">Current password</label><input class="form-input" type="password" id="curPw"></div>
+          <div class="form-group"><label class="form-label">New password (min 8)</label><input class="form-input" type="password" id="newPw"></div>
+          <button class="btn btn-primary" onclick="dashboard.changePassword()"><i class="fas fa-lock"></i> Update password</button>
+        </div>`;
+    } else if (tab==='payments') {
+      panel.innerHTML = `
+        <div class="panel"><h3><i class="fas fa-plus-circle"></i> ${i18n.t('dash.add_payment')}</h3>
+          <div class="form-group"><label class="form-label">${i18n.t('dash.pay_method')}</label>
+            <select class="form-select" id="prMethod">
+              <option value="">— select —</option>
+              <option value="MTN Mobile Money">MTN Mobile Money</option>
+              <option value="Airtel Money">Airtel Money</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="Visa / Mastercard">Visa / Mastercard</option>
+              <option value="PayPal">PayPal</option>
+              <option value="Cash">Cash</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">${i18n.t('dash.pay_ref')}</label>
+            <input class="form-input" id="prRef" placeholder="e.g. MOMO-1234ABCD">
+          </div>
+          <div class="form-group"><label class="form-label">${i18n.t('dash.pay_amount')}</label>
+            <input class="form-input" id="prAmount" type="number" step="0.01" min="0.01" placeholder="5.99">
+          </div>
+          <div class="form-group"><label class="form-label">${i18n.t('dash.pay_book')}</label>
+            <select class="form-select" id="prBook">
+              <option value="">— none —</option>
+              ${all.map(b=>`<option value="${b.id}" data-title="${esc(b.title)}">${esc(b.title)} (${b.is_free?'FREE':$money(b.price_cents)})</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">${i18n.t('dash.pay_date')}</label>
+            <input class="form-input" id="prDate" type="date" value="${new Date().toISOString().slice(0,10)}">
+          </div>
+          <div class="form-group"><label class="form-label">${i18n.t('dash.pay_note')}</label>
+            <textarea class="form-textarea" id="prNote" placeholder="Optional note"></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="dashboard.addPaymentRecord()"><i class="fas fa-save"></i> ${i18n.t('dash.pay_submit')}</button>
+        </div>
+        <div class="panel"><h3><i class="fas fa-receipt"></i> ${i18n.t('dash.tab.payments')}</h3>
+          ${manualRecords.length===0 ? '<p style="color:var(--text-2)">No payment records yet.</p>' :
+            `<div class="table-wrap"><table>
+              <thead><tr><th>Date</th><th>Method</th><th>Reference</th><th>Book</th><th>Amount</th><th></th></tr></thead>
+              <tbody>${manualRecords.map(r=>`
+                <tr>
+                  <td>${esc(r.date||'')}</td>
+                  <td>${esc(r.method)}</td>
+                  <td><code style="font-size:.78rem">${esc(r.reference)}</code></td>
+                  <td>${esc(r.book_title||'—')}</td>
+                  <td>${$money(r.amount_cents)}</td>
+                  <td><button class="btn btn-secondary" style="padding:4px 10px;font-size:.75rem" onclick="dashboard.deletePaymentRecord(${r.id})"><i class="fas fa-trash"></i></button></td>
+                </tr>`).join('')}
+              </tbody></table></div>`}
+        </div>
+        <div class="panel"><h3><i class="fas fa-list"></i> Purchase history</h3>
+          ${records.length===0 ? '<p style="color:var(--text-2)">No purchases yet.</p>' :
+            `<div class="table-wrap"><table>
+              <thead><tr><th>Book</th><th>Amount</th><th>Status</th><th>Reference</th><th>Date</th></tr></thead>
+              <tbody>${records.map(r=>{
+                const bk = all.find(b=>b.id===r.book_id);
+                return `<tr><td>${esc(bk?.title||'—')}</td><td>${$money(r.amount_cents)}</td>
+                  <td><span class="badge ${r.status==='paid'?'success':'danger'}">${esc(r.status)}</span></td>
+                  <td><code style="font-size:.78rem">${esc(r.payment_ref)}</code></td>
+                  <td>${new Date(r.created_at).toLocaleString()}</td></tr>`;
+              }).join('')}</tbody></table></div>`}
+        </div>`;
+    } else if (tab==='mine') {
+      panel.innerHTML = `<div class="panel"><h3><i class="fas fa-book"></i> My library</h3>
+        <div class="book-grid">${ownedBooks.map(b=>userBookCard(b, true)).join('')||'<p style="color:var(--text-2)">No purchases yet.</p>'}</div></div>`;
+    } else if (tab==='free') {
+      panel.innerHTML = `<div class="panel"><h3><i class="fas fa-gift"></i> Free books</h3>
+        <div class="book-grid">${freeBooks.map(b=>userBookCard(b, false)).join('')||'<p style="color:var(--text-2)">No free books.</p>'}</div></div>`;
+    }
+  }
+  function userBookCard(b, owned) {
+    const btn = owned || b.is_free
+      ? `<button class="download-btn" onclick="home.download('${b.id}')"><i class="fas fa-download"></i> ${i18n.t('btn.download')}</button>`
+      : `<button class="download-btn" onclick="library.requestBuy('${b.id}')"><i class="fas fa-shopping-cart"></i> ${i18n.t('btn.pay')}</button>`;
+    const price = b.is_free ? '<span class="book-price free">FREE</span>' : `<span class="book-price">${$money(b.price_cents)}</span>`;
+    return `<div class="book-card">
+      <div class="book-cover" style="background:linear-gradient(135deg,${b.color||'#c17a3f'},${shade(b.color||'#c17a3f',-30)})"><i class="fas fa-book"></i></div>
+      <div class="book-body"><div class="book-title">${esc(b.title)}</div><div class="book-author">${esc(b.author)}</div>
+      <div class="book-footer">${price}${btn}</div></div></div>`;
+  }
+  async function saveProfile() {
+    const name = $('#setName').value.trim();
+    if (name.length < 2) { toast.show('Name too short', 'error'); return; }
+    const u = { ...Auth.currentUser, name };
+    await AuthService.saveUser(u);
+    renderUserMenu();
+    toast.show(i18n.t('msg.saved'), 'success');
+  }
+  async function changePassword() {
+    const cur = $('#curPw').value, nw = $('#newPw').value;
+    if (nw.length < 8) { toast.show('New password must be 8+ chars', 'error'); return; }
+    const h = await CryptoUtil.hashPassword(cur, Auth.currentUser.salt);
+    if (h !== Auth.currentUser.hash) { toast.show('Current password is wrong', 'error'); return; }
+    const u = { ...Auth.currentUser, hash: await CryptoUtil.hashPassword(nw, Auth.currentUser.salt) };
+    await AuthService.saveUser(u);
+    $('#curPw').value=''; $('#newPw').value='';
+    toast.show('Password updated', 'success');
+  }
+  async function addPaymentRecord() {
+    try {
+      const method = $('#prMethod').value;
+      const reference = $('#prRef').value.trim();
+      const amount = $('#prAmount').value;
+      const bookId = $('#prBook').value;
+      const bookTitle = bookId ? $('#prBook').selectedOptions[0]?.dataset.title : null;
+      const date = $('#prDate').value;
+      const note = $('#prNote').value.trim();
+      await PaymentRecords.add(Auth.currentUser.id, {
+        method, reference, amount, book_id: bookId || null, book_title: bookTitle, date, note
+      });
+      toast.show(i18n.t('msg.pay_recorded'), 'success');
+      await render();
+    } catch (e) {
+      toast.show(e.message||'Could not save', 'error');
+    }
+  }
+  async function deletePaymentRecord(id) {
+    if (!confirm('Delete this payment record?')) return;
+    await PaymentRecords.remove(id);
+    toast.show('Record deleted', 'info');
+    await render();
+  }
+  return { render, setTab, saveProfile, changePassword, addPaymentRecord, deletePaymentRecord };
+})();
+
+/* ============================================================
+   ADMIN
+   ============================================================ */
+const admin = (() => {
+  let tab = 'overview';
+  let pendingTotpSecret = null;
+
+  function setTab(t) { tab=t; render(); }
+
+  async function render() {
+    const root = $('#adminContent');
+    if (!Auth.currentUser || Auth.currentUser.role!=='admin') {
+      root.innerHTML = `<div class="access-denied"><i class="fas fa-lock"></i>
+        <h2>${i18n.t('admin.denied')}</h2><p>${i18n.t('admin.denied.msg')}</p>
+        <button class="btn btn-primary" onclick="router.go('login')">${i18n.t('admin.signin')}</button></div>`;
+      return;
+    }
+    const users = await DB.getAll('users');
+    const allBooks = await BooksService.list();
+    const purchases = await DB.getAll('purchases');
+    const manualRecords = await PaymentRecords.listAll();
+    const consumers = users.filter(u=>u.role==='user');
+    const paid = purchases.filter(p=>p.status==='paid');
+    const revenue = paid.reduce((s,p)=>s+p.amount_cents,0);
+    const recent = [...allBooks].sort((a,b)=>b.createdAt-a.createdAt).slice(0,8);
+    const popular = [...allBooks].sort((a,b)=>(b.downloads||0)-(a.downloads||0)).slice(0,8);
+    const bookMap = new Map(allBooks.map(b=>[b.id,b.title]));
+    const userMap = new Map(users.map(u=>[u.id,u.email]));
+    const u = Auth.currentUser;
+
+    root.innerHTML = `
+      <div class="dash-header">
+        <div class="feature-icon" style="margin:0"><i class="fas fa-shield-halved"></i></div>
+        <div style="flex:1;min-width:200px">
+          <h2 style="font-family:var(--font-serif);font-size:1.4rem">Admin dashboard</h2>
+          <p style="color:var(--text-2);font-size:.88rem">${esc(u.email)} ${u.totp_enabled?'<span class="badge success">2FA on</span>':'<span class="badge danger">2FA off</span>'}</p>
+        </div>
+        <button class="btn btn-secondary" onclick="authUI.logout()"><i class="fas fa-sign-out-alt"></i> Sign out</button>
+      </div>
+      <div class="dash-tabs">
+        ${['overview','books','consumers','payments','user_records','account','security'].map(t =>
+          `<button class="dash-tab ${tab===t?'active':''}" onclick="admin.setTab('${t}')">${i18n.t('admin.tab.'+t)}</button>`
+        ).join('')}
+      </div>
+      <div id="adminPanel"></div>
+    `;
+    const p = $('#adminPanel');
+    if (tab==='overview') {
+      p.innerHTML = `
+        <div class="stat-grid">
+          <div class="stat"><div class="stat-label">Users</div><div class="stat-value">${consumers.length}</div></div>
+          <div class="stat"><div class="stat-label">Books</div><div class="stat-value">${allBooks.length}</div></div>
+          <div class="stat"><div class="stat-label">Purchases</div><div class="stat-value">${paid.length}</div></div>
+          <div class="stat"><div class="stat-label">Revenue</div><div class="stat-value">${$money(revenue)}</div></div>
+        </div>
+        <div class="panel"><h3><i class="fas fa-clock"></i> Recently added</h3>
+          <div class="book-grid">${recent.slice(0,4).map(b=>adminBookCard(b)).join('')||'<p style="color:var(--text-2)">None</p>'}</div></div>
+        <div class="panel"><h3><i class="fas fa-fire"></i> Most popular</h3>
+          <div class="book-grid">${popular.slice(0,4).map(b=>adminBookCard(b)).join('')||'<p style="color:var(--text-2)">None</p>'}</div></div>`;
+    } else if (tab==='books') {
+      p.innerHTML = `
+        <div class="panel"><h3><i class="fas fa-plus"></i> Add new book</h3>
+          <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="bTitle" placeholder="Book title"></div>
+          <div class="form-group"><label class="form-label">Author</label><input class="form-input" id="bAuthor" placeholder="Author name"></div>
+          <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="bDesc" placeholder="Short description"></textarea></div>
+          <div class="form-group"><label class="form-label">Language</label>
+            <select class="form-select" id="bLang"><option value="en">English</option><option value="rw">Kinyarwanda</option><option value="fr">Français</option></select></div>
+          <div class="form-group"><label class="form-label">Cover color</label><input class="form-input" id="bColor" value="#c17a3f" type="color" style="height:44px;padding:4px"></div>
+          <div class="form-group"><label class="form-label">Price (USD, leave 0 + tick free)</label>
+            <input class="form-input" id="bPrice" type="number" step="0.50" min="0" value="5.99"></div>
+          <div class="form-group"><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="bFree"> Mark as free</label></div>
+          <button class="btn btn-primary" onclick="admin.addBook()"><i class="fas fa-save"></i> Add book</button>
+        </div>
+        <div class="panel"><h3><i class="fas fa-list"></i> All books</h3>
+          ${allBooks.length===0?'<p style="color:var(--text-2)">No books yet.</p>':
+            `<div class="table-wrap"><table>
+              <thead><tr><th>Title</th><th>Author</th><th>Price</th><th>Downloads</th><th></th></tr></thead>
+              <tbody>${allBooks.map(b=>`
+                <tr><td>${esc(b.title)}</td><td>${esc(b.author)}</td>
+                  <td>${b.is_free?'<span class="badge success">FREE</span>':$money(b.price_cents)}</td>
+                  <td>${b.downloads||0}</td>
+                  <td><button class="btn btn-secondary" style="padding:4px 10px;font-size:.75rem" onclick="admin.deleteBook('${b.id}')"><i class="fas fa-trash"></i></button></td>
+                </tr>`).join('')}
+              </tbody></table></div>`}
+        </div>`;
+    } else if (tab==='consumers') {
+      p.innerHTML = `<div class="panel"><h3><i class="fas fa-users"></i> Consumer records</h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Name</th><th>Username</th><th>Email</th><th>Verified</th><th>Purchases</th><th>Spent</th></tr></thead>
+          <tbody>${consumers.map(cu=>{
+            const buys = paid.filter(x=>x.user_id===cu.id);
+            const spent = buys.reduce((s,x)=>s+x.amount_cents,0);
+            return `<tr><td>${esc(cu.name)}</td><td>${esc(cu.username)}</td><td>${esc(cu.email)}</td>
+              <td>${cu.email_verified?'<span class="badge success">yes</span>':'<span class="badge danger">no</span>'}</td>
+              <td>${buys.length}</td><td>${$money(spent)}</td></tr>`;
+          }).join('') || '<tr><td colspan="6" style="color:var(--text-2)">No consumers yet.</td></tr>'}
+          </tbody></table></div></div>`;
+    } else if (tab==='payments') {
+      p.innerHTML = `<div class="panel"><h3><i class="fas fa-receipt"></i> All purchases</h3>
+        ${paid.length===0?'<p style="color:var(--text-2)">No purchases yet.</p>':
+          `<div class="table-wrap"><table>
+            <thead><tr><th>User</th><th>Book</th><th>Amount</th><th>Status</th><th>Reference</th></tr></thead>
+            <tbody>${paid.map(r=>`
+              <tr><td>${esc(userMap.get(r.user_id)||'—')}</td><td>${esc(bookMap.get(r.book_id)||'—')}</td>
+              <td>${$money(r.amount_cents)}</td>
+              <td><span class="badge success">${esc(r.status)}</span></td>
+              <td><code style="font-size:.78rem">${esc(r.payment_ref)}</code></td></tr>`).join('')}
+            </tbody></table></div>`}</div>`;
+    } else if (tab==='user_records') {
+      p.innerHTML = `<div class="panel"><h3><i class="fas fa-file-invoice"></i> ${i18n.t('admin.tab.user_records')}</h3>
+        ${manualRecords.length===0?'<p style="color:var(--text-2)">No user payment records yet.</p>':
+          `<div class="table-wrap"><table>
+            <thead><tr><th>Date</th><th>User</th><th>Method</th><th>Reference</th><th>Book</th><th>Amount</th><th>Note</th></tr></thead>
+            <tbody>${manualRecords.map(r=>`
+              <tr><td>${esc(r.date||'')}</td>
+                <td>${esc(userMap.get(r.user_id)||'—')}</td>
+                <td>${esc(r.method)}</td>
+                <td><code style="font-size:.78rem">${esc(r.reference)}</code></td>
+                <td>${esc(r.book_title||'—')}</td>
+                <td>${$money(r.amount_cents)}</td>
+                <td style="font-size:.78rem;color:var(--text-2)">${esc(r.note||'')}</td></tr>`).join('')}
+            </tbody></table></div>`}
+      </div>`;
+    } else if (tab==='account') {
+      p.innerHTML = `
+        <div class="panel"><h3><i class="fas fa-user-cog"></i> Account</h3>
+          <div class="form-group"><label class="form-label">Name</label><input class="form-input" id="setName" value="${esc(u.name)}"></div>
+          <button class="btn btn-primary" onclick="dashboard.saveProfile()"><i class="fas fa-save"></i> Save</button>
+        </div>
+        <div class="panel"><h3><i class="fas fa-key"></i> Change password</h3>
+          <div class="form-group"><input class="form-input" type="password" id="curPw" placeholder="Current password"></div>
+          <div class="form-group"><input class="form-input" type="password" id="newPw" placeholder="New password (min 8)"></div>
+          <button class="btn btn-primary" onclick="dashboard.changePassword()"><i class="fas fa-lock"></i> Update</button>
+        </div>`;
+    } else if (tab==='security') {
+      p.innerHTML = `
+        <div class="panel"><h3><i class="fas fa-shield-halved"></i> Two-factor authentication</h3>
+          ${u.totp_enabled
+            ? `<p style="color:var(--success);margin-bottom:12px"><i class="fas fa-check-circle"></i> 2FA is enabled.</p>
+               <button class="btn btn-secondary" onclick="admin.disable2FA()">Disable 2FA</button>`
+            : `<p style="color:var(--text-2);margin-bottom:12px">Protect admin login with TOTP (Google Authenticator, Authy, 1Password).</p>
+               <button class="btn btn-primary" onclick="admin.setup2FA()">Set up 2FA</button>
+               <div id="tfaSetup" style="margin-top:16px"></div>`}
+        </div>`;
+    }
+  }
+
+  function adminBookCard(b) {
+    return `<div class="book-card">
+      <div class="book-cover" style="background:linear-gradient(135deg,${b.color||'#c17a3f'},${shade(b.color||'#c17a3f',-30)})"><i class="fas fa-book"></i></div>
+      <div class="book-body"><div class="book-title">${esc(b.title)}</div><div class="book-author">${esc(b.author)}</div>
+      <div class="book-footer"><span class="book-price ${b.is_free?'free':''}">${b.is_free?'FREE':$money(b.price_cents)}</span>
+      <span style="font-size:.78rem;color:var(--text-2)">${b.downloads||0} downloads</span></div></div></div>`;
+  }
+
+  async function addBook() {
+    const title = $('#bTitle').value.trim();
+    const author = $('#bAuthor').value.trim();
+    if (!title || !author) { toast.show('Title and author required', 'error'); return; }
+    const is_free = $('#bFree').checked;
+    const priceDollars = parseFloat($('#bPrice').value) || 0;
+    await BooksService.addBook({
+      title, author,
+      description: $('#bDesc').value.trim(),
+      language: $('#bLang').value,
+      color: $('#bColor').value,
+      price_cents: is_free ? 0 : priceDollars * 100,
+      is_free
+    });
+    toast.show('Book added', 'success');
+    await render();
+  }
+
+  async function deleteBook(id) {
+    if (!confirm('Delete this book? This cannot be undone.')) return;
+    await BooksService.deleteBook(id);
+    toast.show('Book deleted', 'info');
+    await render();
+  }
+
+  function setup2FA() {
+    const secret = TOTP.generateSecret();
+    pendingTotpSecret = secret;
+    const label = encodeURIComponent(Auth.currentUser.email);
+    const issuer = encodeURIComponent('BookHaven');
+    const uri = `otpauth://totp/${issuer}:${label}?secret=${secret}&issuer=${issuer}&algorithm=SHA1&digits=6&period=30`;
+    const box = $('#tfaSetup');
+    if (!box) return;
+    box.innerHTML = `
+      <div class="panel" style="background:var(--bg-sub)">
+        <p style="margin-bottom:8px"><strong>1.</strong> Add this secret to your authenticator app:</p>
+        <div style="background:var(--bg-elev);padding:12px;border-radius:8px;font-family:monospace;word-break:break-all;margin-bottom:12px">${esc(secret)}</div>
+        <p style="margin-bottom:8px"><strong>2.</strong> Or open this URI:</p>
+        <div style="background:var(--bg-elev);padding:12px;border-radius:8px;font-family:monospace;word-break:break-all;margin-bottom:12px;font-size:.8rem">${esc(uri)}</div>
+        <p style="margin-bottom:8px"><strong>3.</strong> Enter the 6-digit code to confirm:</p>
+        <div style="display:flex;gap:8px">
+          <input class="form-input" id="tfaSetupCode" maxlength="6" style="max-width:140px;text-align:center;letter-spacing:.4rem" placeholder="123456">
+          <button class="btn btn-primary" onclick="admin.confirm2FA()">Enable 2FA</button>
+        </div>
+      </div>`;
+  }
+
+  async function confirm2FA() {
+    const code = $('#tfaSetupCode').value.trim();
+    if (!pendingTotpSecret) { toast.show('Run setup first', 'error'); return; }
+    const ok = await TOTP.verify(pendingTotpSecret, code);
+    if (!ok) { toast.show('Invalid code', 'error'); return; }
+    const u = { ...Auth.currentUser, totp_secret: pendingTotpSecret, totp_enabled: 1 };
+    await AuthService.saveUser(u);
+    pendingTotpSecret = null;
+    toast.show('2FA enabled', 'success');
+    await render();
+  }
+
+  async function disable2FA() {
+    if (!confirm('Disable 2FA? This lowers admin security.')) return;
+    const u = { ...Auth.currentUser, totp_secret: null, totp_enabled: 0 };
+    await AuthService.saveUser(u);
+    toast.show('2FA disabled', 'info');
+    await render();
+  }
+
+  return { render, setTab, addBook, deleteBook, setup2FA, confirm2FA, disable2FA };
+})();
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function shade(hex, p) {
+  const n = parseInt(hex.replace('#',''),16);
+  const c = v => Math.max(0,Math.min(255,v));
+  return `rgb(${c((n>>16)+p)},${c(((n>>8)&0xFF)+p)},${c((n&0xFF)+p)})`;
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', async () => {
+  theme.init();
+  i18n.apply();
+  authUI.init();
+  router.init();
+
+  $('#themeBtn').addEventListener('click', ()=>theme.toggle());
+  $$('.lang-btn').forEach(b => b.addEventListener('click', ()=>i18n.set(b.dataset.lang)));
+  document.addEventListener('langchange', ()=>{
+    i18n.apply();
+    if ($('#page-home').classList.contains('active')) home.load();
+    if ($('#page-dashboard').classList.contains('active')) dashboard.render();
+    if ($('#page-admin').classList.contains('active')) admin.render();
+  });
+  $('#payConfirm').addEventListener('click', ()=>library.confirm());
+
+  window.router = router;
+  window.authUI = authUI;
+  window.home = home;
+  window.library = library;
+  window.dashboard = dashboard;
+  window.admin = admin;
+  window.payment = payment;
+
+  await AuthService.ensureFirstAdmin();
+  await AuthService.restore();
+  renderUserMenu();
+
+  if ($('#page-home').classList.contains('active')) await home.load();
+});
+</script>
+</body>
+</html>
