@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BookHaven — Syllabuses, Documents & Books</title>
+<title>BookHaven</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
@@ -148,12 +148,10 @@ tr:hover td{background:var(--bg-sub)}
 .steps-list{list-style:none;counter-reset:step;padding:0}
 .steps-list li{counter-increment:step;position:relative;padding:14px 14px 14px 52px;background:var(--bg-sub);border-radius:10px;margin-bottom:10px;font-size:.9rem;color:var(--text-2)}
 .steps-list li::before{content:counter(step);position:absolute;left:14px;top:14px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-text);display:grid;place-items:center;font-weight:800;font-size:.82rem}
-.demo-warning{background:var(--warning-soft);color:var(--warning);padding:14px 18px;border-radius:10px;font-size:.86rem;line-height:1.6;border-left:4px solid var(--warning);margin-bottom:20px}
-.demo-warning i{margin-right:6px}
 .profile-logo{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid var(--accent-soft);background:var(--bg-sub);display:grid;place-items:center;font-family:var(--font-serif);font-size:2rem;font-weight:800;color:var(--accent);overflow:hidden}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
-/* ============ PASSWORD STRENGTH UI ============ */
+/* PASSWORD STRENGTH UI */
 .pw-meter{height:6px;background:var(--bg-muted);border-radius:3px;margin-top:8px;overflow:hidden}
 .pw-meter-bar{height:100%;width:0;border-radius:3px;transition:width .25s ease, background .25s ease}
 .pw-meter-bar.weak{width:25%;background:var(--danger)}
@@ -165,8 +163,6 @@ tr:hover td{background:var(--bg-sub)}
 .pw-rules li i{font-size:.7rem}
 .pw-rules li.met{color:var(--success)}
 .pw-rules li.met i{color:var(--success)}
-.pw-rules li.fail{color:var(--danger)}
-.pw-rules li.fail i{color:var(--danger)}
 
 @media (max-width:860px){.nav-links{display:none}.hero{padding:40px 24px}.main{padding:24px 16px 60px}.lang-switcher{display:none}.user-info{display:none}.split{grid-template-columns:1fr}.form-row-3{grid-template-columns:1fr}.role-select{grid-template-columns:1fr 1fr}.pw-rules{grid-template-columns:1fr}}
 </style>
@@ -177,18 +173,18 @@ tr:hover td{background:var(--bg-sub)}
   <div class="nav-inner">
     <button class="logo" onclick="router.go('home')"><span class="logo-mark">B</span><span>BookHaven</span></button>
     <div class="nav-links">
-      <button class="nav-link" data-route="home" onclick="router.go('home')"><i class="fas fa-house"></i> Home</button>
-      <button class="nav-link" data-route="library" onclick="router.go('library')"><i class="fas fa-book"></i> Library</button>
-      <button class="nav-link" data-route="how" onclick="router.go('how')"><i class="fas fa-circle-info"></i> How it works</button>
-      <button class="nav-link" data-route="login" onclick="router.go('login')"><i class="fas fa-sign-in-alt"></i> Login</button>
+      <button class="nav-link" data-route="home" onclick="router.go('home')"><i class="fas fa-house"></i> <span data-i18n="nav.home">Home</span></button>
+      <button class="nav-link" data-route="library" onclick="router.go('library')"><i class="fas fa-book"></i> <span data-i18n="nav.library">Library</span></button>
+      <button class="nav-link" data-route="how" onclick="router.go('how')"><i class="fas fa-circle-info"></i> <span data-i18n="nav.how">How it works</span></button>
+      <button class="nav-link" data-route="login" onclick="router.go('login')"><i class="fas fa-sign-in-alt"></i> <span data-i18n="nav.login">Login</span></button>
     </div>
     <div class="nav-actions">
       <div class="lang-switcher">
-        <button class="lang-btn active" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="rw">RW</button>
-        <button class="lang-btn" data-lang="fr">FR</button>
+        <button class="lang-btn active" data-lang="en" onclick="i18n.set('en')">EN</button>
+        <button class="lang-btn" data-lang="rw" onclick="i18n.set('rw')">RW</button>
+        <button class="lang-btn" data-lang="fr" onclick="i18n.set('fr')">FR</button>
       </div>
-      <button class="icon-btn" id="themeBtn"><i class="fas fa-moon"></i></button>
+      <button class="icon-btn" id="themeBtn" onclick="theme.toggle()"><i class="fas fa-moon"></i></button>
       <div id="userMenu"></div>
     </div>
   </div>
@@ -197,55 +193,47 @@ tr:hover td{background:var(--bg-sub)}
 <main class="main">
   <section class="page active" id="page-home">
     <div class="hero">
-      <span class="eyebrow"><i class="fas fa-star"></i> Syllabuses, documents & books</span>
-      <h1>Where great syllabuses find their teachers.</h1>
-      <p>Publish, discover, and download quality syllabuses and documents. Secure payments, three languages, thoughtfully crafted templates.</p>
+      <span class="eyebrow"><i class="fas fa-star"></i> <span data-i18n="hero.eyebrow">Syllabuses, documents & books</span></span>
+      <h1 data-i18n="hero.title">Where great syllabuses find their teachers.</h1>
+      <p data-i18n="hero.subtitle">Publish, discover, and download quality syllabuses and documents. Secure payments, three languages, thoughtfully crafted templates.</p>
       <div class="hero-actions">
-        <button class="btn btn-primary" onclick="router.go('login')"><i class="fas fa-book-open"></i> Get started</button>
-        <button class="btn btn-secondary" onclick="router.go('library')"><i class="fas fa-book"></i> Browse library</button>
+        <button class="btn btn-primary" onclick="router.go('login')"><i class="fas fa-book-open"></i> <span data-i18n="hero.getStarted">Get started</span></button>
+        <button class="btn btn-secondary" onclick="router.go('library')"><i class="fas fa-book"></i> <span data-i18n="hero.browse">Browse library</span></button>
       </div>
     </div>
-    <div class="demo-warning">
-      <i class="fas fa-triangle-exclamation"></i>
-      <strong>Demo mode:</strong> this file runs entirely in your browser. Data is saved locally and is not shared between users on different computers. Real email delivery and PDF sharing between users require a server (use the Express version).
-    </div>
     <div class="section-head">
-      <h2 class="section-title">Recently added</h2>
-      <p class="section-sub">New syllabuses & documents — click a cover to read (login required)</p>
+      <h2 class="section-title" data-i18n="home.recent">Recently added</h2>
+      <p class="section-sub" data-i18n="home.recentSub">New syllabuses & documents</p>
     </div>
     <div class="book-grid" id="homeRecent"></div>
     <div class="section-head" style="margin-top:40px">
-      <h2 class="section-title">Free resources</h2>
-      <p class="section-sub">Books of RE and other free documents</p>
+      <h2 class="section-title" data-i18n="home.free">Free resources</h2>
+      <p class="section-sub" data-i18n="home.freeSub">Books of RE and other free documents</p>
     </div>
     <div class="book-grid" id="homeFree"></div>
   </section>
 
   <section class="page" id="page-library">
     <div class="section-head">
-      <h2 class="section-title">Syllabuses & documents</h2>
-      <p class="section-sub">All published documents.</p>
+      <h2 class="section-title" data-i18n="library.title">Syllabuses & documents</h2>
+      <p class="section-sub" data-i18n="library.sub">All published documents.</p>
     </div>
     <div class="form-group" style="max-width:360px">
-      <input class="form-input" id="librarySearch" placeholder="Search by title or author..." oninput="library.load()">
+      <input class="form-input" id="librarySearch" placeholder="Search..." oninput="library.load()">
     </div>
     <div class="book-grid" id="libraryGrid"></div>
   </section>
 
   <section class="page" id="page-how">
-    <div class="section-head"><h2 class="section-title">How it works</h2></div>
+    <div class="section-head"><h2 class="section-title" data-i18n="how.title">How it works</h2></div>
     <ol class="steps-list">
-      <li><strong>Choose your role at login:</strong> Admin, Teacher, or Student.</li>
-      <li><strong>Strong passwords required:</strong> at least 12 characters with uppercase, lowercase, number, and special character.</li>
-      <li><strong>Teachers and students</strong> create accounts with email, name, password. Students also enter level, class, and section.</li>
-      <li><strong>Admins</strong> log in with email or username, password, and their answer word.</li>
-      <li><strong>Browse the library</strong> — free documents (Books of RE) need no payment.</li>
-      <li><strong>Submit your payment record</strong> with the reference from your SMS, then the admin verifies it.</li>
+      <li data-i18n="how.step1"><strong>Choose your role at login:</strong> Admin, Teacher, or Student.</li>
+      <li data-i18n="how.step2"><strong>Strong passwords required:</strong> at least 12 characters with uppercase, lowercase, number, and special character.</li>
+      <li data-i18n="how.step3"><strong>Teachers and students</strong> create accounts with email, name, password. Students also enter level, class, and section.</li>
+      <li data-i18n="how.step4"><strong>Admins</strong> log in with email or username, password, and their answer word.</li>
+      <li data-i18n="how.step5"><strong>Browse the library</strong> — free documents (Books of RE) need no payment.</li>
+      <li data-i18n="how.step6"><strong>Submit your payment record</strong> with the reference from your SMS, then the admin verifies it.</li>
     </ol>
-    <div class="demo-warning" style="margin-top:20px">
-      <i class="fas fa-info-circle"></i>
-      <strong>Email verification and password reset in this file are simulated.</strong> Real email delivery needs an SMTP server (use the Express version).
-    </div>
   </section>
 
   <section class="page" id="page-login">
@@ -253,80 +241,81 @@ tr:hover td{background:var(--bg-sub)}
       <div class="auth-card">
         <div class="auth-header">
           <div class="auth-icon"><i class="fas fa-user-lock"></i></div>
-          <h2 id="authTitle">Sign in</h2>
-          <p id="authSubtitle">Choose your role and sign in</p>
+          <h2 id="authTitle" data-i18n="auth.signin">Sign in</h2>
+          <p id="authSubtitle" data-i18n="auth.signinSub">Choose your role and sign in</p>
         </div>
         <div class="role-select" id="roleSelect">
-          <div class="role-card" data-role="admin"><i class="fas fa-shield-halved"></i><strong>Admin</strong><span>Manage</span></div>
-          <div class="role-card" data-role="teacher"><i class="fas fa-chalkboard-user"></i><strong>Teacher</strong><span>Teach</span></div>
-          <div class="role-card" data-role="student"><i class="fas fa-user-graduate"></i><strong>Student</strong><span>Learn</span></div>
+          <div class="role-card" data-role="admin"><i class="fas fa-shield-halved"></i><strong data-i18n="role.admin">Admin</strong><span data-i18n="role.adminDesc">Manage</span></div>
+          <div class="role-card" data-role="teacher"><i class="fas fa-chalkboard-user"></i><strong data-i18n="role.teacher">Teacher</strong><span data-i18n="role.teacherDesc">Teach</span></div>
+          <div class="role-card" data-role="student"><i class="fas fa-user-graduate"></i><strong data-i18n="role.student">Student</strong><span data-i18n="role.studentDesc">Learn</span></div>
         </div>
         <div class="tabs">
-          <button type="button" class="tab active" data-tab="signin">Sign in</button>
-          <button type="button" class="tab" data-tab="signup">Create account</button>
-          <button type="button" class="tab" data-tab="forgot">Forgot password</button>
+          <button type="button" class="tab active" data-tab="signin" data-i18n="auth.tab.signin">Sign in</button>
+          <button type="button" class="tab" data-tab="signup" data-i18n="auth.tab.signup">Create account</button>
+          <button type="button" class="tab" data-tab="forgot" data-i18n="auth.tab.forgot">Forgot password</button>
         </div>
         <div class="form-feedback" id="authFeedback"></div>
 
         <form id="authForm" novalidate>
           <div id="signinFields">
-            <div class="form-group"><label class="form-label">Email or username</label><input class="form-input" id="siId" autocomplete="username"></div>
-            <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="siPw" type="password" autocomplete="current-password"></div>
-            <div class="form-group hidden" id="siAnswerGroup"><label class="form-label">Answer word (admin only)</label><input class="form-input" id="siAnswer" placeholder="Your secret answer word"></div>
+            <div class="form-group"><label class="form-label" data-i18n="auth.id">Email or username</label><input class="form-input" id="siId" autocomplete="username"></div>
+            <div class="form-group"><label class="form-label" data-i18n="auth.password">Password</label><input class="form-input" id="siPw" type="password" autocomplete="current-password"></div>
+            <div class="form-group hidden" id="siAnswerGroup"><label class="form-label" data-i18n="auth.answer">Answer word (admin only)</label><input class="form-input" id="siAnswer"></div>
           </div>
 
           <div id="signupFields" class="hidden">
-            <div class="form-group"><label class="form-label">Full name</label><input class="form-input" id="suName" autocomplete="name"></div>
-            <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="suEmail" type="email" autocomplete="email"></div>
+            <div class="form-group"><label class="form-label" data-i18n="auth.fullName">Full name</label><input class="form-input" id="suName"></div>
+            <div class="form-group"><label class="form-label" data-i18n="auth.email">Email</label><input class="form-input" id="suEmail" type="email"></div>
             <div class="form-group">
-              <label class="form-label">Password</label>
-              <input class="form-input" id="suPw" type="password" autocomplete="new-password" oninput="pwUI.update('su')">
+              <label class="form-label" data-i18n="auth.password">Password</label>
+              <input class="form-input" id="suPw" type="password" oninput="pwUI.update('su')">
               <div class="pw-meter"><div class="pw-meter-bar" id="suMeterBar"></div></div>
               <ul class="pw-rules" id="suRules">
-                <li data-rule="length"><i class="fas fa-circle"></i> At least 12 characters</li>
-                <li data-rule="upper"><i class="fas fa-circle"></i> Uppercase letter</li>
-                <li data-rule="lower"><i class="fas fa-circle"></i> Lowercase letter</li>
-                <li data-rule="digit"><i class="fas fa-circle"></i> Number</li>
-                <li data-rule="special"><i class="fas fa-circle"></i> Special character</li>
-                <li data-rule="nocommon"><i class="fas fa-circle"></i> Not a common password</li>
-                <li data-rule="noseq"><i class="fas fa-circle"></i> No sequences (abc, 123)</li>
-                <li data-rule="norepeat"><i class="fas fa-circle"></i> No 3+ repeats (aaa)</li>
+                <li data-rule="length"><i class="fas fa-circle"></i> <span data-i18n="pw.length">At least 12 characters</span></li>
+                <li data-rule="upper"><i class="fas fa-circle"></i> <span data-i18n="pw.upper">Uppercase letter</span></li>
+                <li data-rule="lower"><i class="fas fa-circle"></i> <span data-i18n="pw.lower">Lowercase letter</span></li>
+                <li data-rule="digit"><i class="fas fa-circle"></i> <span data-i18n="pw.digit">Number</span></li>
+                <li data-rule="special"><i class="fas fa-circle"></i> <span data-i18n="pw.special">Special character</span></li>
+                <li data-rule="nocommon"><i class="fas fa-circle"></i> <span data-i18n="pw.nocommon">Not common</span></li>
+                <li data-rule="noseq"><i class="fas fa-circle"></i> <span data-i18n="pw.noseq">No sequences</span></li>
+                <li data-rule="norepeat"><i class="fas fa-circle"></i> <span data-i18n="pw.norepeat">No 3+ repeats</span></li>
               </ul>
+            </div>
+            <div class="form-group hidden" id="answerCreateGroup">
+              <label class="form-label" data-i18n="auth.answerCreate">Answer word (for admin password reset)</label>
+              <input class="form-input" id="suAnswer">
             </div>
             <div id="studentFields" class="hidden">
               <div class="form-row-3">
-                <div class="form-group"><label class="form-label">Level</label><input class="form-input" id="suLevel" placeholder="e.g. S1"></div>
-                <div class="form-group"><label class="form-label">Class</label><input class="form-input" id="suClass" placeholder="e.g. A"></div>
-                <div class="form-group"><label class="form-label">Section</label><input class="form-input" id="suSection" placeholder="e.g. Science"></div>
+                <div class="form-group"><label class="form-label" data-i18n="auth.level">Level</label><input class="form-input" id="suLevel" placeholder="S1"></div>
+                <div class="form-group"><label class="form-label" data-i18n="auth.class">Class</label><input class="form-input" id="suClass" placeholder="A"></div>
+                <div class="form-group"><label class="form-label" data-i18n="auth.section">Section</label><input class="form-input" id="suSection" placeholder="Science"></div>
               </div>
             </div>
           </div>
 
           <div id="forgotFields" class="hidden">
-            <div class="form-group"><label class="form-label">Email used at signup</label><input class="form-input" id="fgEmail" type="email"></div>
-            <div class="form-group"><label class="form-label">Full name (for verification)</label><input class="form-input" id="fgName"></div>
+            <div class="form-group"><label class="form-label" data-i18n="auth.email">Email</label><input class="form-input" id="fgEmail" type="email"></div>
+            <div class="form-group"><label class="form-label" data-i18n="auth.fullName">Full name</label><input class="form-input" id="fgName"></div>
             <div class="form-group">
-              <label class="form-label">New password</label>
-              <input class="form-input" id="fgPw" type="password" autocomplete="new-password" oninput="pwUI.update('fg')">
+              <label class="form-label" data-i18n="auth.newPassword">New password</label>
+              <input class="form-input" id="fgPw" type="password" oninput="pwUI.update('fg')">
               <div class="pw-meter"><div class="pw-meter-bar" id="fgMeterBar"></div></div>
               <ul class="pw-rules" id="fgRules">
-                <li data-rule="length"><i class="fas fa-circle"></i> At least 12 characters</li>
-                <li data-rule="upper"><i class="fas fa-circle"></i> Uppercase letter</li>
-                <li data-rule="lower"><i class="fas fa-circle"></i> Lowercase letter</li>
-                <li data-rule="digit"><i class="fas fa-circle"></i> Number</li>
-                <li data-rule="special"><i class="fas fa-circle"></i> Special character</li>
-                <li data-rule="nocommon"><i class="fas fa-circle"></i> Not a common password</li>
-                <li data-rule="noseq"><i class="fas fa-circle"></i> No sequences (abc, 123)</li>
-                <li data-rule="norepeat"><i class="fas fa-circle"></i> No 3+ repeats (aaa)</li>
+                <li data-rule="length"><i class="fas fa-circle"></i> <span data-i18n="pw.length">At least 12 characters</span></li>
+                <li data-rule="upper"><i class="fas fa-circle"></i> <span data-i18n="pw.upper">Uppercase letter</span></li>
+                <li data-rule="lower"><i class="fas fa-circle"></i> <span data-i18n="pw.lower">Lowercase letter</span></li>
+                <li data-rule="digit"><i class="fas fa-circle"></i> <span data-i18n="pw.digit">Number</span></li>
+                <li data-rule="special"><i class="fas fa-circle"></i> <span data-i18n="pw.special">Special character</span></li>
+                <li data-rule="nocommon"><i class="fas fa-circle"></i> <span data-i18n="pw.nocommon">Not common</span></li>
+                <li data-rule="noseq"><i class="fas fa-circle"></i> <span data-i18n="pw.noseq">No sequences</span></li>
+                <li data-rule="norepeat"><i class="fas fa-circle"></i> <span data-i18n="pw.norepeat">No 3+ repeats</span></li>
               </ul>
             </div>
           </div>
 
-          <button class="btn btn-primary btn-block" id="authSubmit" type="submit"><i class="fas fa-arrow-right-to-bracket"></i> <span>Sign in</span></button>
+          <button class="btn btn-primary btn-block" id="authSubmit" type="submit"><i class="fas fa-arrow-right-to-bracket"></i> <span data-i18n="auth.tab.signin">Sign in</span></button>
         </form>
-        <div class="demo-warning" style="margin-top:16px;font-size:.8rem">
-          <i class="fas fa-info-circle"></i> Demo: signup confirmation and password reset <em>show the flow</em> but do not send real emails. In the Express version these are real emails via SMTP.
-        </div>
       </div>
     </div>
   </section>
@@ -335,18 +324,17 @@ tr:hover td{background:var(--bg-sub)}
   <section class="page" id="page-admin"><div id="adminContent"></div></section>
 </main>
 
-<footer class="footer"><div>BookHaven — All rights reserved.</div></footer>
+<footer class="footer"><div>BookHaven — <span data-i18n="footer.copy">All rights reserved.</span></div></footer>
 
-<!-- Payment modal -->
 <div class="modal-overlay" id="payModal">
   <div class="modal">
-    <h3 id="payTitle">Pay</h3>
+    <h3 id="payTitle" data-i18n="pay.title">Pay</h3>
     <p id="payBook"></p>
     <div id="payDetails"></div>
     <div class="form-group" style="margin-top:16px">
-      <label class="form-label">Payment method</label>
+      <label class="form-label" data-i18n="pay.method">Payment method</label>
       <select class="form-select" id="payMethod">
-        <option value="">— select —</option>
+        <option value="">—</option>
         <option value="MTN Mobile Money">MTN Mobile Money</option>
         <option value="Airtel Money">Airtel Money</option>
         <option value="Bank Transfer">Bank Transfer</option>
@@ -354,38 +342,32 @@ tr:hover td{background:var(--bg-sub)}
         <option value="Cash">Cash</option>
       </select>
     </div>
-    <div class="form-group"><label class="form-label">Reference from your SMS</label><input class="form-input" id="payRef" placeholder="e.g. MOMO-1234ABCD"></div>
-    <div class="form-group"><label class="form-label">Amount you paid (USD)</label><input class="form-input" id="payAmountInput" type="number" step="0.01" min="0.01"></div>
-    <div class="form-group"><label class="form-label">Note (optional)</label><textarea class="form-textarea" id="payNote"></textarea></div>
+    <div class="form-group"><label class="form-label" data-i18n="pay.ref">Reference from SMS</label><input class="form-input" id="payRef"></div>
+    <div class="form-group"><label class="form-label" data-i18n="pay.amount">Amount (USD)</label><input class="form-input" id="payAmountInput" type="number" step="0.01" min="0.01"></div>
+    <div class="form-group"><label class="form-label" data-i18n="pay.note">Note (optional)</label><textarea class="form-textarea" id="payNote"></textarea></div>
     <div class="modal-actions">
-      <button class="btn btn-secondary" onclick="payment.close()">Cancel</button>
-      <button class="btn btn-primary" id="payConfirm">Submit record</button>
+      <button class="btn btn-secondary" onclick="payment.close()" data-i18n="pay.cancel">Cancel</button>
+      <button class="btn btn-primary" id="payConfirm" data-i18n="pay.submit">Submit</button>
     </div>
   </div>
 </div>
 
-<!-- PDF viewer modal -->
 <div class="modal-overlay" id="pdfModal" onclick="if(event.target===this)this.classList.remove('show')">
   <div class="modal" style="max-width:900px;width:100%">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px">
-      <div>
-        <h3 id="pdfTitle">Document</h3>
-        <p id="pdfMeta" style="font-size:.85rem"></p>
-      </div>
-      <button class="btn btn-secondary btn-sm" onclick="document.getElementById('pdfModal').classList.remove('show')"><i class="fas fa-times"></i> Close</button>
+      <div><h3 id="pdfTitle">Document</h3><p id="pdfMeta" style="font-size:.85rem"></p></div>
+      <button class="btn btn-secondary btn-sm" onclick="document.getElementById('pdfModal').classList.remove('show')"><i class="fas fa-times"></i></button>
     </div>
     <div id="pdfContent" style="min-height:400px;background:var(--bg-sub);border-radius:10px;overflow:hidden"></div>
   </div>
 </div>
 
-<!-- Demo email modal -->
 <div class="modal-overlay" id="mailModal">
   <div class="modal">
-    <h3><i class="fas fa-envelope" style="color:var(--accent)"></i> Demo email preview</h3>
-    <p style="margin-top:6px">Real delivery to your inbox requires a server with SMTP (Ethereal, Gmail, SendGrid). This modal shows what the email would look like.</p>
+    <h3><i class="fas fa-envelope" style="color:var(--accent)"></i> <span data-i18n="mail.title">Email preview</span></h3>
     <div style="background:var(--bg-sub);padding:16px;border-radius:8px;margin-top:14px;font-size:.85rem;line-height:1.7" id="mailPreview"></div>
     <div class="modal-actions">
-      <button class="btn btn-primary btn-block" onclick="document.getElementById('mailModal').classList.remove('show')">Close</button>
+      <button class="btn btn-primary btn-block" onclick="document.getElementById('mailModal').classList.remove('show')" data-i18n="mail.close">Close</button>
     </div>
   </div>
 </div>
@@ -393,25 +375,203 @@ tr:hover td{background:var(--bg-sub)}
 <div id="toasts" class="toast-container"></div>
 
 <script>
+/* ============================================================
+   i18n — full translation dictionary
+   ============================================================ */
+const dict = {
+  en: {
+    'nav.home':'Home','nav.library':'Library','nav.how':'How it works','nav.login':'Login',
+    'hero.eyebrow':'Syllabuses, documents & books',
+    'hero.title':'Where great syllabuses find their teachers.',
+    'hero.subtitle':'Publish, discover, and download quality syllabuses and documents. Secure payments, three languages, thoughtfully crafted templates.',
+    'hero.getStarted':'Get started','hero.browse':'Browse library',
+    'home.recent':'Recently added','home.recentSub':'New syllabuses & documents',
+    'home.free':'Free resources','home.freeSub':'Books of RE and other free documents',
+    'library.title':'Syllabuses & documents','library.sub':'All published documents.',
+    'how.title':'How it works',
+    'how.step1':'Choose your role at login: Admin, Teacher, or Student.',
+    'how.step2':'Strong passwords required: at least 12 characters with uppercase, lowercase, number, and special character.',
+    'how.step3':'Teachers and students create accounts with email, name, password. Students also enter level, class, and section.',
+    'how.step4':'Admins log in with email or username, password, and their answer word.',
+    'how.step5':'Browse the library — free documents (Books of RE) need no payment.',
+    'how.step6':'Submit your payment record with the reference from your SMS, then the admin verifies it.',
+    'auth.signin':'Sign in','auth.signinSub':'Choose your role and sign in',
+    'auth.tab.signin':'Sign in','auth.tab.signup':'Create account','auth.tab.forgot':'Forgot password',
+    'auth.id':'Email or username','auth.password':'Password','auth.answer':'Answer word (admin only)',
+    'auth.fullName':'Full name','auth.email':'Email',
+    'auth.answerCreate':'Answer word (for admin password reset)',
+    'auth.level':'Level','auth.class':'Class','auth.section':'Section','auth.newPassword':'New password',
+    'role.admin':'Admin','role.adminDesc':'Manage','role.teacher':'Teacher','role.teacherDesc':'Teach','role.student':'Student','role.studentDesc':'Learn',
+    'pw.length':'At least 12 characters','pw.upper':'Uppercase letter','pw.lower':'Lowercase letter','pw.digit':'Number','pw.special':'Special character','pw.nocommon':'Not common','pw.noseq':'No sequences','pw.norepeat':'No 3+ repeats',
+    'pay.title':'Pay','pay.method':'Payment method','pay.ref':'Reference from SMS','pay.amount':'Amount (USD)','pay.note':'Note (optional)','pay.cancel':'Cancel','pay.submit':'Submit',
+    'mail.title':'Email preview','mail.close':'Close',
+    'footer.copy':'All rights reserved.',
+    'dash.welcome':'Welcome','dash.overview':'Overview','dash.payments':'My payment records','dash.mine':'My library','dash.free':'Free documents','dash.account':'Account',
+    'dash.changePw':'Change password','dash.currentPw':'Current password','dash.updatePw':'Update password',
+    'admin.overview':'Overview','admin.profile':'My profile','admin.documents':'Add document','admin.drafts':'Drafting','admin.verify':'Verify','admin.users':'Users','admin.account':'Account',
+    'admin.signout':'Sign out','dash.signout':'Sign out',
+    'common.owned':'owned','common.free':'FREE','common.read':'Read','common.view':'View','common.download':'Download',
+    'common.delete':'Delete','common.save':'Save','common.publish':'Publish','common.close':'Close',
+    'common.approve':'Approve','common.reject':'Reject','common.edit':'Edit',
+    'toast.welcome':'Welcome,','toast.signedOut':'Signed out.',
+    'toast.accountCreated':'Account created.','toast.confirmFirst':'Please confirm your email first.',
+    'toast.paySubmitted':'Record submitted. Admin will verify soon.',
+    'toast.draftSaved':'Draft saved','toast.published':'Published to library',
+    'toast.deleted':'Deleted','toast.approved':'Approved','toast.rejected':'Rejected',
+    'toast.profileSaved':'Profile saved','toast.passwordUpdated':'Password updated','toast.emailConfirmed':'Email confirmed. Sign in.',
+    'empty.noDocs':'No documents yet. Sign in as admin to upload the first one.',
+    'empty.noFree':'No free documents yet.','empty.noMatch':'No documents match.',
+    'empty.noRecords':'None yet.','empty.noPurchases':'No purchases yet.','empty.noDrafts':'No drafts yet.','empty.noUsers':'No users yet.','empty.noPending':'No pending records.',
+    'err.pwTooWeak':'Password too weak.',
+    'err.pwWeakDetail':'Password is weak — needs:','err.noRole':'Choose your role first.',
+    'err.invalidCreds':'Invalid credentials.','err.answerWrong':'Answer word is incorrect.','err.answerRequired':'Answer word required for admin.',
+    'err.emailTaken':'Email already registered.','err.emailBad':'Enter a valid email.','err.nameShort':'Enter your full name.',
+    'err.roleMismatch':'This account has a different role.','err.noAccount':'No account with that email.',
+    'err.nameMismatch':'Name does not match our records.','err.pwWrong':'Current password is wrong.',
+    'err.titleAuthor':'Title and author required.','err.onlyAdmin':'Admins cannot self-register.',
+    'err.payChoose':'Choose a payment method.','err.payRef':'Enter the SMS reference.','err.payAmount':'Enter amount.'
+  },
+  rw: {
+    'nav.home':'Ahabanza','nav.library':'Isomero','nav.how':'Bikora gute','nav.login':'Injira',
+    'hero.eyebrow':'Syllabus, inyandiko n’ibitabo',
+    'hero.title':'Aho syllabus nziza zihurira n’abarimu.',
+    'hero.subtitle':'Tangaza, shakisha, kandi ukure syllabus n’inyandiko nziza. Indimi eshatu, kwishyura umutekano.',
+    'hero.getStarted':'Tangira','hero.browse':'Reba isomero',
+    'home.recent':'Bishya','home.recentSub':'Syllabus n’inyandiko nshya',
+    'home.free':'Ibikoresho buntu','home.freeSub':'Ibitabo by’idini n’ibindi buntu',
+    'library.title':'Syllabus n’inyandiko','library.sub':'Syllabus zose zatangajwe.',
+    'how.title':'Bikora gute',
+    'how.step1':'Hitamo uruhare rwawe: Umuyobozi, Umwarimu, cyangwa Umunyeshuri.',
+    'how.step2':'Ijambo ry’ibanga rikomeye: nibura inyuguti 12 zirimo inyuguti nkuru, nto, umubare, n’ikimenyetso.',
+    'how.step3':'Abarimu n’abanyeshuri bafungura konti bakoresheje imeyili, amazina, ijambo ry’ibanga. Abanyeshuri bandika n’urwego, ikilasi, n’ishami.',
+    'how.step4':'Abayobozi binjira bakoresheje imeyili cyangwa izina, ijambo ry’ibanga, n’ijambo ry’igisubizo.',
+    'how.step5':'Reba isomero — inyandiko buntu (Ibitabo by’idini) ntizisaba kwishyura.',
+    'how.step6':'Ohereza inyandiko y’ubwishyu hamwe na nimero ya SMS, hanyuma umuyobozi ayemeze.',
+    'auth.signin':'Injira','auth.signinSub':'Hitamo uruhare wawe winjire',
+    'auth.tab.signin':'Injira','auth.tab.signup':'Fungura konti','auth.tab.forgot':'Wibagiwe ijambo',
+    'auth.id':'Imeyili cyangwa izina','auth.password':'Ijambo ry’ibanga','auth.answer':'Ijambo ry’igisubizo (umuyobozi gusa)',
+    'auth.fullName':'Amazina yombi','auth.email':'Imeyili',
+    'auth.answerCreate':'Ijambo ry’igisubizo (ku guhindura ijambo ry’ibanga)',
+    'auth.level':'Urwego','auth.class':'Ikilasi','auth.section':'Ishami','auth.newPassword':'Ijambo ry’ibanga rishya',
+    'role.admin':'Umuyobozi','role.adminDesc':'Genzura','role.teacher':'Umwarimu','role.teacherDesc':'Rigisha','role.student':'Umunyeshuri','role.studentDesc':'Iga',
+    'pw.length':'Nibura inyuguti 12','pw.upper':'Inyuguti nkuru','pw.lower':'Inyuguti nto','pw.digit':'Umubare','pw.special':'Ikimenyetso','pw.nocommon':'Ntabwo isanzwe','pw.noseq':'Nta ruhererekane','pw.norepeat':'Nta gusubiramo 3+',
+    'pay.title':'Wishyure','pay.method':'Uburyo bwo kwishyura','pay.ref':'Nimero ya SMS','pay.amount':'Amafaranga (USD)','pay.note':'Icyitonderwa','pay.cancel':'Reka','pay.submit':'Ohereza',
+    'mail.title':'Reba imeyili','mail.close':'Funga',
+    'footer.copy':'Uburenganzira bwose burafitwe.',
+    'dash.welcome':'Murakaza','dash.overview':'Incamake','dash.payments':'Inyandiko z’ubwishyu','dash.mine':'Isomero ryanjye','dash.free':'Inyandiko buntu','dash.account':'Konti',
+    'dash.changePw':'Hindura ijambo ry’ibanga','dash.currentPw':'Ijambo ry’ibanga rya none','dash.updatePw':'Hindura',
+    'admin.overview':'Incamake','admin.profile':'Umwirondoro wanjye','admin.documents':'Ongeraho inyandiko','admin.drafts':'Gutegura','admin.verify':'Emeza','admin.users':'Abakoresha','admin.account':'Konti',
+    'admin.signout':'Sohoka','dash.signout':'Sohoka',
+    'common.owned':'bifite','common.free':'BUNTU','common.read':'Soma','common.view':'Reba','common.download':'Kura',
+    'common.delete':'Siba','common.save':'Bika','common.publish':'Tangaza','common.close':'Funga',
+    'common.approve':'Emeza','common.reject':'Anga','common.edit':'Hindura',
+    'toast.welcome':'Murakaza,','toast.signedOut':'Wasohotse.',
+    'toast.accountCreated':'Konti yafunguwe.','toast.confirmFirst':'Nyamuneka emeza imeyili mbere.',
+    'toast.paySubmitted':'Inyandiko yoherejwe. Umuyobozi azayemeza.',
+    'toast.draftSaved':'Inyandiko yabitswe','toast.published':'Byatangajwe mu isomero',
+    'toast.deleted':'Byasibwe','toast.approved':'Byemejwe','toast.rejected':'Byanzwe',
+    'toast.profileSaved':'Umwirondoro wabitswe','toast.passwordUpdated':'Ijambo ry’ibanga ryahinduwe','toast.emailConfirmed':'Imeyili yemejwe. Injira.',
+    'empty.noDocs':'Nta nyandiko. Injira nk’umuyobozi utangaze iya mbere.',
+    'empty.noFree':'Nta nyandiko buntu.','empty.noMatch':'Nta nyandiko zihuye.',
+    'empty.noRecords':'Nta na kimwe.','empty.noPurchases':'Nta byaguzwe.','empty.noDrafts':'Nta nyandiko ziteguye.','empty.noUsers':'Nta bakoresha.','empty.noPending':'Nta byo kwemeza.',
+    'err.pwTooWeak':'Ijambo ry’ibanga ni intege nke.',
+    'err.pwWeakDetail':'Ijambo ry’ibanga ni intege nke — rikeneye:','err.noRole':'Hitamo uruhare wawe mbere.',
+    'err.invalidCreds':'Amakuru ntaryo.','err.answerWrong':'Ijambo ry’igisubizo ntiryo.','err.answerRequired':'Ijambo ry’igisubizo rirakenewe.',
+    'err.emailTaken':'Iyi imeyili isanzwe ifite konti.','err.emailBad':'Uzuza imeyili yemewe.','err.nameShort':'Uzuza amazina yawe yombi.',
+    'err.roleMismatch':'Iyi konti ifite uruhare rutandukanye.','err.noAccount':'Nta konti ifite iyi imeyili.',
+    'err.nameMismatch':'Amazina ntahuye n’ayo twanditse.','err.pwWrong':'Ijambo ry’ibanga rya none ntiryo.',
+    'err.titleAuthor':'Umutwe n’umwanditsi birakenewe.','err.onlyAdmin':'Abayobozi ntibashobora kwiyandikisha.',
+    'err.payChoose':'Hitamo uburyo bwo kwishyura.','err.payRef':'Uzuza nimero ya SMS.','err.payAmount':'Uzuza amafaranga.'
+  },
+  fr: {
+    'nav.home':'Accueil','nav.library':'Bibliothèque','nav.how':'Comment ça marche','nav.login':'Connexion',
+    'hero.eyebrow':'Programmes, documents et livres',
+    'hero.title':'Là où les grands programmes trouvent leurs enseignants.',
+    'hero.subtitle':'Publiez, découvrez et téléchargez des programmes et documents de qualité. Trois langues, paiements sécurisés.',
+    'hero.getStarted':'Commencer','hero.browse':'Voir la bibliothèque',
+    'home.recent':'Récemment ajoutés','home.recentSub':'Nouveaux programmes et documents',
+    'home.free':'Ressources gratuites','home.freeSub':'Livres de religion et autres documents gratuits',
+    'library.title':'Programmes et documents','library.sub':'Tous les documents publiés.',
+    'how.title':'Comment ça marche',
+    'how.step1':'Choisissez votre rôle à la connexion : Admin, Enseignant ou Étudiant.',
+    'how.step2':'Mots de passe forts requis : au moins 12 caractères avec majuscule, minuscule, chiffre et caractère spécial.',
+    'how.step3':'Les enseignants et étudiants créent un compte avec email, nom, mot de passe. Les étudiants entrent aussi niveau, classe et section.',
+    'how.step4':'Les admins se connectent avec email ou nom, mot de passe et mot de réponse.',
+    'how.step5':'Parcourez la bibliothèque — les documents gratuits (Livres de religion) ne nécessitent aucun paiement.',
+    'how.step6':'Soumettez votre justificatif de paiement avec la référence de votre SMS, puis l’admin le vérifie.',
+    'auth.signin':'Connexion','auth.signinSub':'Choisissez votre rôle et connectez-vous',
+    'auth.tab.signin':'Connexion','auth.tab.signup':'Créer un compte','auth.tab.forgot':'Mot de passe oublié',
+    'auth.id':'Email ou nom','auth.password':'Mot de passe','auth.answer':'Mot de réponse (admin uniquement)',
+    'auth.fullName':'Nom complet','auth.email':'Email',
+    'auth.answerCreate':'Mot de réponse (pour réinitialiser)',
+    'auth.level':'Niveau','auth.class':'Classe','auth.section':'Section','auth.newPassword':'Nouveau mot de passe',
+    'role.admin':'Admin','role.adminDesc':'Gérer','role.teacher':'Enseignant','role.teacherDesc':'Enseigner','role.student':'Étudiant','role.studentDesc':'Apprendre',
+    'pw.length':'Au moins 12 caractères','pw.upper':'Majuscule','pw.lower':'Minuscule','pw.digit':'Chiffre','pw.special':'Caractère spécial','pw.nocommon':'Pas commun','pw.noseq':'Pas de séquences','pw.norepeat':'Pas de répétitions 3+',
+    'pay.title':'Payer','pay.method':'Méthode de paiement','pay.ref':'Référence du SMS','pay.amount':'Montant (USD)','pay.note':'Note (optionnel)','pay.cancel':'Annuler','pay.submit':'Soumettre',
+    'mail.title':'Aperçu email','mail.close':'Fermer',
+    'footer.copy':'Tous droits réservés.',
+    'dash.welcome':'Bienvenue','dash.overview':'Aperçu','dash.payments':'Mes paiements','dash.mine':'Ma bibliothèque','dash.free':'Documents gratuits','dash.account':'Compte',
+    'dash.changePw':'Changer le mot de passe','dash.currentPw':'Mot de passe actuel','dash.updatePw':'Mettre à jour',
+    'admin.overview':'Aperçu','admin.profile':'Mon profil','admin.documents':'Ajouter un document','admin.drafts':'Rédaction','admin.verify':'Vérifier','admin.users':'Utilisateurs','admin.account':'Compte',
+    'admin.signout':'Déconnexion','dash.signout':'Déconnexion',
+    'common.owned':'possédé','common.free':'GRATUIT','common.read':'Lire','common.view':'Voir','common.download':'Télécharger',
+    'common.delete':'Supprimer','common.save':'Enregistrer','common.publish':'Publier','common.close':'Fermer',
+    'common.approve':'Approuver','common.reject':'Rejeter','common.edit':'Modifier',
+    'toast.welcome':'Bienvenue,','toast.signedOut':'Déconnecté.',
+    'toast.accountCreated':'Compte créé.','toast.confirmFirst':'Confirmez votre email d’abord.',
+    'toast.paySubmitted':'Justificatif soumis. Admin va vérifier.',
+    'toast.draftSaved':'Brouillon enregistré','toast.published':'Publié dans la bibliothèque',
+    'toast.deleted':'Supprimé','toast.approved':'Approuvé','toast.rejected':'Rejeté',
+    'toast.profileSaved':'Profil enregistré','toast.passwordUpdated':'Mot de passe mis à jour','toast.emailConfirmed':'Email confirmé. Connectez-vous.',
+    'empty.noDocs':'Aucun document. Connectez-vous comme admin pour ajouter.',
+    'empty.noFree':'Aucun document gratuit.','empty.noMatch':'Aucun document ne correspond.',
+    'empty.noRecords':'Aucun.','empty.noPurchases':'Aucun achat.','empty.noDrafts':'Aucun brouillon.','empty.noUsers':'Aucun utilisateur.','empty.noPending':'Aucun en attente.',
+    'err.pwTooWeak':'Mot de passe trop faible.',
+    'err.pwWeakDetail':'Mot de passe faible — nécessite :','err.noRole':'Choisissez votre rôle d’abord.',
+    'err.invalidCreds':'Identifiants invalides.','err.answerWrong':'Mot de réponse incorrect.','err.answerRequired':'Mot de réponse requis.',
+    'err.emailTaken':'Email déjà enregistré.','err.emailBad':'Entrez un email valide.','err.nameShort':'Entrez votre nom complet.',
+    'err.roleMismatch':'Ce compte a un rôle différent.','err.noAccount':'Aucun compte avec cet email.',
+    'err.nameMismatch':'Le nom ne correspond pas.','err.pwWrong':'Mot de passe actuel incorrect.',
+    'err.titleAuthor':'Titre et auteur requis.','err.onlyAdmin':'Les admins ne peuvent pas s’inscrire.',
+    'err.payChoose':'Choisissez une méthode.','err.payRef':'Entrez la référence SMS.','err.payAmount':'Entrez le montant.'
+  }
+};
+
+const i18n = (() => {
+  let current = Prefs.get('lang','en');
+  if (!dict[current]) current = 'en';
+  const t = (key) => dict[current][key] ?? dict.en[key] ?? key;
+  const apply = () => {
+    document.documentElement.lang = current;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      el.textContent = t(key);
+    });
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === current));
+    // re-render dynamic views on language change
+    document.dispatchEvent(new Event('langchange'));
+  };
+  const set = (lang) => {
+    if (!dict[lang]) return;
+    current = lang;
+    Prefs.set('lang', lang);
+    apply();
+  };
+  return { t, apply, set, get: () => current };
+})();
+
 /* ============ UTILS ============ */
 const $ = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 const esc = (s) => String(s??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const $money = (c) => '$' + (c/100).toFixed(2);
 
-/* ============ PASSWORD STRENGTH ============ */
+/* ============ PASSWORD ============ */
 const Password = (() => {
-  const COMMON = new Set([
-    'password','password1','password123','12345678','123456789','1234567890',
-    'qwerty','qwerty123','qwertyuiop','admin','admin123','administrator',
-    'welcome','welcome1','letmein','monkey','dragon','sunshine','iloveyou',
-    'abc123','password!','passw0rd','p@ssw0rd','changeme','secret','football',
-    'baseball','master','superman','batman','trustno1','hello','hello123'
-  ]);
-
+  const COMMON = new Set(['password','password1','password123','12345678','123456789','1234567890','qwerty','qwerty123','admin','admin123','welcome','welcome1','letmein','monkey','dragon','sunshine','iloveyou','abc123','changeme','secret','football','baseball','master','superman','batman','hello','hello123']);
   function evaluate(pw) {
     pw = pw || '';
-    const result = {
+    const r = {
       length: pw.length >= 12,
       upper: /[A-Z]/.test(pw),
       lower: /[a-z]/.test(pw),
@@ -421,48 +581,42 @@ const Password = (() => {
       noseq: pw.length > 0 && !/(abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz|012|123|234|345|456|567|678|789)/i.test(pw),
       norepeat: pw.length > 0 && !/(.)\1\1/.test(pw)
     };
-    const passed = Object.values(result).filter(Boolean).length;
+    const passed = Object.values(r).filter(Boolean).length;
     let level = 'weak';
     if (passed >= 8) level = 'strong';
     else if (passed >= 6) level = 'good';
     else if (passed >= 4) level = 'fair';
-    const ok = result.length && result.upper && result.lower && result.digit && result.special && result.nocommon && result.noseq && result.norepeat;
-    return { ok, level, result, passed, total: 8 };
+    const ok = r.length && r.upper && r.lower && r.digit && r.special && r.nocommon && r.noseq && r.norepeat;
+    return { ok, level, result: r };
   }
-
   function validate(pw) {
     const e = evaluate(pw);
     if (e.ok) return;
     const missing = [];
-    if (!e.result.length) missing.push('at least 12 characters');
-    if (!e.result.upper) missing.push('an uppercase letter');
-    if (!e.result.lower) missing.push('a lowercase letter');
-    if (!e.result.digit) missing.push('a number');
-    if (!e.result.special) missing.push('a special character');
-    if (!e.result.nocommon) missing.push('a non-common password');
-    if (!e.result.noseq) missing.push('no sequences like abc/123');
-    if (!e.result.norepeat) missing.push('no 3+ repeats like aaa');
-    throw new Error('Password too weak — needs ' + missing.join(', ') + '.');
+    if (!e.result.length) missing.push(i18n.t('pw.length'));
+    if (!e.result.upper) missing.push(i18n.t('pw.upper'));
+    if (!e.result.lower) missing.push(i18n.t('pw.lower'));
+    if (!e.result.digit) missing.push(i18n.t('pw.digit'));
+    if (!e.result.special) missing.push(i18n.t('pw.special'));
+    if (!e.result.nocommon) missing.push(i18n.t('pw.nocommon'));
+    if (!e.result.noseq) missing.push(i18n.t('pw.noseq'));
+    if (!e.result.norepeat) missing.push(i18n.t('pw.norepeat'));
+    throw new Error(i18n.t('err.pwWeakDetail') + ' ' + missing.join(', ') + '.');
   }
-
   return { evaluate, validate };
 })();
 
-/* ============ PASSWORD STRENGTH UI ============ */
 const pwUI = (() => {
   function update(prefix) {
     const pw = $('#'+prefix+'Pw')?.value || '';
     const e = Password.evaluate(pw);
     const bar = $('#'+prefix+'MeterBar');
-    if (bar) {
-      bar.className = 'pw-meter-bar ' + e.level;
-    }
+    if (bar) bar.className = 'pw-meter-bar ' + e.level;
     const rules = $$('#'+prefix+'Rules li');
     rules.forEach(li => {
       const rule = li.dataset.rule;
       const met = e.result[rule];
       li.classList.toggle('met', met);
-      li.classList.remove('fail');
       const icon = li.querySelector('i');
       if (icon) icon.className = 'fas ' + (met ? 'fa-circle-check' : 'fa-circle');
     });
@@ -470,10 +624,45 @@ const pwUI = (() => {
   return { update };
 })();
 
+/* ============ PREFS ============ */
+const Prefs = {
+  get: (k,d) => { try { return JSON.parse(localStorage.getItem('bh_'+k)) ?? d; } catch { return d; } },
+  set: (k,v) => localStorage.setItem('bh_'+k, JSON.stringify(v))
+};
+
+/* ============ THEME ============ */
+const theme = (() => {
+  let current = Prefs.get('theme','light');
+  const apply = (t) => {
+    document.documentElement.dataset.theme = t;
+    const i = $('#themeBtn i');
+    if (i) i.className = t === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+  };
+  const toggle = () => {
+    current = current === 'light' ? 'dark' : 'light';
+    Prefs.set('theme', current);
+    apply(current);
+  };
+  return { init: () => apply(current), toggle };
+})();
+
+/* ============ TOAST ============ */
+const toast = (() => {
+  const c = $('#toasts');
+  return { show(msg, type='info', ms=4200) {
+    const el = document.createElement('div');
+    el.className = `toast ${type}`;
+    const ic = type==='success'?'fa-circle-check':type==='error'?'fa-circle-exclamation':type==='warning'?'fa-triangle-exclamation':'fa-circle-info';
+    el.innerHTML = `<i class="fas ${ic}"></i><span>${esc(msg)}</span>`;
+    c.appendChild(el);
+    setTimeout(() => { el.classList.add('removing'); setTimeout(() => el.remove(), 220); }, ms);
+  }};
+})();
+
 /* ============ INDEXEDDB ============ */
 const DB = (() => {
   const NAME='bookhaven', VERSION=6;
-  let dbp=null;
+  let dbp = null;
   const open = () => {
     if (dbp) return dbp;
     dbp = new Promise((resolve, reject) => {
@@ -526,35 +715,10 @@ const CryptoUtil = {
     return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
   },
   randomHex(bytes=24){
-    const a=new Uint8Array(bytes);crypto.getRandomValues(a);
-    return Array.from(a).map(b=>b.toString(16).padStart(2,'0')).join('');
+    const a = new Uint8Array(bytes); crypto.getRandomValues(a);
+    return Array.from(a).map(b => b.toString(16).padStart(2, '0')).join('');
   }
 };
-
-/* ============ PREFS / THEME / TOAST ============ */
-const Prefs = {
-  get:(k,d)=>{try{return JSON.parse(localStorage.getItem('bh_'+k))??d}catch{return d}},
-  set:(k,v)=>localStorage.setItem('bh_'+k, JSON.stringify(v))
-};
-
-const theme = (() => {
-  let current = Prefs.get('theme','light');
-  const apply = (t) => { document.documentElement.dataset.theme = t; const i=$('#themeBtn i'); if(i) i.className = t==='dark'?'fas fa-sun':'fas fa-moon'; };
-  const toggle = () => { current = current==='light'?'dark':'light'; Prefs.set('theme', current); apply(current); };
-  return { init:()=>apply(current), toggle };
-})();
-
-const toast = (() => {
-  const c = $('#toasts');
-  return { show(msg, type='info', ms=4200) {
-    const el = document.createElement('div');
-    el.className = `toast ${type}`;
-    const ic = type==='success'?'fa-circle-check':type==='error'?'fa-circle-exclamation':type==='warning'?'fa-triangle-exclamation':'fa-circle-info';
-    el.innerHTML = `<i class="fas ${ic}"></i><span>${esc(msg)}</span>`;
-    c.appendChild(el);
-    setTimeout(()=>{el.classList.add('removing');setTimeout(()=>el.remove(),220)}, ms);
-  }};
-})();
 
 /* ============ AUTH STATE ============ */
 const Auth = { currentUser: null, pendingVerifyUserId: null };
@@ -583,125 +747,79 @@ const AuthService = (() => {
   }
 
   async function registerStudent({ name, email, password, level, cls, section }) {
-    if (!name || name.trim().length < 2) throw new Error('Enter your full name.');
-    if (!/^\S+@\S+\.\S+$/.test(email)) throw new Error('Enter a valid email.');
+    if (!name || name.trim().length < 2) throw new Error(i18n.t('err.nameShort'));
+    if (!/^\S+@\S+\.\S+$/.test(email)) throw new Error(i18n.t('err.emailBad'));
     Password.validate(password);
-    if (!level || !cls) throw new Error('Level and class are required for students.');
+    if (!level || !cls) throw new Error(i18n.t('err.nameShort'));
     const emailLower = email.toLowerCase();
-    if ((await DB.byIndex('users','email',emailLower)).length) throw new Error('Email already registered.');
+    if ((await DB.byIndex('users','email',emailLower)).length) throw new Error(i18n.t('err.emailTaken'));
     const salt = CryptoUtil.randomHex(16);
     const hash = await CryptoUtil.hashPassword(password, salt);
-    const user = {
-      id:'u_'+Date.now()+'_'+CryptoUtil.randomHex(4),
-      name:name.trim(), email:emailLower, username:emailLower.split('@')[0],
-      salt, hash, role:'student',
-      level:level.trim(), class:cls.trim(), section:(section||'').trim(),
-      email_verified: 0, createdAt: Date.now()
-    };
+    const user = { id:'u_'+Date.now()+'_'+CryptoUtil.randomHex(4), name:name.trim(), email:emailLower, username:emailLower.split('@')[0], salt, hash, role:'student', level:level.trim(), class:cls.trim(), section:(section||'').trim(), email_verified:1, createdAt: Date.now() };
     await DB.put('users', user);
     return user;
   }
 
   async function registerTeacher({ name, email, password }) {
-    if (!name || name.trim().length < 2) throw new Error('Enter your full name.');
-    if (!/^\S+@\S+\.\S+$/.test(email)) throw new Error('Enter a valid email.');
+    if (!name || name.trim().length < 2) throw new Error(i18n.t('err.nameShort'));
+    if (!/^\S+@\S+\.\S+$/.test(email)) throw new Error(i18n.t('err.emailBad'));
     Password.validate(password);
     const emailLower = email.toLowerCase();
-    if ((await DB.byIndex('users','email',emailLower)).length) throw new Error('Email already registered.');
+    if ((await DB.byIndex('users','email',emailLower)).length) throw new Error(i18n.t('err.emailTaken'));
     const salt = CryptoUtil.randomHex(16);
     const hash = await CryptoUtil.hashPassword(password, salt);
-    const user = {
-      id:'u_'+Date.now()+'_'+CryptoUtil.randomHex(4),
-      name:name.trim(), email:emailLower, username:emailLower.split('@')[0],
-      salt, hash, role:'teacher',
-      email_verified: 0, createdAt: Date.now()
-    };
+    const user = { id:'u_'+Date.now()+'_'+CryptoUtil.randomHex(4), name:name.trim(), email:emailLower, username:emailLower.split('@')[0], salt, hash, role:'teacher', email_verified:1, createdAt: Date.now() };
     await DB.put('users', user);
     return user;
   }
 
   async function registerAdmin({ name, email, password, answer }) {
-    if (!name || name.trim().length < 2) throw new Error('Enter your full name.');
-    if (!/^\S+@\S+\.\S+$/.test(email)) throw new Error('Enter a valid email.');
+    if (!name || name.trim().length < 2) throw new Error(i18n.t('err.nameShort'));
+    if (!/^\S+@\S+\.\S+$/.test(email)) throw new Error(i18n.t('err.emailBad'));
     Password.validate(password);
-    if (!answer || answer.trim().length < 2) throw new Error('Answer word must be at least 2 characters.');
+    if (!answer || answer.trim().length < 2) throw new Error(i18n.t('err.answerRequired'));
     const emailLower = email.toLowerCase();
-    if ((await DB.byIndex('users','email',emailLower)).length) throw new Error('Email already registered.');
-
+    if ((await DB.byIndex('users','email',emailLower)).length) throw new Error(i18n.t('err.emailTaken'));
     const allUsers = await DB.getAll('users');
     const isFirst = allUsers.length === 0;
-
     const salt = CryptoUtil.randomHex(16);
     const hash = await CryptoUtil.hashPassword(password, salt);
     const answerSalt = CryptoUtil.randomHex(16);
     const answerHash = await CryptoUtil.hashPassword(answer.trim().toLowerCase(), answerSalt);
-
-    const user = {
-      id:'u_'+Date.now()+'_'+CryptoUtil.randomHex(4),
-      name:name.trim(), email:emailLower, username:emailLower.split('@')[0],
-      salt, hash, role:'admin',
-      answerSalt, answerHash,
-      email_verified: isFirst ? 1 : 0,
-      createdAt: Date.now()
-    };
+    const user = { id:'u_'+Date.now()+'_'+CryptoUtil.randomHex(4), name:name.trim(), email:emailLower, username:emailLower.split('@')[0], salt, hash, role:'admin', answerSalt, answerHash, email_verified:1, createdAt: Date.now() };
     await DB.put('users', user);
-    await DB.put('admin_profiles', {
-      user_id: user.id, display_name: name.trim(), school:'', phone:'', address:'', bio:'', website:'', logo_data:''
-    });
+    await DB.put('admin_profiles', { user_id: user.id, display_name: name.trim(), school:'', phone:'', address:'', bio:'', website:'', logo_data:'' });
     return { user, isFirst };
-  }
-
-  async function verifyEmail(userId) {
-    const u = await DB.get('users', userId);
-    if (!u) throw new Error('User not found');
-    u.email_verified = 1;
-    await DB.put('users', u);
-    return u;
   }
 
   async function login(role, id, password, answer) {
     const idLower = (id||'').trim().toLowerCase();
-    if (!idLower) throw new Error('Enter email or username.');
-    if (!password) throw new Error('Enter password.');
-
+    if (!idLower || !password) throw new Error(i18n.t('err.invalidCreds'));
     let users = await DB.byIndex('users','email',idLower);
     if (!users.length) users = await DB.byIndex('users','username',idLower);
-    if (!users.length) throw new Error('Invalid credentials.');
-
+    if (!users.length) throw new Error(i18n.t('err.invalidCreds'));
     const user = users.find(u => u.role === role);
-    if (!user) throw new Error(`No ${role} account with those credentials.`);
-
+    if (!user) throw new Error(i18n.t('err.roleMismatch'));
     const hash = await CryptoUtil.hashPassword(password, user.salt);
-    if (hash !== user.hash) throw new Error('Invalid credentials.');
-
+    if (hash !== user.hash) throw new Error(i18n.t('err.invalidCreds'));
     if (user.role === 'admin') {
-      if (!answer) throw new Error('Answer word is required for admin.');
+      if (!answer) throw new Error(i18n.t('err.answerRequired'));
       const ah = await CryptoUtil.hashPassword(answer.trim().toLowerCase(), user.answerSalt);
-      if (ah !== user.answerHash) throw new Error('Answer word is incorrect.');
+      if (ah !== user.answerHash) throw new Error(i18n.t('err.answerWrong'));
     }
-
-    if (!user.email_verified && user.role !== 'admin') {
-      const err = new Error('Please confirm your email first.');
-      err.needsVerification = true;
-      err.userId = user.id;
-      throw err;
-    }
-
     await createSession(user.id);
     Auth.currentUser = user;
     return user;
   }
 
   async function changePasswordByEmail(email, name, newPassword) {
-    if (!/^\S+@\S+\.\S+$/.test(email||'')) throw new Error('Enter a valid email.');
-    if ((name||'').trim().length < 2) throw new Error('Enter your full name.');
+    if (!/^\S+@\S+\.\S+$/.test(email||'')) throw new Error(i18n.t('err.emailBad'));
+    if ((name||'').trim().length < 2) throw new Error(i18n.t('err.nameShort'));
     Password.validate(newPassword);
     const users = await DB.byIndex('users','email', email.toLowerCase());
-    if (!users.length) throw new Error('No account with that email.');
+    if (!users.length) throw new Error(i18n.t('err.noAccount'));
     const user = users[0];
-    if (user.name.trim().toLowerCase() !== name.trim().toLowerCase()) {
-      throw new Error('Name does not match our records.');
-    }
+    if (user.name.trim().toLowerCase() !== name.trim().toLowerCase()) throw new Error(i18n.t('err.nameMismatch'));
     user.salt = CryptoUtil.randomHex(16);
     user.hash = await CryptoUtil.hashPassword(newPassword, user.salt);
     user.email_verified = 1;
@@ -722,133 +840,70 @@ const AuthService = (() => {
     Auth.currentUser = null;
   }
 
-  return { restore, registerStudent, registerTeacher, registerAdmin, verifyEmail, login, changePasswordByEmail, saveUser, logout };
+  return { restore, registerStudent, registerTeacher, registerAdmin, login, changePasswordByEmail, saveUser, logout };
 })();
 
-/* ============ DOCUMENTS ============ */
+/* ============ DOCS ============ */
 const Docs = (() => {
   async function list() { return DB.getAll('documents'); }
   async function addDocument(doc) {
     const d = {
       id:'d_'+Date.now()+'_'+CryptoUtil.randomHex(4),
-      title: doc.title, author: doc.author,
-      description: doc.description||'', content: doc.content||'',
-      pdf_data_url: doc.pdf_data_url || '',
-      type: doc.type || 'syllabus',
-      language: doc.language || 'en',
-      cover_color: doc.cover_color || '#c17a3f',
-      view_price_cents: doc.is_free ? 0 : (doc.view_price_cents||0),
-      download_price_cents: doc.is_free ? 0 : (doc.download_price_cents||0),
-      is_free: doc.is_free ? 1 : 0,
-      views:0, downloads:0,
-      createdAt: Date.now()
+      title:doc.title, author:doc.author,
+      description:doc.description||'', content:doc.content||'',
+      pdf_data_url:doc.pdf_data_url||'',
+      type:doc.type||'syllabus', language:doc.language||'en',
+      cover_color:doc.cover_color||'#c17a3f',
+      view_price_cents: doc.is_free?0:(doc.view_price_cents||0),
+      download_price_cents: doc.is_free?0:(doc.download_price_cents||0),
+      is_free: doc.is_free?1:0,
+      views:0, downloads:0, createdAt: Date.now()
     };
     await DB.put('documents', d);
     return d;
   }
   async function deleteDocument(id) { await DB.del('documents', id); }
   async function incrementViews(id) { const d = await DB.get('documents', id); if (d) { d.views=(d.views||0)+1; await DB.put('documents', d); } }
-  async function incrementDownloads(id) { const d = await DB.get('documents', id); if (d) { d.downloads=(d.downloads||0)+1; await DB.put('documents', d); } }
-  return { list, addDocument, deleteDocument, incrementViews, incrementDownloads };
+  return { list, addDocument, deleteDocument, incrementViews };
 })();
 
-/* ============ PURCHASES ============ */
+/* ============ PURCHASES / PAYRECS / DRAFTS / PROFILE ============ */
 const Purchases = (() => {
-  async function ownedBy(userId) {
-    const rows = await DB.byIndex('purchases','user_id',userId);
-    return new Set(rows.filter(p=>p.status==='paid').map(p=>p.document_id));
-  }
-  async function hasAccess(userId, docId, kind) {
-    const rows = await DB.byIndex('purchases','user_id',userId);
-    return rows.some(p => p.document_id===docId && p.status==='paid' &&
-      (kind==='view' ? true : p.kind === 'download'));
-  }
-  async function grant(userId, docId, amount, kind, ref, method) {
-    await DB.add('purchases', {
-      user_id:userId, document_id:docId, amount_cents:amount,
-      kind, payment_ref:ref, payment_method:method,
-      status:'paid', created_at: Date.now()
-    });
-  }
+  async function ownedBy(userId) { const rows = await DB.byIndex('purchases','user_id',userId); return new Set(rows.filter(p=>p.status==='paid').map(p=>p.document_id)); }
+  async function hasAccess(userId, docId, kind) { const rows = await DB.byIndex('purchases','user_id',userId); return rows.some(p => p.document_id===docId && p.status==='paid' && (kind==='view' ? true : p.kind === 'download')); }
+  async function grant(userId, docId, amount, kind, ref, method) { await DB.add('purchases', { user_id:userId, document_id:docId, amount_cents:amount, kind, payment_ref:ref, payment_method:method, status:'paid', created_at: Date.now() }); }
   async function listFor(userId) { return DB.byIndex('purchases','user_id',userId); }
   return { ownedBy, hasAccess, grant, listFor };
 })();
 
-/* ============ PAYMENT RECORDS ============ */
 const PayRecs = (() => {
-  async function submit(userId, data) {
-    const rec = {
-      user_id: userId, document_id: data.document_id,
-      document_title: data.document_title, kind: data.kind,
-      method: data.method, reference: data.reference,
-      amount_cents: Math.round(data.amount*100),
-      note: data.note||'', date: new Date().toISOString().slice(0,10),
-      status: 'pending', createdAt: Date.now()
-    };
-    return DB.add('payment_records', rec);
-  }
+  async function submit(userId, data) { const rec = { user_id:userId, document_id:data.document_id, document_title:data.document_title, kind:data.kind, method:data.method, reference:data.reference, amount_cents:Math.round(data.amount*100), note:data.note||'', date:new Date().toISOString().slice(0,10), status:'pending', createdAt: Date.now() }; return DB.add('payment_records', rec); }
   async function listFor(userId) { return DB.byIndex('payment_records','user_id',userId); }
   async function listAll() { return DB.getAll('payment_records'); }
-  async function approve(id) {
-    const r = await DB.get('payment_records', id);
-    if (!r || r.status !== 'pending') throw new Error('Cannot approve');
-    r.status = 'approved';
-    await DB.put('payment_records', r);
-    await Purchases.grant(r.user_id, r.document_id, r.amount_cents, r.kind, r.reference, r.method);
-    return r;
-  }
-  async function reject(id) {
-    const r = await DB.get('payment_records', id);
-    if (!r) throw new Error('Not found');
-    r.status = 'rejected';
-    await DB.put('payment_records', r);
-    return r;
-  }
+  async function approve(id) { const r = await DB.get('payment_records', id); if (!r || r.status!=='pending') throw new Error('Cannot approve'); r.status='approved'; await DB.put('payment_records', r); await Purchases.grant(r.user_id, r.document_id, r.amount_cents, r.kind, r.reference, r.method); return r; }
+  async function reject(id) { const r = await DB.get('payment_records', id); if (!r) throw new Error('Not found'); r.status='rejected'; await DB.put('payment_records', r); return r; }
   return { submit, listFor, listAll, approve, reject };
 })();
 
-/* ============ DRAFTS / PROFILE ============ */
 const Drafts = (() => {
-  async function save(adminId, data) {
-    const draft = {
-      admin_id: adminId, title: data.title || 'Untitled',
-      type: data.type || 'syllabus',
-      content: data.content || '',
-      notes: data.notes || '',
-      updatedAt: Date.now(),
-      createdAt: data.createdAt || Date.now()
-    };
-    if (data.id) draft.id = data.id;
-    await DB.put('drafts', draft);
-    return draft;
-  }
+  async function save(adminId, data) { const draft = { admin_id:adminId, title:data.title||'Untitled', type:data.type||'syllabus', content:data.content||'', notes:data.notes||'', updatedAt: Date.now(), createdAt:data.createdAt||Date.now() }; if (data.id) draft.id = data.id; await DB.put('drafts', draft); return draft; }
   async function listFor(adminId) { return DB.byIndex('drafts','admin_id',adminId); }
   async function remove(id) { await DB.del('drafts', id); }
   return { save, listFor, remove };
 })();
 
 const Profile = (() => {
-  async function get(userId) {
-    let p = await DB.get('admin_profiles', userId);
-    if (!p) {
-      p = { user_id: userId, display_name:'', school:'', phone:'', address:'', bio:'', website:'', logo_data:'' };
-      await DB.put('admin_profiles', p);
-    }
-    return p;
-  }
-  async function save(userId, data) {
-    const p = { user_id: userId, ...data };
-    await DB.put('admin_profiles', p);
-    return p;
-  }
+  async function get(userId) { let p = await DB.get('admin_profiles', userId); if (!p) { p = { user_id:userId, display_name:'', school:'', phone:'', address:'', bio:'', website:'', logo_data:'' }; await DB.put('admin_profiles', p); } return p; }
+  async function save(userId, data) { const p = { user_id:userId, ...data }; await DB.put('admin_profiles', p); return p; }
   return { get, save };
 })();
 
-/* ============ USER MENU / ROUTER ============ */
+/* ============ USER MENU ============ */
 function renderUserMenu() {
   const el = $('#userMenu');
   if (!Auth.currentUser) {
-    el.innerHTML = `<button class="btn btn-primary" style="padding:8px 14px;font-size:.8rem" onclick="router.go('login')"><i class="fas fa-sign-in-alt"></i> Login</button>`;
+    el.innerHTML = `<button class="btn btn-primary" style="padding:8px 14px;font-size:.8rem" onclick="router.go('login')"><i class="fas fa-sign-in-alt"></i> <span data-i18n="nav.login">Login</span></button>`;
+    i18n.apply();
     return;
   }
   const u = Auth.currentUser;
@@ -862,6 +917,7 @@ function renderUserMenu() {
     </div>`;
 }
 
+/* ============ ROUTER ============ */
 const router = (() => {
   const routes = ['home','library','how','login','dashboard','admin'];
   async function go(route) {
@@ -892,24 +948,26 @@ const authUI = (() => {
     $('#signupFields').classList.toggle('hidden', m!=='signup');
     $('#forgotFields').classList.toggle('hidden', m!=='forgot');
     const signupTab = $$('.tab').find(t=>t.dataset.tab==='signup');
-    if (signupTab) signupTab.classList.toggle('hidden', selectedRole==='admin');
+    if (signupTab) signupTab.classList.toggle('hidden', selectedRole==='admin' && mode==='signin' ? false : false);
 
     const b = $('#authSubmit');
-    if (m==='signin') { b.querySelector('span').textContent = 'Sign in'; b.querySelector('i').className = 'fas fa-arrow-right-to-bracket'; }
-    else if (m==='signup') { b.querySelector('span').textContent = 'Create account'; b.querySelector('i').className = 'fas fa-user-plus'; }
-    else { b.querySelector('span').textContent = 'Reset password'; b.querySelector('i').className = 'fas fa-key'; }
+    const span = b.querySelector('span');
+    if (m==='signin') { span.dataset.i18n = 'auth.tab.signin'; b.querySelector('i').className = 'fas fa-arrow-right-to-bracket'; }
+    else if (m==='signup') { span.dataset.i18n = 'auth.tab.signup'; b.querySelector('i').className = 'fas fa-user-plus'; }
+    else { span.dataset.i18n = 'auth.tab.forgot'; b.querySelector('i').className = 'fas fa-key'; }
 
     const ansGroup = $('#siAnswerGroup');
     if (ansGroup) ansGroup.classList.toggle('hidden', !(m==='signin' && selectedRole==='admin'));
     $('#studentFields').classList.toggle('hidden', !(m==='signup' && selectedRole==='student'));
+    $('#answerCreateGroup').classList.toggle('hidden', !(m==='signup' && selectedRole==='admin'));
 
     feedback(null);
+    i18n.apply();
   }
 
   function setRole(r) {
     selectedRole = r;
     $$('.role-card').forEach(c => c.classList.toggle('active', c.dataset.role === r));
-    if (r==='admin' && mode==='signup') setMode('signin');
     setMode(mode);
   }
 
@@ -922,119 +980,72 @@ const authUI = (() => {
   async function submit(e) {
     e.preventDefault();
     feedback(null);
-    if (!selectedRole) { feedback('Choose your role first.'); return; }
+    if (!selectedRole) { feedback(i18n.t('err.noRole')); return; }
     const btn = $('#authSubmit'); btn.disabled = true;
     try {
       if (mode === 'signin') {
-        const user = await AuthService.login(
-          selectedRole,
-          $('#siId').value.trim(),
-          $('#siPw').value,
-          $('#siAnswer')?.value || ''
-        );
+        const user = await AuthService.login(selectedRole, $('#siId').value.trim(), $('#siPw').value, $('#siAnswer')?.value || '');
         renderUserMenu();
-        toast.show('Welcome, ' + user.name, 'success');
-        router.go(user.role==='admin' ? 'admin' : 'dashboard');
+        toast.show(i18n.t('toast.welcome') + ' ' + user.name, 'success');
+        router.go(user.role === 'admin' ? 'admin' : 'dashboard');
       } else if (mode === 'signup') {
+        const name = $('#suName').value.trim();
+        const email = $('#suEmail').value.trim();
+        const pw = $('#suPw').value;
         if (selectedRole === 'student') {
-          const user = await AuthService.registerStudent({
-            name: $('#suName').value.trim(),
-            email: $('#suEmail').value.trim(),
-            password: $('#suPw').value,
-            level: $('#suLevel').value.trim(),
-            cls: $('#suClass').value.trim(),
-            section: $('#suSection').value.trim()
-          });
-          Auth.pendingVerifyUserId = user.id;
-          showDemoEmail(user);
-          feedback('Account created. Check the demo email to confirm.', 'success');
-          setMode('signin');
+          const user = await AuthService.registerStudent({ name, email, password: pw, level: $('#suLevel').value.trim(), cls: $('#suClass').value.trim(), section: $('#suSection').value.trim() });
+          toast.show(i18n.t('toast.accountCreated'), 'success');
+          renderUserMenu();
+          router.go('dashboard');
         } else if (selectedRole === 'teacher') {
-          const user = await AuthService.registerTeacher({
-            name: $('#suName').value.trim(),
-            email: $('#suEmail').value.trim(),
-            password: $('#suPw').value
-          });
-          Auth.pendingVerifyUserId = user.id;
-          showDemoEmail(user);
-          feedback('Account created. Check the demo email to confirm.', 'success');
+          await AuthService.registerTeacher({ name, email, password: pw });
+          toast.show(i18n.t('toast.accountCreated'), 'success');
           setMode('signin');
+        } else if (selectedRole === 'admin') {
+          const answer = $('#suAnswer').value.trim();
+          const { user, isFirst } = await AuthService.registerAdmin({ name, email, password: pw, answer });
+          toast.show(isFirst ? i18n.t('toast.accountCreated') + ' (Admin bootstrapped)' : i18n.t('toast.accountCreated'), 'success');
+          renderUserMenu();
+          router.go('admin');
         } else {
-          feedback('Admins cannot self-register.', 'error');
+          feedback(i18n.t('err.onlyAdmin'));
         }
       } else if (mode === 'forgot') {
-        const email = $('#fgEmail').value.trim();
-        const name = $('#fgName').value.trim();
-        const newPw = $('#fgPw').value;
-        await AuthService.changePasswordByEmail(email, name, newPw);
-        showResetEmail({ name, email });
-        feedback('Password reset successfully (demo). Sign in with your new password.', 'success');
+        await AuthService.changePasswordByEmail($('#fgEmail').value.trim(), $('#fgName').value.trim(), $('#fgPw').value);
+        feedback(i18n.t('toast.passwordUpdated'), 'success');
         setMode('signin');
       }
     } catch (err) {
       feedback(err.message || 'Error');
-      if (err.needsVerification) Auth.pendingVerifyUserId = err.userId;
     } finally { btn.disabled = false; }
-  }
-
-  function showDemoEmail(user) {
-    const box = $('#mailPreview');
-    box.innerHTML = `
-      <strong>To:</strong> ${esc(user.email)}<br>
-      <strong>From:</strong> BookHaven &lt;no-reply@bookhaven.local&gt;<br>
-      <strong>Subject:</strong> Confirm your BookHaven account<br><br>
-      <p>Hi ${esc(user.name)},</p>
-      <p>Click the button in the real email to confirm your account. In this demo, use the button below.</p>
-      <button class="btn btn-primary btn-sm" style="margin-top:10px" onclick="authUI.confirmDemoEmail('${user.id}')">Confirm account (demo)</button>
-      <p style="margin-top:12px;color:var(--warning);font-size:.8rem">⚠ Demo only — no email actually sent.</p>`;
-    $('#mailModal').classList.add('show');
-  }
-
-  function showResetEmail(user) {
-    const box = $('#mailPreview');
-    box.innerHTML = `
-      <strong>To:</strong> ${esc(user.email)}<br>
-      <strong>From:</strong> BookHaven &lt;no-reply@bookhaven.local&gt;<br>
-      <strong>Subject:</strong> Password changed<br><br>
-      <p>Hi ${esc(user.name)},</p>
-      <p>Your password was successfully changed. If this wasn't you, contact support immediately.</p>
-      <p style="margin-top:12px;color:var(--warning);font-size:.8rem">⚠ Demo only — no email actually sent.</p>`;
-    $('#mailModal').classList.add('show');
-  }
-
-  async function confirmDemoEmail(userId) {
-    try {
-      await AuthService.verifyEmail(userId);
-      $('#mailModal').classList.remove('show');
-      toast.show('Email confirmed. You can sign in now.', 'success');
-    } catch (e) { toast.show(e.message, 'error'); }
   }
 
   async function logout() {
     await AuthService.logout();
     renderUserMenu();
-    toast.show('Signed out.', 'info');
+    toast.show(i18n.t('toast.signedOut'), 'info');
     router.go('home');
   }
 
   function init() {
-    $$('.tab').forEach(t=>t.addEventListener('click', ()=>setMode(t.dataset.tab)));
+    $$('.tab').forEach(t => t.addEventListener('click', () => setMode(t.dataset.tab)));
     $$('.role-card').forEach(c => c.addEventListener('click', () => setRole(c.dataset.role)));
     $('#authForm').addEventListener('submit', submit);
     setMode('signin');
   }
 
-  return { init, setMode, logout, confirmDemoEmail };
+  return { init, setMode, logout };
 })();
 
-/* ============ HOME / LIBRARY ============ */
+/* ============ HOME ============ */
 const home = (() => {
   function docCard(d) {
     const isFree = !!d.is_free;
-    const price = isFree ? `<span class="book-price free">FREE</span>` : `<span class="book-price">${$money(d.download_price_cents)}</span>`;
+    const price = isFree ? `<span class="book-price free">${i18n.t('common.free')}</span>` : `<span class="book-price">${$money(d.download_price_cents)}</span>`;
+    const icon = d.type==='syllabus'?'fa-book':d.type==='re'?'fa-church':'fa-file-alt';
     return `<div class="book-card">
       <div class="book-cover" style="background:linear-gradient(135deg,${d.cover_color||'#c17a3f'},${shade(d.cover_color||'#c17a3f',-30)})" onclick="home.open('${d.id}')">
-        <i class="fas ${d.type==='syllabus'?'fa-book':d.type==='re'?'fa-church':'fa-file-alt'}"></i>
+        <i class="fas ${icon}"></i>
         <span class="cover-badge">${esc(d.type||'doc')}</span>
       </div>
       <div class="book-body">
@@ -1042,8 +1053,8 @@ const home = (() => {
         <div class="book-author">${esc(d.author)}</div>
         <div class="book-footer">${price}<div style="display:flex;gap:4px;flex-wrap:wrap">${
           isFree
-            ? `<button class="btn-pill free" onclick="home.open('${d.id}')"><i class="fas fa-eye"></i> Read</button>`
-            : `<button class="btn-pill" onclick="payment.open('${d.id}','view')"><i class="fas fa-eye"></i> View ${$money(d.view_price_cents)}</button>
+            ? `<button class="btn-pill free" onclick="home.open('${d.id}')"><i class="fas fa-eye"></i> ${i18n.t('common.read')}</button>`
+            : `<button class="btn-pill" onclick="payment.open('${d.id}','view')"><i class="fas fa-eye"></i> ${i18n.t('common.view')} ${$money(d.view_price_cents)}</button>
                <button class="btn-pill" onclick="payment.open('${d.id}','download')"><i class="fas fa-download"></i> ${$money(d.download_price_cents)}</button>`
         }</div></div>
       </div>
@@ -1052,55 +1063,56 @@ const home = (() => {
   async function load() {
     const all = await Docs.list();
     const recent = [...all].sort((a,b)=>b.createdAt-a.createdAt).slice(0,8);
-    const free = all.filter(d=>d.is_free);
-    $('#homeRecent').innerHTML = recent.map(docCard).join('') || '<p style="color:var(--text-2)">No documents yet. Sign in as admin to upload the first one.</p>';
-    $('#homeFree').innerHTML = free.map(docCard).join('') || '<p style="color:var(--text-2)">No free documents yet.</p>';
+    const free = all.filter(d => d.is_free);
+    $('#homeRecent').innerHTML = recent.map(docCard).join('') || `<p style="color:var(--text-2)">${i18n.t('empty.noDocs')}</p>`;
+    $('#homeFree').innerHTML = free.map(docCard).join('') || `<p style="color:var(--text-2)">${i18n.t('empty.noFree')}</p>`;
   }
   async function open(id) {
-    if (!Auth.currentUser) { toast.show('Please sign in to read.', 'error'); router.go('login'); return; }
+    if (!Auth.currentUser) { toast.show(i18n.t('err.invalidCreds'), 'error'); router.go('login'); return; }
     const d = await DB.get('documents', id);
     if (!d) return;
     const isAdmin = Auth.currentUser.role === 'admin';
     const hasView = d.is_free || isAdmin || await Purchases.hasAccess(Auth.currentUser.id, id, 'view');
-    if (!hasView) { toast.show('Pay to view this document first.', 'error'); payment.open(id, 'view'); return; }
+    if (!hasView) { toast.show(i18n.t('pay.title'), 'error'); payment.open(id, 'view'); return; }
     await Docs.incrementViews(id);
     $('#pdfTitle').textContent = d.title;
-    $('#pdfMeta').textContent = 'by ' + d.author;
+    $('#pdfMeta').textContent = d.author;
     const box = $('#pdfContent');
     if (d.pdf_data_url) box.innerHTML = `<iframe src="${d.pdf_data_url}" style="width:100%;height:70vh;border:0"></iframe>`;
     else if (d.content) box.innerHTML = `<div style="padding:24px;white-space:pre-wrap;line-height:1.7;font-size:.92rem">${esc(d.content)}</div>`;
-    else box.innerHTML = `<div style="padding:24px;color:var(--text-2)">No content in this document yet.</div>`;
+    else box.innerHTML = `<div style="padding:24px;color:var(--text-2)">—</div>`;
     $('#pdfModal').classList.add('show');
   }
   return { load, open };
 })();
 
+/* ============ LIBRARY ============ */
 const library = (() => {
   async function load() {
     const q = ($('#librarySearch')?.value||'').trim().toLowerCase();
     const all = await Docs.list();
     const filtered = q ? all.filter(d => d.title.toLowerCase().includes(q) || d.author.toLowerCase().includes(q)) : all;
-    $('#libraryGrid').innerHTML = filtered.length ? filtered.map(docCard).join('') : '<p style="color:var(--text-2)">No documents match.</p>';
-  }
-  function docCard(d) {
-    const isFree = !!d.is_free;
-    const price = isFree ? `<span class="book-price free">FREE</span>` : `<span class="book-price">${$money(d.download_price_cents)}</span>`;
-    return `<div class="book-card">
-      <div class="book-cover" style="background:linear-gradient(135deg,${d.cover_color||'#c17a3f'},${shade(d.cover_color||'#c17a3f',-30)})" onclick="home.open('${d.id}')">
-        <i class="fas ${d.type==='syllabus'?'fa-book':d.type==='re'?'fa-church':'fa-file-alt'}"></i>
-        <span class="cover-badge">${esc(d.type||'doc')}</span>
-      </div>
-      <div class="book-body">
-        <div class="book-title">${esc(d.title)}</div>
-        <div class="book-author">${esc(d.author)}</div>
-        <div class="book-footer">${price}<div style="display:flex;gap:4px;flex-wrap:wrap">${
-          isFree
-            ? `<button class="btn-pill free" onclick="home.open('${d.id}')"><i class="fas fa-eye"></i> Read</button>`
-            : `<button class="btn-pill" onclick="payment.open('${d.id}','view')"><i class="fas fa-eye"></i> ${$money(d.view_price_cents)}</button>
-               <button class="btn-pill" onclick="payment.open('${d.id}','download')"><i class="fas fa-download"></i> ${$money(d.download_price_cents)}</button>`
-        }</div></div>
-      </div>
-    </div>`;
+    const card = (d) => {
+      const isFree = !!d.is_free;
+      const price = isFree ? `<span class="book-price free">${i18n.t('common.free')}</span>` : `<span class="book-price">${$money(d.download_price_cents)}</span>`;
+      const icon = d.type==='syllabus'?'fa-book':d.type==='re'?'fa-church':'fa-file-alt';
+      return `<div class="book-card">
+        <div class="book-cover" style="background:linear-gradient(135deg,${d.cover_color||'#c17a3f'},${shade(d.cover_color||'#c17a3f',-30)})" onclick="home.open('${d.id}')">
+          <i class="fas ${icon}"></i><span class="cover-badge">${esc(d.type||'doc')}</span>
+        </div>
+        <div class="book-body">
+          <div class="book-title">${esc(d.title)}</div>
+          <div class="book-author">${esc(d.author)}</div>
+          <div class="book-footer">${price}<div style="display:flex;gap:4px;flex-wrap:wrap">${
+            isFree
+              ? `<button class="btn-pill free" onclick="home.open('${d.id}')"><i class="fas fa-eye"></i> ${i18n.t('common.read')}</button>`
+              : `<button class="btn-pill" onclick="payment.open('${d.id}','view')"><i class="fas fa-eye"></i> ${$money(d.view_price_cents)}</button>
+                 <button class="btn-pill" onclick="payment.open('${d.id}','download')"><i class="fas fa-download"></i> ${$money(d.download_price_cents)}</button>`
+          }</div></div>
+        </div>
+      </div>`;
+    };
+    $('#libraryGrid').innerHTML = filtered.length ? filtered.map(card).join('') : `<p style="color:var(--text-2)">${i18n.t('empty.noMatch')}</p>`;
   }
   return { load };
 })();
@@ -1109,14 +1121,14 @@ const library = (() => {
 const payment = (() => {
   let pending = null;
   async function open(docId, kind) {
-    if (!Auth.currentUser) { toast.show('Please sign in.', 'error'); router.go('login'); return; }
+    if (!Auth.currentUser) { toast.show(i18n.t('err.invalidCreds'), 'error'); router.go('login'); return; }
     const d = await DB.get('documents', docId);
     if (!d) return;
     pending = { doc: d, kind };
     const price = kind === 'view' ? d.view_price_cents : d.download_price_cents;
-    $('#payTitle').textContent = kind === 'view' ? 'Pay to view' : 'Pay to download';
+    $('#payTitle').textContent = i18n.t('pay.title');
     $('#payBook').textContent = d.title + ' — ' + d.author;
-    $('#payDetails').innerHTML = `<div class="form-feedback info show" style="margin-top:14px"><i class="fas fa-info-circle"></i><div>You are paying <strong>${$money(price)}</strong> for ${kind === 'view' ? '<strong>view only</strong>' : '<strong>download access</strong>'}.</div></div>`;
+    $('#payDetails').innerHTML = `<div class="form-feedback info show" style="margin-top:14px"><i class="fas fa-info-circle"></i><div>${$money(price)} — ${kind}</div></div>`;
     $('#payRef').value = '';
     $('#payAmountInput').value = (price/100).toFixed(2);
     $('#payNote').value = '';
@@ -1129,18 +1141,14 @@ const payment = (() => {
     const method = $('#payMethod').value;
     const reference = $('#payRef').value.trim();
     const amount = parseFloat($('#payAmountInput').value);
-    if (!method) { toast.show('Choose a payment method', 'error'); return; }
-    if (!reference) { toast.show('Enter the SMS reference', 'error'); return; }
-    if (!amount || amount <= 0) { toast.show('Enter amount', 'error'); return; }
+    if (!method) { toast.show(i18n.t('err.payChoose'), 'error'); return; }
+    if (!reference) { toast.show(i18n.t('err.payRef'), 'error'); return; }
+    if (!amount || amount <= 0) { toast.show(i18n.t('err.payAmount'), 'error'); return; }
     const btn = $('#payConfirm'); btn.disabled = true;
     try {
-      await PayRecs.submit(Auth.currentUser.id, {
-        document_id: pending.doc.id, document_title: pending.doc.title,
-        kind: pending.kind, method, reference, amount,
-        note: $('#payNote').value.trim()
-      });
+      await PayRecs.submit(Auth.currentUser.id, { document_id: pending.doc.id, document_title: pending.doc.title, kind: pending.kind, method, reference, amount, note: $('#payNote').value.trim() });
       $('#payModal').classList.remove('show');
-      toast.show('Record submitted. Admin will verify soon.', 'success');
+      toast.show(i18n.t('toast.paySubmitted'), 'success');
       if ($('#page-dashboard').classList.contains('active')) await dashboard.render();
     } catch (e) { toast.show(e.message, 'error'); }
     finally { btn.disabled = false; pending = null; }
@@ -1155,7 +1163,7 @@ const dashboard = (() => {
   function setTab(t) { tab=t; render(); }
   async function render() {
     const root = $('#dashboardContent');
-    if (!Auth.currentUser) { root.innerHTML = '<div class="access-denied"><h2>Please sign in.</h2></div>'; return; }
+    if (!Auth.currentUser) { root.innerHTML = `<div class="access-denied"><h2>${i18n.t('auth.tab.signin')}</h2></div>`; return; }
     const u = Auth.currentUser;
     const all = await Docs.list();
     const owned = await Purchases.ownedBy(u.id);
@@ -1168,82 +1176,81 @@ const dashboard = (() => {
       <div class="dash-header">
         <div class="feature-icon" style="margin:0"><i class="fas fa-${u.role==='student'?'user-graduate':'chalkboard-user'}"></i></div>
         <div style="flex:1;min-width:200px">
-          <h2 style="font-family:var(--font-serif);font-size:1.4rem">Welcome, ${esc(u.name)}</h2>
-          <p style="color:var(--text-2);font-size:.88rem">${esc(u.email)} · <span class="badge">${esc(u.role)}</span>
-          ${u.role==='student' ? `· Level ${esc(u.level||'—')} · Class ${esc(u.class||'—')} · Section ${esc(u.section||'—')}` : ''}</p>
+          <h2 style="font-family:var(--font-serif);font-size:1.4rem">${i18n.t('dash.welcome')}, ${esc(u.name)}</h2>
+          <p style="color:var(--text-2);font-size:.88rem">${esc(u.email)} · <span class="badge">${esc(u.role)}</span>${u.role==='student' ? ` · ${esc(u.level||'—')} ${esc(u.class||'—')} ${esc(u.section||'—')}` : ''}</p>
         </div>
-        <button class="btn btn-secondary" onclick="authUI.logout()"><i class="fas fa-sign-out-alt"></i> Sign out</button>
+        <button class="btn btn-secondary" onclick="authUI.logout()"><i class="fas fa-sign-out-alt"></i> ${i18n.t('dash.signout')}</button>
       </div>
       <div class="dash-tabs">
         ${['overview','payments','mine','free','settings'].map(t =>
           `<button class="dash-tab ${tab===t?'active':''}" onclick="dashboard.setTab('${t}')">${
-            t==='overview'?'Overview':t==='payments'?'My payment records':t==='mine'?'My library':t==='free'?'Free documents':'Account'
+            t==='overview'?i18n.t('dash.overview'):t==='payments'?i18n.t('dash.payments'):t==='mine'?i18n.t('dash.mine'):t==='free'?i18n.t('dash.free'):i18n.t('dash.account')
           }</button>`).join('')}
       </div>
       <div id="dashPanel"></div>`;
     const panel = $('#dashPanel');
     if (tab==='overview') {
       panel.innerHTML = `<div class="stat-grid">
-        <div class="stat"><div class="stat-label">Documents owned</div><div class="stat-value">${owned.size}</div></div>
-        <div class="stat"><div class="stat-label">Free documents</div><div class="stat-value">${free.length}</div></div>
-        <div class="stat"><div class="stat-label">Spent</div><div class="stat-value">${$money(purchases.reduce((s,p)=>s+p.amount_cents,0))}</div></div>
-        <div class="stat"><div class="stat-label">Pending records</div><div class="stat-value">${records.filter(r=>r.status==='pending').length}</div></div>
+        <div class="stat"><div class="stat-label">${i18n.t('dash.mine')}</div><div class="stat-value">${owned.size}</div></div>
+        <div class="stat"><div class="stat-label">${i18n.t('dash.free')}</div><div class="stat-value">${free.length}</div></div>
+        <div class="stat"><div class="stat-label">$</div><div class="stat-value">${$money(purchases.reduce((s,p)=>s+p.amount_cents,0))}</div></div>
+        <div class="stat"><div class="stat-label">${i18n.t('dash.payments')}</div><div class="stat-value">${records.filter(r=>r.status==='pending').length}</div></div>
       </div>`;
     } else if (tab==='payments') {
-      panel.innerHTML = `<div class="panel"><h3><i class="fas fa-file-invoice"></i> My payment records</h3>
-        ${records.length===0 ? '<p style="color:var(--text-2)">None yet.</p>' :
+      panel.innerHTML = `<div class="panel"><h3><i class="fas fa-file-invoice"></i> ${i18n.t('dash.payments')}</h3>
+        ${records.length===0 ? `<p style="color:var(--text-2)">${i18n.t('empty.noRecords')}</p>` :
           `<div class="table-wrap"><table><thead><tr><th>Date</th><th>Document</th><th>Type</th><th>Method</th><th>Reference</th><th>Amount</th><th>Status</th></tr></thead>
           <tbody>${records.map(r=>`<tr><td>${esc(r.date||'')}</td><td>${esc(r.document_title||'—')}</td><td>${esc(r.kind)}</td><td>${esc(r.method)}</td><td><code style="font-size:.78rem">${esc(r.reference)}</code></td><td>${$money(r.amount_cents)}</td><td><span class="badge ${r.status==='approved'?'success':r.status==='rejected'?'danger':'warning'}">${esc(r.status)}</span></td></tr>`).join('')}</tbody></table></div>`}
       </div>`;
     } else if (tab==='mine') {
-      panel.innerHTML = `<div class="panel"><h3><i class="fas fa-book"></i> My library</h3>
-        <div class="book-grid">${ownedDocs.map(d=>docCard(d, true)).join('')||'<p style="color:var(--text-2)">No purchases yet.</p>'}</div></div>`;
+      panel.innerHTML = `<div class="panel"><h3><i class="fas fa-book"></i> ${i18n.t('dash.mine')}</h3>
+        <div class="book-grid">${ownedDocs.map(d=>docCard(d)).join('')||`<p style="color:var(--text-2)">${i18n.t('empty.noPurchases')}</p>`}</div></div>`;
     } else if (tab==='free') {
-      panel.innerHTML = `<div class="panel"><h3><i class="fas fa-gift"></i> Free documents</h3>
-        <div class="book-grid">${free.map(d=>docCard(d, true)).join('')||'<p style="color:var(--text-2)">No free documents.</p>'}</div></div>`;
+      panel.innerHTML = `<div class="panel"><h3><i class="fas fa-gift"></i> ${i18n.t('dash.free')}</h3>
+        <div class="book-grid">${free.map(d=>docCard(d)).join('')||`<p style="color:var(--text-2)">${i18n.t('empty.noFree')}</p>`}</div></div>`;
     } else if (tab==='settings') {
       panel.innerHTML = `
-        <div class="panel"><h3><i class="fas fa-key"></i> Change password</h3>
-          <div class="form-group"><label class="form-label">Current password</label><input class="form-input" type="password" id="curPw"></div>
+        <div class="panel"><h3><i class="fas fa-key"></i> ${i18n.t('dash.changePw')}</h3>
+          <div class="form-group"><label class="form-label">${i18n.t('dash.currentPw')}</label><input class="form-input" type="password" id="curPw"></div>
           <div class="form-group">
-            <label class="form-label">New password</label>
+            <label class="form-label">${i18n.t('auth.newPassword')}</label>
             <input class="form-input" type="password" id="newPw" oninput="pwUI.update('chg')">
             <div class="pw-meter"><div class="pw-meter-bar" id="chgMeterBar"></div></div>
             <ul class="pw-rules" id="chgRules">
-              <li data-rule="length"><i class="fas fa-circle"></i> At least 12 characters</li>
-              <li data-rule="upper"><i class="fas fa-circle"></i> Uppercase letter</li>
-              <li data-rule="lower"><i class="fas fa-circle"></i> Lowercase letter</li>
-              <li data-rule="digit"><i class="fas fa-circle"></i> Number</li>
-              <li data-rule="special"><i class="fas fa-circle"></i> Special character</li>
-              <li data-rule="nocommon"><i class="fas fa-circle"></i> Not a common password</li>
-              <li data-rule="noseq"><i class="fas fa-circle"></i> No sequences (abc, 123)</li>
-              <li data-rule="norepeat"><i class="fas fa-circle"></i> No 3+ repeats (aaa)</li>
+              <li data-rule="length"><i class="fas fa-circle"></i> <span>${i18n.t('pw.length')}</span></li>
+              <li data-rule="upper"><i class="fas fa-circle"></i> <span>${i18n.t('pw.upper')}</span></li>
+              <li data-rule="lower"><i class="fas fa-circle"></i> <span>${i18n.t('pw.lower')}</span></li>
+              <li data-rule="digit"><i class="fas fa-circle"></i> <span>${i18n.t('pw.digit')}</span></li>
+              <li data-rule="special"><i class="fas fa-circle"></i> <span>${i18n.t('pw.special')}</span></li>
+              <li data-rule="nocommon"><i class="fas fa-circle"></i> <span>${i18n.t('pw.nocommon')}</span></li>
+              <li data-rule="noseq"><i class="fas fa-circle"></i> <span>${i18n.t('pw.noseq')}</span></li>
+              <li data-rule="norepeat"><i class="fas fa-circle"></i> <span>${i18n.t('pw.norepeat')}</span></li>
             </ul>
           </div>
-          <button class="btn btn-primary" onclick="dashboard.changePassword()"><i class="fas fa-lock"></i> Update password</button>
+          <button class="btn btn-primary" onclick="dashboard.changePassword()"><i class="fas fa-lock"></i> ${i18n.t('dash.updatePw')}</button>
         </div>`;
     }
   }
   function docCard(d) {
+    const icon = d.type==='syllabus'?'fa-book':d.type==='re'?'fa-church':'fa-file-alt';
     return `<div class="book-card">
       <div class="book-cover" style="background:linear-gradient(135deg,${d.cover_color||'#c17a3f'},${shade(d.cover_color||'#c17a3f',-30)})" onclick="home.open('${d.id}')">
-        <i class="fas fa-book"></i><span class="cover-badge">${esc(d.type||'doc')}</span>
+        <i class="fas ${icon}"></i><span class="cover-badge">${esc(d.type||'doc')}</span>
       </div>
       <div class="book-body"><div class="book-title">${esc(d.title)}</div><div class="book-author">${esc(d.author)}</div>
-      <div class="book-footer"><span class="book-price ${d.is_free?'free':''}">${d.is_free?'FREE':$money(d.download_price_cents)}</span>
-      <button class="btn-pill" onclick="home.open('${d.id}')"><i class="fas fa-eye"></i> Read</button>
+      <div class="book-footer"><span class="book-price ${d.is_free?'free':''}">${d.is_free?i18n.t('common.free'):$money(d.download_price_cents)}</span>
+      <button class="btn-pill" onclick="home.open('${d.id}')"><i class="fas fa-eye"></i> ${i18n.t('common.read')}</button>
       </div></div></div>`;
   }
   async function changePassword() {
     const cur = $('#curPw').value, nw = $('#newPw').value;
     const h = await CryptoUtil.hashPassword(cur, Auth.currentUser.salt);
-    if (h !== Auth.currentUser.hash) { toast.show('Current password is wrong', 'error'); return; }
-    try { Password.validate(nw); }
-    catch (e) { toast.show(e.message, 'error'); return; }
+    if (h !== Auth.currentUser.hash) { toast.show(i18n.t('err.pwWrong'), 'error'); return; }
+    try { Password.validate(nw); } catch (e) { toast.show(e.message, 'error'); return; }
     const u = { ...Auth.currentUser, hash: await CryptoUtil.hashPassword(nw, Auth.currentUser.salt) };
     await AuthService.saveUser(u);
     $('#curPw').value = ''; $('#newPw').value = '';
-    toast.show('Password updated', 'success');
+    toast.show(i18n.t('toast.passwordUpdated'), 'success');
   }
   return { render, setTab, changePassword };
 })();
@@ -1259,7 +1266,7 @@ const admin = (() => {
   async function render() {
     const root = $('#adminContent');
     if (!Auth.currentUser || Auth.currentUser.role !== 'admin') {
-      root.innerHTML = `<div class="access-denied"><i class="fas fa-lock"></i><h2>Access Denied</h2><p>Admins only.</p><button class="btn btn-primary" onclick="router.go('login')">Sign in as Admin</button></div>`;
+      root.innerHTML = `<div class="access-denied"><i class="fas fa-lock"></i><h2>Admin</h2><button class="btn btn-primary" onclick="router.go('login')">${i18n.t('auth.tab.signin')}</button></div>`;
       return;
     }
     const u = Auth.currentUser;
@@ -1279,15 +1286,15 @@ const admin = (() => {
       <div class="dash-header">
         <div class="feature-icon" style="margin:0"><i class="fas fa-shield-halved"></i></div>
         <div style="flex:1;min-width:200px">
-          <h2 style="font-family:var(--font-serif);font-size:1.4rem">Admin dashboard</h2>
+          <h2 style="font-family:var(--font-serif);font-size:1.4rem">${i18n.t('role.admin')}</h2>
           <p style="color:var(--text-2);font-size:.88rem">${esc(u.email)}</p>
         </div>
-        <button class="btn btn-secondary" onclick="authUI.logout()"><i class="fas fa-sign-out-alt"></i> Sign out</button>
+        <button class="btn btn-secondary" onclick="authUI.logout()"><i class="fas fa-sign-out-alt"></i> ${i18n.t('admin.signout')}</button>
       </div>
       <div class="dash-tabs">
         ${['overview','profile','documents','drafts','verify','users','account'].map(t =>
           `<button class="dash-tab ${tab===t?'active':''}" onclick="admin.setTab('${t}')">${
-            t==='overview'?'Overview':t==='profile'?'My profile':t==='documents'?'Add document':t==='drafts'?'Drafting':t==='verify'?'Verify ('+pending.length+')':t==='users'?'Users':'Account'
+            t==='overview'?i18n.t('admin.overview'):t==='profile'?i18n.t('admin.profile'):t==='documents'?i18n.t('admin.documents'):t==='drafts'?i18n.t('admin.drafts'):t==='verify'?i18n.t('admin.verify')+' ('+pending.length+')':t==='users'?i18n.t('admin.users'):i18n.t('admin.account')
           }</button>`).join('')}
       </div>
       <div id="adminPanel"></div>`;
@@ -1295,18 +1302,17 @@ const admin = (() => {
 
     if (tab==='overview') {
       p.innerHTML = `<div class="stat-grid">
-        <div class="stat"><div class="stat-label">Teachers</div><div class="stat-value">${teachers.length}</div></div>
-        <div class="stat"><div class="stat-label">Students</div><div class="stat-value">${students.length}</div></div>
-        <div class="stat"><div class="stat-label">Documents</div><div class="stat-value">${allDocs.length}</div></div>
-        <div class="stat"><div class="stat-label">Revenue</div><div class="stat-value">${$money(revenue)}</div></div>
+        <div class="stat"><div class="stat-label">${i18n.t('role.teacher')}</div><div class="stat-value">${teachers.length}</div></div>
+        <div class="stat"><div class="stat-label">${i18n.t('role.student')}</div><div class="stat-value">${students.length}</div></div>
+        <div class="stat"><div class="stat-label">${i18n.t('admin.documents')}</div><div class="stat-value">${allDocs.length}</div></div>
+        <div class="stat"><div class="stat-label">$</div><div class="stat-value">${$money(revenue)}</div></div>
       </div>`;
     } else if (tab==='profile') {
       p.innerHTML = `
-        <div class="panel"><h3><i class="fas fa-id-badge"></i> My admin profile</h3>
-          <p style="color:var(--text-2);font-size:.88rem;margin-bottom:16px">This info is saved to the database and shown to teachers/students on your published documents.</p>
+        <div class="panel"><h3><i class="fas fa-id-badge"></i> ${i18n.t('admin.profile')}</h3>
           <div class="form-row">
             <div class="form-group"><label class="form-label">Display name</label><input class="form-input" id="pfDisplay" value="${esc(profile.display_name||'')}"></div>
-            <div class="form-group"><label class="form-label">School / institution</label><input class="form-input" id="pfSchool" value="${esc(profile.school||'')}"></div>
+            <div class="form-group"><label class="form-label">School</label><input class="form-input" id="pfSchool" value="${esc(profile.school||'')}"></div>
           </div>
           <div class="form-row">
             <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="pfPhone" value="${esc(profile.phone||'')}"></div>
@@ -1314,133 +1320,121 @@ const admin = (() => {
           </div>
           <div class="form-group"><label class="form-label">Address</label><input class="form-input" id="pfAddress" value="${esc(profile.address||'')}"></div>
           <div class="form-group"><label class="form-label">Bio</label><textarea class="form-textarea" id="pfBio">${esc(profile.bio||'')}</textarea></div>
-          <div class="form-group"><label class="form-label">Logo (upload image)</label>
+          <div class="form-group"><label class="form-label">Logo</label>
             <div style="display:flex;gap:12px;align-items:center;margin-top:6px">
               <div class="profile-logo">${profile.logo_data ? `<img src="${esc(profile.logo_data)}" style="width:100%;height:100%;object-fit:cover">` : `<i class="fas fa-image" style="font-size:1.5rem;color:var(--text-3)"></i>`}</div>
               <input class="form-input" id="pfLogoFile" type="file" accept="image/*" style="flex:1">
             </div>
           </div>
-          <button class="btn btn-primary" onclick="admin.saveProfile()"><i class="fas fa-save"></i> Save profile</button>
+          <button class="btn btn-primary" onclick="admin.saveProfile()"><i class="fas fa-save"></i> ${i18n.t('common.save')}</button>
         </div>`;
     } else if (tab==='documents') {
       p.innerHTML = `
-        <div class="panel"><h3><i class="fas fa-plus"></i> Add document (PDF upload)</h3>
+        <div class="panel"><h3><i class="fas fa-plus"></i> ${i18n.t('admin.documents')}</h3>
           <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="dTitle"></div>
           <div class="form-group"><label class="form-label">Author</label><input class="form-input" id="dAuthor"></div>
           <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="dDesc"></textarea></div>
           <div class="form-row">
             <div class="form-group"><label class="form-label">Type</label>
-              <select class="form-select" id="dType"><option value="syllabus">Syllabus</option><option value="document">Document</option><option value="re">Book of RE (free)</option><option value="book">Book</option></select></div>
+              <select class="form-select" id="dType"><option value="syllabus">Syllabus</option><option value="document">Document</option><option value="re">RE (free)</option><option value="book">Book</option></select></div>
             <div class="form-group"><label class="form-label">Language</label>
-              <select class="form-select" id="dLang"><option value="en">English</option><option value="rw">Kinyarwanda</option><option value="fr">Français</option></select></div>
+              <select class="form-select" id="dLang"><option value="en">EN</option><option value="rw">RW</option><option value="fr">FR</option></select></div>
           </div>
           <div class="form-group"><label class="form-label">Cover color</label><input class="form-input" id="dColor" value="#c17a3f" type="color" style="height:44px;padding:4px"></div>
-          <div class="form-group"><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="dFree" checked> Free document (no payment)</label></div>
+          <div class="form-group"><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="dFree" checked> Free</label></div>
           <div class="form-row">
-            <div class="form-group"><label class="form-label">View-only price (USD)</label><input class="form-input" id="dViewPrice" type="number" step="0.01" min="0" value="0"></div>
+            <div class="form-group"><label class="form-label">View price (USD)</label><input class="form-input" id="dViewPrice" type="number" step="0.01" min="0" value="0"></div>
             <div class="form-group"><label class="form-label">Download price (USD)</label><input class="form-input" id="dDlPrice" type="number" step="0.01" min="0" value="0"></div>
           </div>
-          <div class="form-group"><label class="form-label">PDF file (optional)</label><input class="form-input" id="dPdf" type="file" accept="application/pdf"></div>
-          <div class="form-group"><label class="form-label">Or text content (optional)</label><textarea class="form-textarea" id="dContent" style="min-height:140px"></textarea></div>
-          <button class="btn btn-primary" onclick="admin.addDocument()"><i class="fas fa-save"></i> Publish document</button>
-          <div class="demo-warning" style="margin-top:16px"><i class="fas fa-triangle-exclamation"></i><strong>Demo limitation:</strong> the PDF you upload is stored in this browser only. On the Express version, files are stored on the server and shared with all users.</div>
+          <div class="form-group"><label class="form-label">PDF</label><input class="form-input" id="dPdf" type="file" accept="application/pdf"></div>
+          <div class="form-group"><label class="form-label">Or text</label><textarea class="form-textarea" id="dContent" style="min-height:140px"></textarea></div>
+          <button class="btn btn-primary" onclick="admin.addDocument()"><i class="fas fa-save"></i> ${i18n.t('common.publish')}</button>
         </div>
-        <div class="panel"><h3><i class="fas fa-list"></i> All documents (${allDocs.length})</h3>
-          ${allDocs.length===0?'<p style="color:var(--text-2)">No documents.</p>':
-            `<div class="table-wrap"><table><thead><tr><th>Title</th><th>Type</th><th>Free</th><th>View $</th><th>DL $</th><th>Views</th><th>DLs</th><th></th></tr></thead>
-            <tbody>${allDocs.map(d=>`<tr><td>${esc(d.title)}</td><td>${esc(d.type)}</td><td>${d.is_free?'<span class="badge success">yes</span>':'<span class="badge">no</span>'}</td><td>${$money(d.view_price_cents||0)}</td><td>${$money(d.download_price_cents||0)}</td><td>${d.views||0}</td><td>${d.downloads||0}</td><td><button class="btn btn-secondary btn-sm" onclick="admin.deleteDocument('${d.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('')}</tbody></table></div>`}
+        <div class="panel"><h3><i class="fas fa-list"></i> ${allDocs.length}</h3>
+          ${allDocs.length===0?`<p style="color:var(--text-2)">${i18n.t('empty.noDocs')}</p>`:
+            `<div class="table-wrap"><table><thead><tr><th>Title</th><th>Type</th><th>Free</th><th>$</th><th></th></tr></thead>
+            <tbody>${allDocs.map(d=>`<tr><td>${esc(d.title)}</td><td>${esc(d.type)}</td><td>${d.is_free?'✓':'—'}</td><td>${$money(d.download_price_cents)}</td><td><button class="btn btn-secondary btn-sm" onclick="admin.deleteDocument('${d.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('')}</tbody></table></div>`}
         </div>`;
     } else if (tab==='drafts') {
       p.innerHTML = `
-        <div class="panel"><h3><i class="fas fa-pen-fancy"></i> Drafting workspace</h3>
-          <p style="color:var(--text-2);font-size:.88rem;margin-bottom:14px">Draft syllabuses on one side, refer to real books on the other side. Publish when ready.</p>
+        <div class="panel"><h3><i class="fas fa-pen-fancy"></i> ${i18n.t('admin.drafts')}</h3>
           <div class="split">
             <div>
               <div class="form-group"><label class="form-label">Draft title</label><input class="form-input" id="drTitle" value="${editingDraftId?'':'New draft'}"></div>
               <div class="form-group"><label class="form-label">Type</label>
-                <select class="form-select" id="drType"><option value="syllabus">Syllabus</option><option value="document">Document</option><option value="re">Book of RE</option><option value="book">Book</option></select></div>
-              <div class="form-group"><label class="form-label">Draft content</label>
-                <textarea class="form-textarea" id="drContent" style="min-height:280px" placeholder="Write your syllabus here..."></textarea></div>
-              <div class="form-group"><label class="form-label">Internal notes</label>
-                <textarea class="form-textarea" id="drNotes" placeholder="Private notes"></textarea></div>
+                <select class="form-select" id="drType"><option value="syllabus">Syllabus</option><option value="document">Document</option><option value="re">RE</option><option value="book">Book</option></select></div>
+              <div class="form-group"><label class="form-label">Content</label>
+                <textarea class="form-textarea" id="drContent" style="min-height:280px"></textarea></div>
+              <div class="form-group"><label class="form-label">Notes</label>
+                <textarea class="form-textarea" id="drNotes"></textarea></div>
               <div style="display:flex;gap:10px;flex-wrap:wrap">
-                <button class="btn btn-primary" onclick="admin.saveDraft()"><i class="fas fa-save"></i> Save draft</button>
-                <button class="btn btn-secondary" onclick="admin.newDraft()"><i class="fas fa-file"></i> New</button>
+                <button class="btn btn-primary" onclick="admin.saveDraft()"><i class="fas fa-save"></i> ${i18n.t('common.save')}</button>
+                <button class="btn btn-secondary" onclick="admin.newDraft()"><i class="fas fa-file"></i> +</button>
               </div>
             </div>
             <div>
               <div class="panel" style="background:var(--bg-sub);margin:0">
-                <h3 style="margin-bottom:12px"><i class="fas fa-books"></i> Reference books</h3>
-                <p style="color:var(--text-2);font-size:.82rem;margin-bottom:10px">These published documents can help you prepare the syllabus.</p>
+                <h3 style="margin-bottom:12px"><i class="fas fa-books"></i> ${i18n.t('nav.library')}</h3>
                 <div style="max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:8px">
-                  ${allDocs.length===0?'<p style="color:var(--text-2);font-size:.85rem">No published documents yet.</p>':
+                  ${allDocs.length===0?`<p style="color:var(--text-2);font-size:.85rem">${i18n.t('empty.noDocs')}</p>`:
                     allDocs.map(d=>`<div style="background:var(--bg-elev);padding:10px;border-radius:8px;cursor:pointer" onclick="admin.loadReference('${d.id}')">
                       <strong style="font-size:.86rem">${esc(d.title)}</strong><br>
-                      <small style="color:var(--text-2)">${esc(d.author)} · ${esc(d.type)}</small>
+                      <small style="color:var(--text-2)">${esc(d.author)}</small>
                     </div>`).join('')}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="panel"><h3><i class="fas fa-folder-open"></i> My drafts (${drafts.length})</h3>
-          ${drafts.length===0?'<p style="color:var(--text-2)">No drafts yet.</p>':
-            `<div class="table-wrap"><table><thead><tr><th>Title</th><th>Type</th><th>Updated</th><th>Actions</th></tr></thead>
+        <div class="panel"><h3><i class="fas fa-folder-open"></i> (${drafts.length})</h3>
+          ${drafts.length===0?`<p style="color:var(--text-2)">${i18n.t('empty.noDrafts')}</p>`:
+            `<div class="table-wrap"><table><thead><tr><th>Title</th><th>Type</th><th>Updated</th><th></th></tr></thead>
             <tbody>${drafts.map(d=>`<tr><td>${esc(d.title)}</td><td>${esc(d.type)}</td><td>${new Date(d.updatedAt).toLocaleString()}</td>
               <td style="display:flex;gap:4px">
                 <button class="btn btn-secondary btn-sm" onclick="admin.editDraft(${d.id})"><i class="fas fa-pen"></i></button>
-                <button class="btn btn-primary btn-sm" onclick="admin.publishDraft(${d.id})"><i class="fas fa-upload"></i> Publish</button>
+                <button class="btn btn-primary btn-sm" onclick="admin.publishDraft(${d.id})"><i class="fas fa-upload"></i> ${i18n.t('common.publish')}</button>
                 <button class="btn btn-secondary btn-sm" onclick="admin.deleteDraft(${d.id})"><i class="fas fa-trash"></i></button>
               </td></tr>`).join('')}</tbody></table></div>`}
         </div>`;
     } else if (tab==='verify') {
       p.innerHTML = `
-        <div class="panel"><h3><i class="fas fa-check-double"></i> Verify payment records</h3>
-          <p style="color:var(--text-2);font-size:.88rem;margin-bottom:14px">Cross-check the reference against the SMS received on your phone. Approve to grant access.</p>
-          ${pending.length===0?'<p style="color:var(--text-2)">No pending records.</p>':
-            `<div class="table-wrap"><table><thead><tr><th>Date</th><th>User</th><th>Document</th><th>Type</th><th>Method</th><th>Reference</th><th>Amount</th><th>Action</th></tr></thead>
+        <div class="panel"><h3><i class="fas fa-check-double"></i> ${i18n.t('admin.verify')}</h3>
+          ${pending.length===0?`<p style="color:var(--text-2)">${i18n.t('empty.noPending')}</p>`:
+            `<div class="table-wrap"><table><thead><tr><th>Date</th><th>User</th><th>Document</th><th>Method</th><th>Ref</th><th>Amount</th><th></th></tr></thead>
             <tbody>${pending.map(r => {
               const user = allUsers.find(x => x.id === r.user_id);
-              return `<tr><td>${esc(r.date||'')}</td><td>${esc(user?.email||'—')}</td><td>${esc(r.document_title||'—')}</td><td>${esc(r.kind)}</td><td>${esc(r.method)}</td><td><code style="font-size:.78rem">${esc(r.reference)}</code></td><td>${$money(r.amount_cents)}</td>
+              return `<tr><td>${esc(r.date||'')}</td><td>${esc(user?.email||'—')}</td><td>${esc(r.document_title||'—')}</td><td>${esc(r.method)}</td><td><code style="font-size:.78rem">${esc(r.reference)}</code></td><td>${$money(r.amount_cents)}</td>
                 <td style="display:flex;gap:4px">
-                  <button class="btn btn-primary btn-sm" onclick="admin.approve(${r.id})"><i class="fas fa-check"></i> Approve</button>
+                  <button class="btn btn-primary btn-sm" onclick="admin.approve(${r.id})"><i class="fas fa-check"></i> ${i18n.t('common.approve')}</button>
                   <button class="btn btn-secondary btn-sm" onclick="admin.reject(${r.id})"><i class="fas fa-times"></i></button>
                 </td></tr>`;
             }).join('')}</tbody></table></div>`}
-        </div>
-        <div class="panel"><h3><i class="fas fa-history"></i> All records</h3>
-          ${records.length===0?'<p style="color:var(--text-2)">None.</p>':
-            `<div class="table-wrap"><table><thead><tr><th>Date</th><th>User</th><th>Document</th><th>Method</th><th>Reference</th><th>Amount</th><th>Status</th></tr></thead>
-            <tbody>${records.map(r => {
-              const user = allUsers.find(x => x.id === r.user_id);
-              return `<tr><td>${esc(r.date||'')}</td><td>${esc(user?.email||'—')}</td><td>${esc(r.document_title||'—')}</td><td>${esc(r.method)}</td><td><code style="font-size:.78rem">${esc(r.reference)}</code></td><td>${$money(r.amount_cents)}</td><td><span class="badge ${r.status==='approved'?'success':r.status==='rejected'?'danger':'warning'}">${esc(r.status)}</span></td></tr>`;
-            }).join('')}</tbody></table></div>`}
         </div>`;
     } else if (tab==='users') {
-      p.innerHTML = `<div class="panel"><h3><i class="fas fa-users"></i> Users</h3>
-        <div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Verified</th><th>Details</th></tr></thead>
-        <tbody>${allUsers.filter(u=>u.role!=='admin').map(u=>`<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td><span class="badge">${esc(u.role)}</span></td><td>${u.email_verified?'<span class="badge success">yes</span>':'<span class="badge danger">no</span>'}</td><td>${u.role==='student'?`L:${esc(u.level||'—')} C:${esc(u.class||'—')} S:${esc(u.section||'—')}`:'—'}</td></tr>`).join('') || '<tr><td colspan="5" style="color:var(--text-2)">No users yet.</td></tr>'}</tbody></table></div>
+      p.innerHTML = `<div class="panel"><h3><i class="fas fa-users"></i> ${i18n.t('admin.users')}</h3>
+        <div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Details</th></tr></thead>
+        <tbody>${allUsers.filter(u=>u.role!=='admin').map(u=>`<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td><span class="badge">${esc(u.role)}</span></td><td>${u.role==='student'?`${esc(u.level||'—')} ${esc(u.class||'—')} ${esc(u.section||'—')}`:'—'}</td></tr>`).join('') || `<tr><td colspan="4" style="color:var(--text-2)">${i18n.t('empty.noUsers')}</td></tr>`}</tbody></table></div>
       </div>`;
     } else if (tab==='account') {
       p.innerHTML = `
-        <div class="panel"><h3><i class="fas fa-key"></i> Change password</h3>
-          <div class="form-group"><label class="form-label">Current password</label><input class="form-input" type="password" id="curPw"></div>
+        <div class="panel"><h3><i class="fas fa-key"></i> ${i18n.t('dash.changePw')}</h3>
+          <div class="form-group"><label class="form-label">${i18n.t('dash.currentPw')}</label><input class="form-input" type="password" id="curPw"></div>
           <div class="form-group">
-            <label class="form-label">New password</label>
+            <label class="form-label">${i18n.t('auth.newPassword')}</label>
             <input class="form-input" type="password" id="newPw" oninput="pwUI.update('chg')">
             <div class="pw-meter"><div class="pw-meter-bar" id="chgMeterBar"></div></div>
             <ul class="pw-rules" id="chgRules">
-              <li data-rule="length"><i class="fas fa-circle"></i> At least 12 characters</li>
-              <li data-rule="upper"><i class="fas fa-circle"></i> Uppercase letter</li>
-              <li data-rule="lower"><i class="fas fa-circle"></i> Lowercase letter</li>
-              <li data-rule="digit"><i class="fas fa-circle"></i> Number</li>
-              <li data-rule="special"><i class="fas fa-circle"></i> Special character</li>
-              <li data-rule="nocommon"><i class="fas fa-circle"></i> Not a common password</li>
-              <li data-rule="noseq"><i class="fas fa-circle"></i> No sequences (abc, 123)</li>
-              <li data-rule="norepeat"><i class="fas fa-circle"></i> No 3+ repeats (aaa)</li>
+              <li data-rule="length"><i class="fas fa-circle"></i> <span>${i18n.t('pw.length')}</span></li>
+              <li data-rule="upper"><i class="fas fa-circle"></i> <span>${i18n.t('pw.upper')}</span></li>
+              <li data-rule="lower"><i class="fas fa-circle"></i> <span>${i18n.t('pw.lower')}</span></li>
+              <li data-rule="digit"><i class="fas fa-circle"></i> <span>${i18n.t('pw.digit')}</span></li>
+              <li data-rule="special"><i class="fas fa-circle"></i> <span>${i18n.t('pw.special')}</span></li>
+              <li data-rule="nocommon"><i class="fas fa-circle"></i> <span>${i18n.t('pw.nocommon')}</span></li>
+              <li data-rule="noseq"><i class="fas fa-circle"></i> <span>${i18n.t('pw.noseq')}</span></li>
+              <li data-rule="norepeat"><i class="fas fa-circle"></i> <span>${i18n.t('pw.norepeat')}</span></li>
             </ul>
           </div>
-          <button class="btn btn-primary" onclick="dashboard.changePassword()"><i class="fas fa-lock"></i> Update password</button>
+          <button class="btn btn-primary" onclick="dashboard.changePassword()"><i class="fas fa-lock"></i> ${i18n.t('dash.updatePw')}</button>
         </div>`;
     }
   }
@@ -1449,61 +1443,32 @@ const admin = (() => {
     const fileInput = $('#pfLogoFile');
     let logo = editingProfile.logo_data || '';
     if (fileInput?.files?.length) logo = await fileToDataUrl(fileInput.files[0]);
-    await Profile.save(Auth.currentUser.id, {
-      display_name: $('#pfDisplay').value.trim(),
-      school: $('#pfSchool').value.trim(),
-      phone: $('#pfPhone').value.trim(),
-      website: $('#pfWebsite').value.trim(),
-      address: $('#pfAddress').value.trim(),
-      bio: $('#pfBio').value.trim(),
-      logo_data: logo
-    });
-    toast.show('Profile saved', 'success');
+    await Profile.save(Auth.currentUser.id, { display_name: $('#pfDisplay').value.trim(), school: $('#pfSchool').value.trim(), phone: $('#pfPhone').value.trim(), website: $('#pfWebsite').value.trim(), address: $('#pfAddress').value.trim(), bio: $('#pfBio').value.trim(), logo_data: logo });
+    toast.show(i18n.t('toast.profileSaved'), 'success');
     await render();
   }
 
   async function addDocument() {
     const title = $('#dTitle').value.trim();
     const author = $('#dAuthor').value.trim();
-    if (!title || !author) { toast.show('Title and author required', 'error'); return; }
+    if (!title || !author) { toast.show(i18n.t('err.titleAuthor'), 'error'); return; }
     const isFree = $('#dFree').checked;
     let pdfDataUrl = '';
     const pdfInput = $('#dPdf');
     if (pdfInput?.files?.length) pdfDataUrl = await fileToDataUrl(pdfInput.files[0]);
-    await Docs.addDocument({
-      title, author,
-      description: $('#dDesc').value.trim(),
-      content: $('#dContent').value.trim(),
-      pdf_data_url: pdfDataUrl,
-      type: $('#dType').value,
-      language: $('#dLang').value,
-      cover_color: $('#dColor').value,
-      is_free: isFree,
-      view_price_cents: parseFloat($('#dViewPrice').value||0) * 100,
-      download_price_cents: parseFloat($('#dDlPrice').value||0) * 100
-    });
-    toast.show('Document published', 'success');
+    await Docs.addDocument({ title, author, description: $('#dDesc').value.trim(), content: $('#dContent').value.trim(), pdf_data_url: pdfDataUrl, type: $('#dType').value, language: $('#dLang').value, cover_color: $('#dColor').value, is_free: isFree, view_price_cents: parseFloat($('#dViewPrice').value||0) * 100, download_price_cents: parseFloat($('#dDlPrice').value||0) * 100 });
+    toast.show(i18n.t('toast.published'), 'success');
     await render();
   }
 
-  async function deleteDocument(id) {
-    if (!confirm('Delete this document?')) return;
-    await Docs.deleteDocument(id);
-    toast.show('Deleted', 'info');
-    await render();
-  }
+  async function deleteDocument(id) { if (!confirm('?')) return; await Docs.deleteDocument(id); toast.show(i18n.t('toast.deleted'), 'info'); await render(); }
 
   async function saveDraft() {
     const title = $('#drTitle').value.trim();
-    if (!title) { toast.show('Draft title required', 'error'); return; }
-    const draft = await Drafts.save(Auth.currentUser.id, {
-      id: editingDraftId, title,
-      type: $('#drType').value,
-      content: $('#drContent').value,
-      notes: $('#drNotes').value
-    });
+    if (!title) { toast.show(i18n.t('err.titleAuthor'), 'error'); return; }
+    const draft = await Drafts.save(Auth.currentUser.id, { id: editingDraftId, title, type: $('#drType').value, content: $('#drContent').value, notes: $('#drNotes').value });
     editingDraftId = draft.id;
-    toast.show('Draft saved', 'success');
+    toast.show(i18n.t('toast.draftSaved'), 'success');
     await render();
   }
 
@@ -1524,50 +1489,21 @@ const admin = (() => {
 
   async function publishDraft(id) {
     const draft = await DB.get('drafts', id);
-    if (!draft || !confirm(`Publish "${draft.title}"?`)) return;
+    if (!draft || !confirm('?')) return;
     const isFree = draft.type === 're';
-    await Docs.addDocument({
-      title: draft.title, author: Auth.currentUser.name,
-      description: draft.content.slice(0,200), content: draft.content,
-      type: draft.type, language: 'en',
-      cover_color: isFree?'#4a7c59':'#c17a3f', is_free: isFree,
-      view_price_cents: isFree?0:199, download_price_cents: isFree?0:499
-    });
+    await Docs.addDocument({ title: draft.title, author: Auth.currentUser.name, description: draft.content.slice(0,200), content: draft.content, type: draft.type, language: 'en', cover_color: isFree?'#4a7c59':'#c17a3f', is_free: isFree, view_price_cents: isFree?0:199, download_price_cents: isFree?0:499 });
     await Drafts.remove(id);
-    toast.show('Draft published to library', 'success');
+    toast.show(i18n.t('toast.published'), 'success');
     editingDraftId = null; tab = 'documents';
     await render();
   }
 
-  async function deleteDraft(id) {
-    if (!confirm('Delete this draft?')) return;
-    await Drafts.remove(id);
-    if (editingDraftId === id) editingDraftId = null;
-    toast.show('Draft deleted', 'info');
-    await render();
-  }
+  async function deleteDraft(id) { if (!confirm('?')) return; await Drafts.remove(id); if (editingDraftId === id) editingDraftId = null; toast.show(i18n.t('toast.deleted'), 'info'); await render(); }
 
-  async function loadReference(id) {
-    const d = await DB.get('documents', id);
-    if (!d) return;
-    const box = $('#drContent');
-    if (box) {
-      box.value = (box.value || '') + '\n\n--- Reference: ' + d.title + ' ---\n' + (d.content || d.description || '') + '\n';
-      toast.show('Reference inserted', 'info');
-    }
-  }
+  async function loadReference(id) { const d = await DB.get('documents', id); if (!d) return; const box = $('#drContent'); if (box) { box.value = (box.value || '') + '\n\n--- ' + d.title + ' ---\n' + (d.content || d.description || '') + '\n'; toast.show('+', 'info'); } }
 
-  async function approve(id) {
-    if (!confirm('Approve this record? Access will be granted.')) return;
-    try { await PayRecs.approve(id); toast.show('Approved.', 'success'); await render(); }
-    catch (e) { toast.show(e.message, 'error'); }
-  }
-
-  async function reject(id) {
-    if (!confirm('Reject this record?')) return;
-    try { await PayRecs.reject(id); toast.show('Rejected.', 'info'); await render(); }
-    catch (e) { toast.show(e.message, 'error'); }
-  }
+  async function approve(id) { try { await PayRecs.approve(id); toast.show(i18n.t('toast.approved'), 'success'); await render(); } catch (e) { toast.show(e.message, 'error'); } }
+  async function reject(id) { try { await PayRecs.reject(id); toast.show(i18n.t('toast.rejected'), 'info'); await render(); } catch (e) { toast.show(e.message, 'error'); } }
 
   return { render, setTab, saveProfile, addDocument, deleteDocument, saveDraft, editDraft, newDraft, publishDraft, deleteDraft, loadReference, approve, reject };
 })();
@@ -1579,24 +1515,15 @@ function shade(hex, p) {
   return `rgb(${c((n>>16)+p)},${c(((n>>8)&0xFF)+p)},${c((n&0xFF)+p)})`;
 }
 function fileToDataUrl(file) {
-  return new Promise((res, rej) => {
-    const fr = new FileReader();
-    fr.onload = () => res(fr.result);
-    fr.onerror = () => rej(fr.error);
-    fr.readAsDataURL(file);
-  });
+  return new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.onerror = () => rej(fr.error); fr.readAsDataURL(file); });
 }
 
 /* ============ BOOT ============ */
 document.addEventListener('DOMContentLoaded', async () => {
   theme.init();
+  i18n.apply();
   authUI.init();
   router.init();
-
-  $('#themeBtn').addEventListener('click', ()=>theme.toggle());
-  $$('.lang-btn').forEach(b => b.addEventListener('click', ()=>{
-    $$('.lang-btn').forEach(x=>x.classList.toggle('active', x === b));
-  }));
 
   window.router = router;
   window.authUI = authUI;
@@ -1610,6 +1537,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   await AuthService.restore();
   renderUserMenu();
   await home.load();
+
+  // language switching — re-render dynamic views
+  document.addEventListener('langchange', async () => {
+    if ($('#page-home').classList.contains('active')) await home.load();
+    if ($('#page-library').classList.contains('active')) await library.load();
+    if ($('#page-dashboard').classList.contains('active')) await dashboard.render();
+    if ($('#page-admin').classList.contains('active')) await admin.render();
+    renderUserMenu();
+  });
 });
 </script>
 </body>
